@@ -1,4 +1,4 @@
-PerfX360 Performance Testing Tool
+# PerfX360 Performance Testing Tool
 
 ## Getting started
 
@@ -19,5 +19,3 @@ After modules are installed, you can start the server using the command:
 ```
 
 You can install more modules and configure them in the **gulpfile.js** file as needed.
-
-## Links
