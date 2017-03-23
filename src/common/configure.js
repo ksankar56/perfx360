@@ -20,4 +20,9 @@ exports.init = function(app) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, '../../public')));
+    app.use(function (err, req, res, next) {
+        console.log(err.stack);
+        res.status(500).send({"Error": err.stack});
+        //rem.emit('ErrorJsonResponse', req, res, {"status" : err});
+    });
 }

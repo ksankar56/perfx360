@@ -1,0 +1,24 @@
+{
+  "development":{
+    "mongodb":{
+      "host":"localhost",
+      "port":27017,
+      "dbName" : "perfx360"
+    },
+    "server" : {
+      "host" : "localhost",
+      "port" : 8642
+    }
+  },
+  "production":{
+    "mongodb":{
+      "host":"localhost",
+      "port":27017,
+      "dbName" : "perfx360"
+    },
+    "server" : {
+      "host" : "localhost",
+      "port" : 8642
+    }
+  }
+}

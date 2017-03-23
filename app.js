@@ -1,6 +1,10 @@
+var env = process.env.NODE_ENV || "development";
+global.config = require('./config/config.json')[env];
+
 var express = require('express');
 var favicon = require('serve-favicon');
 var configure = require('./src/common/configure');
+var db = require('./src/model/db');
 
 var app = express();
 
