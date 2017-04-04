@@ -5,6 +5,20 @@
       "port":27017,
       "dbName" : "perfx360"
     },
+    "elasticSearch":{
+      "master" : {
+        "host": "localhost",
+        "port": 9200,
+        "log": "trace"
+      },
+      "slave" : {
+        "host": "localhost",
+        "port": 9200,
+        "log": "trace"
+      },
+      "indexDefaultName" : "perfx360",
+      "defaultTypeName" : "users"
+    },
     "server" : {
       "host" : "localhost",
       "port" : 8642
@@ -15,6 +29,20 @@
       "host":"localhost",
       "port":27017,
       "dbName" : "perfx360"
+    },
+    "elasticSearch":{
+      "master" : {
+        "host": "localhost",
+        "port": 9200,
+        "log": "trace"
+      },
+      "slave" : {
+        "host": "localhost",
+        "port": 9200,
+        "log": "trace"
+      },
+      "indexDefaultName" : "nsa",
+      "defaultTypeName" : "users"
     },
     "server" : {
       "host" : "localhost",
