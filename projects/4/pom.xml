@@ -13,7 +13,7 @@
 			<plugin>
 				<groupId>com.lazerycode.jmeter</groupId>
 				<artifactId>jmeter-maven-plugin</artifactId>
-				<version>1.4.1</version>
+				<version>1.10.0</version>
 				<configuration>
 					<testResultsTimestamp>false</testResultsTimestamp>
 				</configuration>

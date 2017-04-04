@@ -33,7 +33,7 @@ router.get('/mvn/exec/:projectId/:testId', function(req, res, next) {
 router.get('/mvn/output/:projectId/:testName', function(req, res, next) {
     var projectFolder = '/projects/4';
     var project = path.join(process.env.PWD, "/projects/" + req.params.projectId);
-    var jtlPath =  path.join(project, "/target/jmeter/report/test.jtl");
+    var jtlPath =  path.join(project, "/target/jmeter/results/test.jtl");
     fs.readFile(jtlPath, 'utf8', function(err, data) {
         parser.parseString(data, function (err, result) {
             console.dir(result);

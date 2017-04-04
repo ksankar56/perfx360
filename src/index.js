@@ -18,6 +18,7 @@ router.get('/', function(req, res, next) {
         description: 'Page Description',
         header: 'Page Header'
     };
+    console.info('home');
     res.render('index', locals);
 });
 
