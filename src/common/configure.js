@@ -7,13 +7,19 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var path = require('path');
 var express = require('express')
-    , session = require('express-session');
-var expressLayouts = require('express-ejs-layouts');
+    , session = require('express-session')
+    , expressLayouts = require('express-ejs-layouts')
+    , validator = require('express-validator')
+    , cors = require('cors')
+    , resEvents = require('./events');
 
 exports.init = function(app) {
-// view engine setup
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
+
+    app.use(cors());
+
+    // view engine setup
     app.set('views', path.join(__dirname, '../../views'));
     app.set('view engine', 'ejs');
     app.use(expressLayouts);
@@ -38,6 +44,7 @@ exports.init = function(app) {
     }));
 
     app.use(function (err, req, res, next) {
-        res.status(500).send({"Error": err.stack});
+        //res.status(500).send({"Error": err.stack});
+        resEvents.emit('ErrorJsonResponse', req, res, {"status" : err});
     });
 }
