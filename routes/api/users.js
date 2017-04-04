@@ -5,7 +5,8 @@ var express = require('express')
     , Utils = require('../../src/util/util')
     , BaseError = require('../../src/common/BaseError')
     , _ = require('lodash')
-    , constants = require('../../src/common/constants');
+    , constants = require('../../src/common/constants')
+    , winston = require('winston');
 
 var User = require('../../src/model/user');
 
@@ -84,6 +85,7 @@ router.post('/auth', function(req, res, next) {
         var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
         resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
     }
+    winston.info('Hello again distributed logs');
 
     User.findOne({ username: userJson.userName }, function(err, user) {
         if (err) throw err;

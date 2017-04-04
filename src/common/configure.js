@@ -8,6 +8,8 @@ var logger = require('morgan');
 var path = require('path');
 var express = require('express')
     , session = require('express-session')
+    , morgan = require('morgan')
+    , logger = require("../../config/logger")
     , expressLayouts = require('express-ejs-layouts')
     , validator = require('express-validator')
     , cors = require('cors')
@@ -28,10 +30,10 @@ exports.init = function(app) {
     app.use(require('../../src'));
     app.set('json spaces', 5);
 
+    app.use(morgan('combined', {"stream": logger.stream}));
+
     // uncomment after placing your favicon in /public
     //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-    app.use(logger('dev'));
-
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, '../../public')));
 
