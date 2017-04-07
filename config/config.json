@@ -17,7 +17,7 @@
         "log": "trace"
       },
       "indexDefaultName" : "perfx360",
-      "defaultTypeName" : "users"
+      "defaultTypeName" : "performance"
     },
     "server" : {
       "host" : "localhost",
@@ -41,8 +41,8 @@
         "port": 9200,
         "log": "trace"
       },
-      "indexDefaultName" : "nsa",
-      "defaultTypeName" : "users"
+      "indexDefaultName" : "perfx360",
+      "defaultTypeName" : "performance"
     },
     "server" : {
       "host" : "localhost",
