@@ -46,55 +46,6 @@ router.get('/mvn/output/:projectId/:testName', function(req, res, next) {
     var project = path.join(process.env.PWD, "/projects/" + req.params.projectId);
     var jtlPath =  path.join(project, "/target/jmeter/results/test.jtl");
     var resultsPath = project + '/target/jmeter/results'
-    console.info('######################################################');
-    console.info('project = ', project );
-    console.info('######################################################');
-
-    /*fs.readdir(resultsPath, function(err, items) {
-        console.log(items);
-        var jtlFiles = {};
-        var resultJson = {};
-        jtlFiles.filePaths = [];
-        //var arr = _.values(items);
-        _.forEach(items, function(value) {
-            var filePath = resultsPath + '/' + value;
-            var cc = _.concat(resultsPath, '/' + value);
-            jtlFiles.filePaths.push({'filePath': filePath});
-            fs.readFile(filePath, 'utf8', function(err, data) {
-                parser.parseString(data, function   (err, result) {
-                    //console.dir(result);
-                    //res.json(result);
-                    resultJson[value] = result;
-
-                    //res.json(resultJson);
-                });
-            });
-        });
-        console.log('Done = ', resultJson);
-        //console.info('jtlFiles = ', jtlFiles);
-
-    });*/
-
-    /*var result;
-    async.waterfall(
-        [
-            function(callback) {
-                readItems(req, res, callback);
-            },
-            function(items, resultsPath, callback) {
-                readFilePaths(items, resultsPath, callback);
-            },
-            function(jtlFiles, items, callback) {
-                readJtlFileJson(jtlFiles, items, callback);
-            }
-        ],
-        function (err, resultJson) {
-            result = resultJson;
-        }
-    );
-
-    console.log('result = ', result);
-    res.json({result: result});*/
 
     async.waterfall(
         [
