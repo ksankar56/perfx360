@@ -10,7 +10,8 @@ var express = require('express')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
-    pingService.check({requestTimeout: Infinity}, function(error, response, status) {
+    /* Check save is pining. */
+    pingService.checkSlave({requestTimeout: Infinity}, function(error, response, status) {
         Status.code = status;
         Status.message = response;
         res.json({status : Status});

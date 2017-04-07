@@ -8,10 +8,8 @@ var ping = function f(options) {
     var self = this;
 };
 
-ping.check = function(searchParams, callback) {
+ping.checkSlave = function(searchParams, callback) {
     client.getSlave.ping(searchParams, function (error, response, status) {
-        console.info('response = ', response);
-        console.info('status = ', status);
         callback(error, response, status);
     });
 };
