@@ -1,0 +1,7 @@
+{"_id":{"$oid":"58e92fbdc41e02a7cefb0f73"},"typeId":1,"name":"LINE","description":"Line Chart","order":1,"status":true}
+{"_id":{"$oid":"58e92fbdc41e02a7cefb0f74"},"typeId":2,"name":"BAR","description":"Bar Chart","order":2,"status":true}
+{"_id":{"$oid":"58e92fbdc41e02a7cefb0f75"},"typeId":3,"name":"PIE","description":"Pie Chart","order":3,"status":true}
+{"_id":{"$oid":"58e92fbdc41e02a7cefb0f76"},"typeId":4,"name":"SCATTER","description":"Scatter Chart","order":4,"status":true}
+{"_id":{"$oid":"58e92fbdc41e02a7cefb0f77"},"typeId":5,"name":"FUNNEL","description":"Funnel Chart","order":5,"status":true}
+{"_id":{"$oid":"58e92fbdc41e02a7cefb0f78"},"typeId":6,"name":"GAUGE","description":"Gauge Chart","order":6,"status":true}
+{"_id":{"$oid":"58e92fbdc41e02a7cefb0f79"},"typeId":7,"name":"MULTI","description":"Multi Chart","order":7,"status":true}

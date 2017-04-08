@@ -1,0 +1,7 @@
+{"_id":{"$oid":"58e940c2c41e02a7cefb1383"},"name":"REST_JSON","description":"Rest Json Web Services","order":1,"status":true}
+{"_id":{"$oid":"58e940c2c41e02a7cefb1384"},"name":"REST_XML","description":"Rest XML Web Services","order":2,"status":true}
+{"_id":{"$oid":"58e940c2c41e02a7cefb1385"},"name":"SOAP","description":"Soap Web Services","order":3,"status":true}
+{"_id":{"$oid":"58e940c2c41e02a7cefb1386"},"name":"WEBUI","description":"Web UI","order":4,"status":true}
+{"_id":{"$oid":"58e940c2c41e02a7cefb1387"},"name":"WEBPAGE","description":"Web Page","order":5,"status":true}
+{"_id":{"$oid":"58e940c2c41e02a7cefb1388"},"name":"WEB_AUTOMATION","description":"Web Automation","order":6,"status":true}
+{"_id":{"$oid":"58e940c2c41e02a7cefb1389"},"name":"MOBILE_AUTOMATION","description":"Mobile Automation","order":7,"status":true}
