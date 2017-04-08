@@ -11,10 +11,11 @@ var events = require('../../../src/common/events');
 var promise = require('bluebird');
 var parser = require('xml2json');
 var constants = require('../../../src/common/constants');
+var baseService = require('../../../src/common/base.service');
 
 exports.execute = function(req, res, next) {
 
-    var project = 'projects/' + req.params.projectId;
+    var project = 'dist/projects/' + req.params.projectId;
 
     try {
         const maven = mvn.create({
@@ -37,7 +38,7 @@ exports.execute = function(req, res, next) {
 
 exports.output = function(req, res) {
     var projectId = req.params.projectId;
-    var project = path.join(process.env.PWD, "/projects/" + projectId);
+    var project = path.join(process.env.PWD, "/dist/projects/" + projectId);
     var resultsPath = project + constants.JMETER_TARGET_RESULT_PATH;
 
     async.waterfall(
@@ -45,6 +46,12 @@ exports.output = function(req, res) {
             function(callback) {
                 fs.readdir(resultsPath, function(err, items) {
                     var files = [];
+
+                    if(!items) {
+                        res.status(constants.HTTP_OK).send({
+                            status: baseService.getStatus(req, res, constants.HTTP_OK, "No Results found.")});
+                        return;
+                    }
                     for(var i = 0; i < items.length; i++) {
                         if(_.endsWith(items[i], 'jtl')) {
                             files.push(items[i]);
