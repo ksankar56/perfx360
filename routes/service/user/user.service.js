@@ -1,17 +1,18 @@
-var express = require('express')
-    , router = express.Router()
-    , mongoose = require('mongoose')
-    , resEvents = require('../../src/common/events')
-    , Utils = require('../../src/util/util')
-    , BaseError = require('../../src/common/BaseError')
+/**
+ * Created by senthil on 08/04/17.
+ */
+var mongoose = require('mongoose')
+    , resEvents = require('../../../src/common/events')
+    , Utils = require('../../../src/util/util')
+    , BaseError = require('../../../src/common/BaseError')
     , _ = require('lodash')
-    , constants = require('../../src/common/constants')
-    , winston = require('winston');
+    , constants = require('../../../src/common/constants')
+    , winston = require('winston')
+    , baseService = require('../../../src/common/base.service');
 
-var User = require('../../src/model/user');
+var User = require('../../../src/model/user');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
+exports.getUsers = function(req, res, next) {
 
     User.find(function (error, users) {
         if (error) {
@@ -20,50 +21,45 @@ router.get('/', function(req, res, next) {
         }
 
         console.log(users);
-        res.json(users);
+        res.status(constants.HTTP_OK).send({
+            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
+            data: users});
     });
-});
+};
 
-router.post('/', function(req, res, next) {
+exports.saveUser = function(req, res, next) {
 
-    // create a user a new user
+    // create a new user
     var userJson = req.body;
+    console.info('userJson = ', userJson);
 
     if (_.isEmpty(userJson)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_DUPLICATE_MSG, err.message, 500));
         resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
     }
 
-    var newUser = new User({
-        username: userJson.userName,
+    var user = new User({
+        username: userJson.username,
         password: userJson.password,
         firstName : userJson.firstName,
         lastName : userJson.lastName,
-        emailAddress : userJson.emailAddress
+        emailAddress: userJson.emailAddress
     });
 
     // save user to database
-    newUser.save(function(err) {
+    user.save(function(err) {
         if (err) {
-            console.info('throwing error = ', err.message);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_DUPLICATE, '', constants.USER_DUPLICATE_MSG, err.message, 500));
-            console.info('base error = ', baseError);
             resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
-            //throw baseError;
         }
-        console.info('After error');
-        // fetch user and test password verification
 
-        User.findOne({ username: newUser.username }, function(err, user) {
-            if (err) throw err;
-
-            resEvents.emit('JsonResponse', req, res, user);
-        });
+        res.status(constants.HTTP_OK).send({
+            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Saved"),
+            data: user});
     });
-});
+};
 
-/* GET users listing. */
-router.post('/auth', function(req, res, next) {
+exports.authenticate = function(req, res, next) {
 
     // create a user a new user
     var userJson = req.body;
@@ -74,7 +70,7 @@ router.post('/auth', function(req, res, next) {
     }
     winston.info('Hello again distributed logs');
 
-    User.findOne({ username: userJson.userName }, function(err, user) {
+        User.findOne({ username: userJson.username }, function(err, user) {
         if (err) throw err;
 
         user.comparePassword(userJson.password, function(err, isMatch) {
@@ -88,7 +84,4 @@ router.post('/auth', function(req, res, next) {
             }
         });
     });
-});
-
-
-module.exports = router;
+};

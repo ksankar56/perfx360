@@ -14,18 +14,20 @@ var _ = require('lodash')
 var Component = require('../../../src/model/Component');
 
 exports.getComponents = function(req, res, next) {
-    Component.find(function (err, components) {
-        if (err) throw err;
+    Component.find({})
+        .populate('componentType')
+        .exec( function (err, components) {
+            if (err) throw err;
 
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
-            data: components});
+            res.status(constants.HTTP_OK).send({
+                status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
+                data: components});
     });
 };
 
 exports.saveComponent = function(req, res, next) {
 
-    // create a user a new user
+    // create a component
     var componentJson = req.body;
     console.info('componentJson = ', componentJson);
 
@@ -43,7 +45,7 @@ exports.saveComponent = function(req, res, next) {
     });
 
     // save component type to database
-    Component.save(function(err) {
+    component.save(function(err) {
         if (err) {
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_DUPLICATE, '', constants.COMPONENT_DUPLICATE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
