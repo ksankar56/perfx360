@@ -14,13 +14,26 @@ module.exports = Object.freeze({
     COMPONENT_OBJ_EMPTY: "COMPONENT_OBJ_EMPTY",
     COMPONENT_DUPLICATE : "COMPONENT_DUPLICATE",
 
+    GRAPH_TYPE_OBJ_EMPTY: "GRAPH_TYPE_OBJ_EMPTY",
+    GRAPH_TYPE_DUPLICATE : "GRAPH_TYPE_DUPLICATE",
+
+    GRAPH_OBJ_EMPTY: "GRAPH_OBJ_EMPTY",
+    GRAPH_DUPLICATE : "GRAPH_DUPLICATE",
+
+    GRAPH_INSTANCE_OBJ_EMPTY: "GRAPH_INSTANCE_OBJ_EMPTY",
+    GRAPH_INSTANCE_DUPLICATE : "GRAPH_INSTANCE_DUPLICATE",
+
     //Error Response Message
     USER_OBJ_EMPTY_MSG : "User Object is Empty",
     USER_DUPLICATE_MSG : "Username already in use",
     USER_PASSWORD_NOT_MATCH_MSG : "Password Invalid!",
 
     COMPONENT_TYPE_DUPLICATE_MSG : "Duplicate Component Type",
-    COMPONENT_DUPLICATE_MSG : "Component Type Component",
+    COMPONENT_DUPLICATE_MSG : "Duplicate Component",
+
+    GRAPH_TYPE_DUPLICATE_MSG : "Duplicate Graph Type",
+    GRAPH_DUPLICATE_MSG : "Duplicate Graph",
+    GRAPH_INSTANCE_DUPLICATE_MSG : "Duplicate Graph Instance",
 
     /* HTTP Response Codes */
     HTTP_OK: 200,

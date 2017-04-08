@@ -20,7 +20,7 @@ exports.getComponents = function(req, res, next) {
             if (err) throw err;
 
             res.status(constants.HTTP_OK).send({
-                status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
+                status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
                 data: components});
     });
 };
