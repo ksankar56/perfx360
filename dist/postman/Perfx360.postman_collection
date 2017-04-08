@@ -1,0 +1,242 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Perfx360",
+		"_postman_id": "e6d8af7e-eb88-6a27-fbd9-e4ea7a9f447c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Components",
+			"description": "",
+			"item": [
+				{
+					"name": "Save Component Type",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/component/type",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"WEBUI\",\n    \"description\": \"WEBUI\",\n    \"order\" : 1,\n    \"status\" : true\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Component Types",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/component/types",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Component Type",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/component/type",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"58e8c90e4ae37a1d65b125a7\",\n    \"name\": \"WEBUITEST\",\n    \"description\": \"WEBUITEST\",\n    \"order\" : 1,\n    \"status\" : true\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Component Type",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/component/type/58e8c90e4ae37a1d65b125a7",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Components",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/components",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Component",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/components",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My Component\",\n    \"description\": \"My New Component\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"componentType\" : \"58e8b29223a0bb1a7e27d1b3\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Maven",
+			"description": "",
+			"item": [
+				{
+					"name": "JMeter Maven Execute",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/jmeter/mvn/exec/4/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "JMeter Maven Output",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/jmeter/mvn/output/3/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Users",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/user",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save User",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/user",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"username\": \"sonj\",\n        \"password\": \"password\",\n        \"firstName\" : \"Son\",\n        \"lastName\" : \"J\",\n        \"emailAddress\" : \"sonj@sonj.com\"\n    }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "User Authentication",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/user/auth",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"sonj\",\n\t\"password\" : \"password\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
