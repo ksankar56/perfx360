@@ -18,7 +18,7 @@ var compomentSchema = new Schema({
     status: {
         type: Boolean
     },
-    componentType: {type: Schema.Types.ObjectId, ref: 'ComponentType'}
+    componentType: {type: Schema.ObjectId, ref: 'ComponentType'}
 }, { collection: 'components' });
 
 module.exports = mongoose.model('Component', compomentSchema);

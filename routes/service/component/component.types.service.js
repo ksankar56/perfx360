@@ -1,46 +1,29 @@
 /**
  * Created by senthil on 08/04/17.
  */
-var express = require('express')
-    , router = express.Router()
-    , _ = require('lodash')
+var _ = require('lodash')
     , mongoose = require('mongoose')
     , winston = require('winston')
-    , resEvents = require('../../src/common/events')
-    , Utils = require('../../src/util/util')
-    , BaseError = require('../../src/common/BaseError')
-    , constants = require('../../src/common/constants')
-    , Status = require('../../src/common/domains/Status')
-    , baseService = require('../../src/common/base.service');
+    , resEvents = require('../../../src/common/events')
+    , Utils = require('../../../src/util/util')
+    , BaseError = require('../../../src/common/BaseError')
+    , constants = require('../../../src/common/constants')
+    , Status = require('../../../src/common/domains/Status')
+    , baseService = require('../../../src/common/base.service');
 
-var Component = require('../../src/model/Component');
-var ComponentType = require('../../src/model/ComponentType');
+var ComponentType = require('../../../src/model/ComponentType');
 
-/**
- * Expose component types.
- *
- * @return {Function}
- * @api public
- */
-router.get('/types', function(req, res, next) {
+exports.getComponentTypes = function(req, res, callback) {
     ComponentType.find(function (err, componentTypes) {
-        if (err) {
-            throw err;
-        }
-        console.log(componentTypes);
+        if (err) throw err;
+
         res.status(constants.HTTP_OK).send({
             status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
-            componentTypes: componentTypes});
+            data: componentTypes});
     });
-});
+};
 
-/**
- * Creates a component type.
- *
- * @return {Function}
- * @api public
- */
-router.post('/type', function(req, res, next) {
+exports.saveComponentType = function(req, res, next) {
 
     // create a user a new user
     var componentTypeJson = req.body;
@@ -61,28 +44,17 @@ router.post('/type', function(req, res, next) {
     // save component type to database
     componentType.save(function(err) {
         if (err) {
-            console.info('throwing error = ', err.message);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_DUPLICATE, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
-            console.info('base error = ', baseError);
             resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
-            //throw baseError;
         }
-        console.info('After error');
-        // fetch component type and test password verification
 
         res.status(constants.HTTP_OK).send({
             status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Saved"),
-            componentType: componentType});
+            data: componentType});
     });
-});
+};
 
-/**
- * Modifies a component type by passing the body object.
- *
- * @return {Function}
- * @api public
- */
-router.put('/type', function(req, res, next) {
+exports.updateComponentType = function(req, res, next) {
     ComponentType.findById(req.body.id, function (err, componentType) {
         // Handle any possible database errors
         if (err) {
@@ -101,19 +73,14 @@ router.put('/type', function(req, res, next) {
 
                 res.status(constants.HTTP_OK).send({
                     status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
-                    componentType: result});
+                    data: result});
             });
         }
     });
-});
+};
 
-/**
- * Deletes a component type by req.params.id.
- *
- * @return {Function}
- * @api public
- */
-router.delete('/type/:id', function(req, res, next) {
+
+exports.deleteComponentType = function(req, res, next) {
     ComponentType.remove({ _id: req.params.id }, function(err) {
         if (err) throw err;
 
@@ -121,17 +88,4 @@ router.delete('/type/:id', function(req, res, next) {
             status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Deleted"),
         });
     });
-});
-
-/* GET components listing. */
-router.get('/', function(req, res, next) {
-    Component.find(function (error, users) {
-        if (error) {
-            throw err;
-        }
-        console.log(components);
-        res.json(components);
-    });
-});
-
-module.exports = router;
+};
