@@ -18,7 +18,7 @@ var groupSchema = new Schema({
     status: {
         type: Boolean
     },
-    component: {type: Schema.ObjectId, ref: 'Component'}
+    component: [{type: Schema.ObjectId, ref: 'Component'}]
 }, { collection: 'groups' });
 
 module.exports = mongoose.model('Group', groupSchema);
