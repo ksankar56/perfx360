@@ -12,6 +12,18 @@ var environmentSchema = new Schema({
     description: {
         type: String
     },
+    protocol: {
+        type: String
+    },
+    host: {
+        type: String
+    },
+    port: {
+        type: String
+    },
+    context: {
+        type: String
+    },
     order: {
         type: Number
     },

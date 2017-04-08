@@ -23,6 +23,9 @@ module.exports = Object.freeze({
     GRAPH_INSTANCE_OBJ_EMPTY: "GRAPH_INSTANCE_OBJ_EMPTY",
     GRAPH_INSTANCE_DUPLICATE : "GRAPH_INSTANCE_DUPLICATE",
 
+    ENVIRONMENT_OBJ_EMPTY: "ENVIRONMENT_OBJ_EMPTY",
+    ENVIRONMENT_DUPLICATE : "ENVIRONMENT_DUPLICATE",
+
     //Error Response Message
     USER_OBJ_EMPTY_MSG : "User Object is Empty",
     USER_DUPLICATE_MSG : "Username already in use",
@@ -34,6 +37,7 @@ module.exports = Object.freeze({
     GRAPH_TYPE_DUPLICATE_MSG : "Duplicate Graph Type",
     GRAPH_DUPLICATE_MSG : "Duplicate Graph",
     GRAPH_INSTANCE_DUPLICATE_MSG : "Duplicate Graph Instance",
+    ENVIRONMENT_DUPLICATE_MSG : "Duplicate Environment",
 
     /* HTTP Response Codes */
     HTTP_OK: 200,

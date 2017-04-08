@@ -7,7 +7,8 @@ var express = require('express')
     , componentTypesApi = require('./api/component/component.types.api')
     , graphsApi = require('./api/dashboard/graph.api')
     , graphTypesApi = require('./api/dashboard/graph.types.api')
-    , graphInstancesApi = require('./api/dashboard/graph.instances.api');
+    , graphInstancesApi = require('./api/dashboard/graph.instances.api')
+    , environmentsApi = require('./api/environment/environment.api');
 
 var restVersionV1 = '/rest/api/v1/perf';
 
@@ -19,5 +20,6 @@ router.use(restVersionV1 + '/components', componentsApi);
 router.use(restVersionV1 + '/graph', graphTypesApi);
 router.use(restVersionV1 + '/graphs', graphsApi);
 router.use(restVersionV1 + '/graph/instance', graphInstancesApi);
+router.use(restVersionV1 + '/environment', environmentsApi);
 
 module.exports = router;
