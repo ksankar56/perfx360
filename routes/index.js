@@ -1,7 +1,7 @@
 var express = require('express')
     , router = express.Router()
     , ping = require('./api/ping')
-    , jmeter = require('./api/jmeter')
+    , jmeter = require('./api/exec/jmeter.api')
     , users = require('./api/users')
     , componentsApi = require('./api/component/components.api')
     , componentTypesApi = require('./api/component/component.types.api');

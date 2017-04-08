@@ -45,5 +45,10 @@ module.exports = Object.freeze({
     METHOD_POST : 'POST',
     UPDATED_DATE: 'updated_date',
 
+    /* JMeter Constants
+     */
+
+    JMETER_TARGET_RESULT_PATH : '/target/jmeter/results',
+
 });
 
