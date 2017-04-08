@@ -58,19 +58,6 @@ router.post('/', function(req, res, next) {
             if (err) throw err;
 
             resEvents.emit('JsonResponse', req, res, user);
-            // test a matching password
-            /*user.comparePassword(newUser.password, function(err, isMatch) {
-                if (err) throw err;
-                //console.log('Password123:', isMatch); // -> Password123: true
-                //resEvents.emit('JsonResponse', user);
-                resEvents.emit('JsonResponse', req, res, user);
-            });
-
-            // test a failing password
-            user.comparePassword(newUser.password, function(err, isMatch) {
-                if (err) throw err;
-                console.log('123Password:', isMatch); // -> 123Password: false
-            });*/
         });
     });
 });

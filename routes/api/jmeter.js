@@ -42,15 +42,17 @@ router.get('/mvn/exec/:projectId/:testId', function(req, res, next) {
 
 /* GET users listing. */
 router.get('/mvn/output/:projectId/:testName', function(req, res, next) {
+    executeResult(req, res, req.params.projectId);
+});
 
-    var project = path.join(process.env.PWD, "/projects/" + req.params.projectId);
-    var jtlPath =  path.join(project, "/target/jmeter/results/test.jtl");
+function executeResult(req, res, projectId) {
+    var project = path.join(process.env.PWD, "/projects/" + projectId);
     var resultsPath = project + '/target/jmeter/results'
 
     async.waterfall(
         [
             function(callback) {
-                var project = path.join(process.env.PWD, "/projects/" + req.params.projectId);
+                var project = path.join(process.env.PWD, "/projects/" + projectId);
                 var resultsPath = project + '/target/jmeter/results'
 
                 fs.readdir(resultsPath, function(err, items) {
@@ -101,7 +103,7 @@ router.get('/mvn/output/:projectId/:testName', function(req, res, next) {
         }
     );
     //events.emit("JsonResponse", req, res, resultJson);
-});
+}
 
 function readItems(req, res, callback) {
 
