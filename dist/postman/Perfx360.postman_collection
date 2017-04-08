@@ -12,6 +12,17 @@
 			"description": "",
 			"item": [
 				{
+					"name": "Get Component Types",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/component/types",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "Save Component Type",
 					"request": {
 						"url": "http://localhost:8642/rest/api/v1/perf/component/type",
@@ -32,17 +43,6 @@
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"WEBUI\",\n    \"description\": \"WEBUI\",\n    \"order\" : 1,\n    \"status\" : true\n}"
 						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Get Component Types",
-					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/component/types",
-						"method": "GET",
-						"header": [],
-						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -125,6 +125,167 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"name\": \"My Component\",\n    \"description\": \"My New Component\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"componentType\" : \"58e8b29223a0bb1a7e27d1b3\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Graphs",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graphs",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Graph Types",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/types",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Graph Type",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/type",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"typeId\": 8,\n    \"name\": \"NEW\",\n    \"description\": \"New Type\",\n    \"order\" : 8,\n    \"status\" : true\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Graph Type",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/type",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58e93c31fd5c3d283bc5b8ce\",\n    \"typeId\": 8,\n    \"name\": \"NEWW\",\n    \"description\": \"New Type\",\n    \"order\" : 8,\n    \"status\" : true\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Graph Type",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/type/58e93c31fd5c3d283bc5b8ce",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Graph Instance",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/instance",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Graph Instance",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/instance",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"graphInstanceId\" : 1,\n    \"name\" : \"Line Graph\",\n    \"description\" : \"Line Graph\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"graph\" : \"58e933edc41e02a7cefb109a\",\n    \"autoRefresh\" : true,\n    \"autoRefreshDefSec\" : 5,\n    \"esQuery\" : {},\n    \"xAxis\" : \"time\",\n    \"xAxisCaption\" : \"Time Series\",\n    \"y1Axis\" : \"milliseconds\",\n    \"y1AxisCaption\" : \"Millis\",\n    \"y2Axis\" : \"count\",\n    \"y2AxisCaption\" : \"Count\",\n    \"createdDate\" : \"09/04/2017\",\n    \"updatedDate\" : \"09/04/2017\",\n    \"updatedBy\" : \"Admin\"\n}"
 						},
 						"description": ""
 					},
