@@ -6,7 +6,7 @@ var express = require('express')
     , graphInstanceService = require('../../service/dashboard/graph.instances.service');
 
 /**
- * Expose component types.
+ * Expose graph instances.
  *
  * @return {Function}
  * @api public
@@ -15,7 +15,7 @@ var express = require('express')
 router.get('/', graphInstanceService.getGraphInstances);
 
 /**
- * Creates a component type.
+ * Creates a graph instance.
  *
  * @return {Function}
  * @api public
@@ -23,7 +23,7 @@ router.get('/', graphInstanceService.getGraphInstances);
 router.post('/', graphInstanceService.saveGraphInstance);
 
 /**
- * Modifies a component type by passing the body object.
+ * Modifies a graph instance by passing the body object.
  *
  * @return {Function}
  * @api public
@@ -31,7 +31,7 @@ router.post('/', graphInstanceService.saveGraphInstance);
 router.put('/', graphInstanceService.updateGraphInstance);
 
 /**
- * Deletes a component type by req.params.id.
+ * Deletes a graph instance by req.params.id.
  *
  * @return {Function}
  * @api public
