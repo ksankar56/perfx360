@@ -294,6 +294,106 @@
 			]
 		},
 		{
+			"name": "Environments",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Environments",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/environment",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Environment",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/environment",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"QA\",\n    \"description\" : \"QA Environment\",\n    \"protocol\" : \"http\",\n    \"host\" : \"qa.site.com\",\n    \"port\" : \"80\",\n    \"context\" : \"app\",\n    \"order\" : 1,\n    \"status\" : true\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Environment",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/environment",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58e958072a38282c266bc0f1\",\n    \"name\" : \"QA1\",\n    \"description\" : \"QA1 Environment\",\n    \"protocol\" : \"https\",\n    \"host\" : \"qa1.site.com\",\n    \"port\" : \"8080\",\n    \"context\" : \"apps\",\n    \"order\" : 2,\n    \"status\" : false\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Environment",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/environment/58e958072a38282c266bc0f1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Maven",
 			"description": "",
 			"item": [
