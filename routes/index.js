@@ -15,7 +15,9 @@ var express = require('express')
     , projecsApi = require('./api/project/project.api')
     , dashboardTypeApi = require('./api/dashboard/dashboard.types.api')
     , dashboardApi = require('./api/dashboard/dashboard.api')
-    , dashboardsApi = require('./api/dashboard/dashboards.api');
+    , dashboardsApi = require('./api/dashboard/dashboards.api')
+    , testApi = require('./api/test/test.api')
+    , testsApi = require('./api/test/tests.api');
 
 var restVersionV1 = '/rest/api/v1/perf';
 
@@ -35,5 +37,7 @@ router.use(restVersionV1 + '/project', projecsApi);
 router.use(restVersionV1 + '/dashboardtype', dashboardTypeApi);
 router.use(restVersionV1 + '/dashboard', dashboardApi);
 router.use(restVersionV1 + '/dashboards', dashboardsApi);
+router.use(restVersionV1 + '/test', testApi);
+router.use(restVersionV1 + '/tests', testsApi);
 
 module.exports = router;

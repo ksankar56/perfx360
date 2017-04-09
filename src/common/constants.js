@@ -126,11 +126,21 @@ module.exports = Object.freeze({
     DASHBOARD_OBJ_EMPTY_MSG : "Dashboard Object is Empty",
 
     DASHBOARD_DUPLICATE : "DASHBOARD_DUPLICATE",
-    DASHBOARD_DUPLICATE_MSG : "Duplocate Dashboard",
+    DASHBOARD_DUPLICATE_MSG : "Duplicate Dashboard",
 
     DASHBOARD_NOT_AVAILABLE : "DASHBOARD_NOT_AVAILABLE",
     DASHBOARD_NOT_AVAILABLE_MSG : "Dashboard not available",
 
+
+    //Test Code and Messages
+    TEST_OBJ_EMPTY: "TEST_OBJ_EMPTY",
+    TEST_OBJ_EMPTY_MSG : "Test Object is Empty",
+
+    TEST_DUPLICATE : "TEST_DUPLICATE",
+    TEST_DUPLICATE_MSG : "Duplicate Dashboard",
+
+    TEST_NOT_AVAILABLE : "TEST_NOT_AVAILABLE",
+    TEST_NOT_AVAILABLE_MSG : "Test not available",
 
     /* HTTP Response Codes */
     HTTP_OK: 200,

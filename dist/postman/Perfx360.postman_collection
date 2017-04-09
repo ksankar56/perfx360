@@ -124,23 +124,78 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"My Component\",\n    \"description\": \"My New Component\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"componentType\" : \"58e8b29223a0bb1a7e27d1b3\"\n}"
+							"raw": "{\n    \"name\": \"Next Component\",\n    \"description\": \"Next Component\",\n    \"order\" : 2,\n    \"status\" : true,\n    \"componentType\" : \"58e940c2c41e02a7cefb1383\"\n}"
 						},
 						"description": ""
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "Dashboard",
-			"description": "",
-			"item": [
+				},
 				{
-					"name": "Get Graphs",
+					"name": "Get Groups",
 					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/graphs",
+						"url": "http://localhost:8642/rest/api/v1/perf/group",
 						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Group",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/group",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Group6\",\n    \"description\" : \"Group6\",\n    \"order\" : 2,\n    \"status\" : true,\n    \"components\": \"58e96b0c9c50273245a3347c\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Group",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/group",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58ea8ba090f1904ab7c16f83\",\n    \"name\" : \"Group2\",\n    \"description\" : \"Group2\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"components\": \"58e96daa25fc31331d43b420\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Group",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/group/58ea8ba090f1904ab7c16f83",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Accept",
@@ -157,13 +212,41 @@
 						"description": ""
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"description": "",
+			"item": [
 				{
 					"name": "Get Graph Types",
 					"request": {
 						"url": "http://localhost:8642/rest/api/v1/perf/graph/types",
 						"method": "GET",
 						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Graph Type",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/type/58ea805914cf9d4922d568bf",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -213,7 +296,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\" : \"58e93c31fd5c3d283bc5b8ce\",\n    \"typeId\": 8,\n    \"name\": \"NEWW\",\n    \"description\": \"New Type\",\n    \"order\" : 8,\n    \"status\" : true\n}"
+							"raw": "{\n\t\"id\" : \"58ea805914cf9d4922d568bf\",\n    \"typeId\": 8,\n    \"name\": \"NEWW\",\n    \"description\": \"New Type\",\n    \"order\" : 8,\n    \"status\" : true\n}"
 						},
 						"description": ""
 					},
@@ -222,7 +305,7 @@
 				{
 					"name": "Delete Graph Type",
 					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/graph/type/58e93c31fd5c3d283bc5b8ce",
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/type/58ea805914cf9d4922d568bf",
 						"method": "DELETE",
 						"header": [
 							{
@@ -245,9 +328,53 @@
 					"response": []
 				},
 				{
-					"name": "Get Graph Instance",
+					"name": "Get Graphs",
 					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/graph/instance",
+						"url": "http://localhost:8642/rest/api/v1/perf/graphs",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Graph",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/graph/58ea7e35c41e02a7cefb46c3",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Graph Instances",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/graph/instances",
 						"method": "GET",
 						"header": [
 							{
@@ -269,7 +396,7 @@
 				{
 					"name": "Save Graph Instance",
 					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/graph/instance",
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/graph/instance",
 						"method": "POST",
 						"header": [
 							{
@@ -287,6 +414,75 @@
 							"mode": "raw",
 							"raw": "{\n\t\"graphInstanceId\" : 1,\n    \"name\" : \"Line Graph\",\n    \"description\" : \"Line Graph\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"graph\" : \"58e933edc41e02a7cefb109a\",\n    \"autoRefresh\" : true,\n    \"autoRefreshDefSec\" : 5,\n    \"esQuery\" : {},\n    \"xAxis\" : \"time\",\n    \"xAxisCaption\" : \"Time Series\",\n    \"y1Axis\" : \"milliseconds\",\n    \"y1AxisCaption\" : \"Millis\",\n    \"y2Axis\" : \"count\",\n    \"y2AxisCaption\" : \"Count\",\n    \"createdDate\" : \"09/04/2017\",\n    \"updatedDate\" : \"09/04/2017\",\n    \"updatedBy\" : \"Admin\"\n}"
 						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Graph Instance",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/graph/instance/58ea836d2ac05e49bcaba284",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Graph Instance",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/graph/instance",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58ea836d2ac05e49bcaba284\",\n\t\"graphInstanceId\" : 1,\n    \"name\" : \"Line Graphs\",\n    \"description\" : \"Line Graphs\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"graph\" : \"58e933edc41e02a7cefb109a\",\n    \"autoRefresh\" : true,\n    \"autoRefreshDefSec\" : 5,\n    \"esQuery\" : {},\n    \"xAxis\" : \"time\",\n    \"xAxisCaption\" : \"Time Series\",\n    \"y1Axis\" : \"milliseconds\",\n    \"y1AxisCaption\" : \"Millis\",\n    \"y2Axis\" : \"count\",\n    \"y2AxisCaption\" : \"Count\",\n    \"createdDate\" : \"09/04/2017\",\n    \"updatedDate\" : \"09/04/2017\",\n    \"updatedBy\" : \"Admin\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Graph Instance",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/graph/instance/58ea836d2ac05e49bcaba284",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
 						"description": ""
 					},
 					"response": []
@@ -363,7 +559,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\" : \"58e958072a38282c266bc0f1\",\n    \"name\" : \"QA1\",\n    \"description\" : \"QA1 Environment\",\n    \"protocol\" : \"https\",\n    \"host\" : \"qa1.site.com\",\n    \"port\" : \"8080\",\n    \"context\" : \"apps\",\n    \"order\" : 2,\n    \"status\" : false\n}"
+							"raw": "{\n\t\"id\" : \"58ea800b14cf9d4922d568be\",\n    \"name\" : \"QA1\",\n    \"description\" : \"QA1 Environment\",\n    \"protocol\" : \"https\",\n    \"host\" : \"qa1.site.com\",\n    \"port\" : \"8080\",\n    \"context\" : \"apps\",\n    \"order\" : 2,\n    \"status\" : false\n}"
 						},
 						"description": ""
 					},
@@ -372,7 +568,7 @@
 				{
 					"name": "Delete Environment",
 					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/environment/58e958072a38282c266bc0f1",
+						"url": "http://localhost:8642/rest/api/v1/perf/environment/58ea800b14cf9d4922d568be",
 						"method": "DELETE",
 						"header": [
 							{
@@ -415,6 +611,134 @@
 						"method": "GET",
 						"header": [],
 						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Projects",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/project",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Project",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/project",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Project6\",\n    \"description\" : \"Project6 Description\",\n    \"status\" : true,\n    \"groups\" : \"58e96c770a67a732bb754660\",\n    \"components\" : \"58e96b0c9c50273245a3347c\",\n    \"createdBy\" : \"58e36333b390e01c9cb07ea2\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/project",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58ea30b8b852e93b7dc9af93\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add Group",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/project/group",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58e9ed90a2ccf836c114af86\",\n\t\"groups\" : [\"58e96c770a67a732bb754660\"]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Groups",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/project/group",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58e9ed90a2ccf836c114af86\",\n\t\"groups\" : [\"58e96c770a67a732bb754660\"]\n}"
+						},
 						"description": ""
 					},
 					"response": []
@@ -466,7 +790,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"username\": \"sonj\",\n        \"password\": \"password\",\n        \"firstName\" : \"Son\",\n        \"lastName\" : \"J\",\n        \"emailAddress\" : \"sonj@sonj.com\"\n    }"
+							"raw": "{\n        \"username\": \"sonj1\",\n        \"password\": \"password\",\n        \"firstName\" : \"Son\",\n        \"lastName\" : \"J\",\n        \"emailAddress\" : \"sonj@sonj.com\"\n    }"
 						},
 						"description": ""
 					},

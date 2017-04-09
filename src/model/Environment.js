@@ -32,10 +32,19 @@ var environmentSchema = new Schema({
     },
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }
-}, { collection: 'environments' });
+}, { collection: 'environments' }, {timestamps: true});
 
 environmentSchema.pre('save', function(next) {
     if (!this.created) this.created = new Date;
+    next();
+});
+
+environmentSchema.pre('update', function(next) {
+    if (!this.created) {
+        this.created = new Date;
+    } else {
+        this.updated = new Date;
+    }
     next();
 });
 

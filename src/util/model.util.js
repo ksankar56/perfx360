@@ -5,6 +5,7 @@
 var constants = require('../../src/common/constants');
 var Project = require('../../src/model/Project');
 var Group = require('../../src/model/Group');
+var Test = require('../../src/model/Test');
 var Dashboard = require('../../src/model/Dashboard');
 var DateUtil = require('./date.util');
 
@@ -23,7 +24,6 @@ ModelUtil.getProjectModel = function(req, res, projectJson) {
         updatedDate: DateUtil.getCurrentDate(),
         createdBy: projectJson.createdBy
     });
-
 
     return project;
 };
@@ -89,6 +89,36 @@ ModelUtil.getDashboardUpdateModel = function (req, res, dashboard) {
     dashboard.updatedBy = req.body.updatedBy || dashboard.updatedBy;
 
     return dashboard;
+};
+
+ModelUtil.getTestModel = function (req, res, testJson) {
+    var test = new Test({
+        testId: testJson.testId,
+        name: testJson.name,
+        description: testJson.description,
+        status: testJson.status,
+        project: testJson.project,
+        components: testJson.components,
+        environment: testJson.environment,
+        groups: testJson.groups,
+        updatedBy: testJson.updatedBy
+    });
+
+    return test;
+};
+
+ModelUtil.getTestUpdateModel = function (req, res, test) {
+    test.testId  = req.body.testId || test.testId;
+    test.name  = req.body.name || test.name;
+    test.description  = req.body.description || test.description;
+    test.status  = req.body.status || test.status;
+    test.project  = req.body.project || test.project;
+    test.components  = req.body.components || test.components;
+    test.environment  = req.body.environment || test.environment;
+    test.groups  = req.body.groups || test.groups;
+    test.updatedBy  = req.body.updatedBy || test.updatedBy;
+
+    return test;
 };
 
 module.exports = ModelUtil;
