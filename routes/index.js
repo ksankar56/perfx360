@@ -12,7 +12,10 @@ var express = require('express')
     , environmentsApi = require('./api/environment/environment.api')
     , groupApi = require('./api/component/group.api')
     , groupsApi = require('./api/component/groups.api')
-    , projecsApi = require('./api/project/project.api');
+    , projecsApi = require('./api/project/project.api')
+    , dashboardTypeApi = require('./api/dashboard/dashboard.types.api')
+    , dashboardApi = require('./api/dashboard/dashboard.api')
+    , dashboardsApi = require('./api/dashboard/dashboards.api');
 
 var restVersionV1 = '/rest/api/v1/perf';
 
@@ -29,5 +32,8 @@ router.use(restVersionV1 + '/environment', environmentsApi);
 router.use(restVersionV1 + '/group', groupApi);
 router.use(restVersionV1 + '/groups', groupsApi);
 router.use(restVersionV1 + '/project', projecsApi);
+router.use(restVersionV1 + '/dashboardtype', dashboardTypeApi);
+router.use(restVersionV1 + '/dashboard', dashboardApi);
+router.use(restVersionV1 + '/dashboards', dashboardsApi);
 
 module.exports = router;

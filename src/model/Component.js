@@ -18,6 +18,18 @@ var compomentSchema = new Schema({
     status: {
         type: Boolean
     },
+    perfLog :{
+        type: Boolean,
+        default: true
+    },
+    metricLog :{
+        type: Boolean,
+        default: false
+    },
+    networkLog :{
+        type: Boolean,
+        default: false
+    },
     componentType: {type: Schema.ObjectId, ref: 'ComponentType'},
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }

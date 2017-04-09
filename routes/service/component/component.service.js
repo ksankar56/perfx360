@@ -6,6 +6,7 @@ var _ = require('lodash')
     , winston = require('winston')
     , resEvents = require('../../../src/common/events')
     , Utils = require('../../../src/util/util')
+    , ModelUtil = require('../../../src/util/model.util')
     , BaseError = require('../../../src/common/BaseError')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
@@ -16,7 +17,7 @@ var Component = require('../../../src/model/Component');
 
 exports.getComponents = function(req, res, next) {
     Component.find({})
-        .populate('componentType')
+        .populate('component')
         .exec( function (err, components) {
             if (err) {
                 logger.debug(err);
@@ -41,15 +42,9 @@ exports.saveComponent = function(req, res, next) {
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
-    var component = new Component({
-        name: componentJson.name,
-        description: componentJson.description,
-        order : componentJson.order,
-        status : componentJson.status,
-        componentType: componentJson.componentType
-    });
+    var component = ModelUtil.getCompomentModel(req, res, componentJson);
 
-    // save component type to database
+    // save component to database
     component.save(function(err) {
         if (err) {
             logger.debug(err);
@@ -64,7 +59,38 @@ exports.saveComponent = function(req, res, next) {
 };
 
 exports.updateComponent = function(req, res, next) {
+    Component.findById(req.body.id, function (err, component) {
+        // Handle any possible database errors
+        if (err) {
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_OBJ_EMPTY, '', constants.COMPONENT_OBJ_EMPTY_MSG, constants.COMPONENT_OBJ_EMPTY_MSG, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        } else {
+            // Update each attribute with any possible attribute that may have been submitted in the body of the request
+            // If that attribute isn't in the request body, default back to whatever it was before.
+            component.name = req.body.name || component.name;
+            component.description = req.body.description || component.description;
+            component.order = req.body.order || component.order;
+            component.status = req.body.status || component.status;
+            component.componentType = req.body.componentType || component.componentType;
+            component.perfLog = req.body.perfLog || component.perfLog;
+            component.metricLog = req.body.metricLog || component.metricLog;
+            component.networkLog = req.body.networkLog || component.networkLog;
 
+            // Save the updated document back to the database
+            component.save(function (err, result) {
+                if (err) {
+                    logger.debug(err);
+                    var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_DUPLICATE, '', constants.COMPONENT_DUPLICATE_MSG, err.message, 500));
+                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
+                }
+
+                res.status(constants.HTTP_OK).send({
+                    status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
+                    data: result});
+            });
+        }
+    });
 };
 
 

@@ -109,6 +109,29 @@ module.exports = Object.freeze({
     PROJECT_NOT_AVAILABLE : "PROJECT_NOT_AVAILABLE",
     PROJECT_NOT_AVAILABLE_MSG : "Project not available",
 
+
+    //Dashboard Type Code and Messages
+    DASHBOARD_TYPE_OBJ_EMPTY: "DASHBOARD_TYPE_OBJ_EMPTY",
+    DASHBOARD_TYPE_OBJ_EMPTY_MSG : "Dashboard Type Object is Empty",
+
+    DASHBOARD_TYPE_DUPLICATE : "DASHBOARD_TYPE_DUPLICATE",
+    DASHBOARD_TYPE_DUPLICATE_MSG : "Duplicate Dashboard Type",
+
+    DASHBOARD_TYPE_NOT_AVAILABLE : "DASHBOARD_TYPE_NOT_AVAILABLE",
+    DASHBOARD_TYPE_NOT_AVAILABLE_MSG : "Dashboard Type not available",
+
+
+    //Dashboard Code and Messages
+    DASHBOARD_OBJ_EMPTY: "DASHBOARD_OBJ_EMPTY",
+    DASHBOARD_OBJ_EMPTY_MSG : "Dashboard Object is Empty",
+
+    DASHBOARD_DUPLICATE : "DASHBOARD_DUPLICATE",
+    DASHBOARD_DUPLICATE_MSG : "Duplocate Dashboard",
+
+    DASHBOARD_NOT_AVAILABLE : "DASHBOARD_NOT_AVAILABLE",
+    DASHBOARD_NOT_AVAILABLE_MSG : "Dashboard not available",
+
+
     /* HTTP Response Codes */
     HTTP_OK: 200,
     HTTP_CREATED: 201,

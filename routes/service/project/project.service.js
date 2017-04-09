@@ -130,7 +130,7 @@ exports.addGroups = function (req, res, next) {
     var groupIdsJsonArray = req.body.groups;
 
     if (_.isEmpty(groupIdsJsonArray)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.GROUP_OBJ_EMPTY, '', constants.GROUP_OBJ_EMPTY_MSG, err.message, 500));
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_OBJ_EMPTY, '', constants.PROJECT_OBJ_EMPTY_MSG, err.message, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
     Project.findById(req.body.id, function (err, project) {
@@ -166,7 +166,7 @@ exports.removeGroups = function(req, res, next) {
 
     if (_.isEmpty(groupIdsJsonArray)) {
         logger.debug(err);
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_OBJ_EMPTY, '', constants.COMPONENT_OBJ_EMPTY_MSG, constants.COMPONENT_OBJ_EMPTY_MSG, 500));
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_OBJ_EMPTY, '', constants.PROJECT_OBJ_EMPTY_MSG, constants.PROJECT_OBJ_EMPTY_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
     Project.findById(req.body.id, function (err, project) {
@@ -203,7 +203,7 @@ exports.addComponents = function (req, res, next) {
     var componentIdsJsonArray = req.body.components;
 
     if (_.isEmpty(componentIdsJsonArray)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_OBJ_EMPTY, '', constants.COMPONENT_OBJ_EMPTY_MSG, err.message, 500));
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_OBJ_EMPTY, '', constants.PROJECT_OBJ_EMPTY_MSG, err.message, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
     Project.findById(req.body.id, function (err, project) {
