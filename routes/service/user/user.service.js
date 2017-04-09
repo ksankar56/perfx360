@@ -7,20 +7,20 @@ var mongoose = require('mongoose')
     , BaseError = require('../../../src/common/BaseError')
     , _ = require('lodash')
     , constants = require('../../../src/common/constants')
-    , winston = require('winston')
+    , logger = require('../../../config/logger')
     , baseService = require('../../../src/common/base.service');
 
 var User = require('../../../src/model/user');
 
 exports.getUsers = function(req, res, next) {
 
-    User.find(function (error, users) {
-        if (error) {
-            response.status(500).send(error);
-            return;
+    User.find(function (err, users) {
+        if (err) {
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_NOT_AVAILABLE, '', constants.USER_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
-        console.log(users);
         res.status(constants.HTTP_OK).send({
             status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
             data: users});
@@ -34,7 +34,8 @@ exports.saveUser = function(req, res, next) {
     console.info('userJson = ', userJson);
 
     if (_.isEmpty(userJson)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_DUPLICATE_MSG, err.message, 500));
+        logger.debug(constants.USER_OBJ_EMPTY_MSG);
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
@@ -49,6 +50,7 @@ exports.saveUser = function(req, res, next) {
     // save user to database
     user.save(function(err) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_DUPLICATE, '', constants.USER_DUPLICATE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
@@ -65,25 +67,31 @@ exports.authenticate = function(req, res, next) {
     var userJson = req.body;
 
     if (_.isEmpty(userJson)) {
+        logger.debug(constants.USER_OBJ_EMPTY_MSG);
         var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
-    winston.info('Hello again distributed logs');
 
-        User.findOne({ username: userJson.username }, function(err, user) {
+    User.findOne({ username: userJson.username }, function(err, user) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
         user.comparePassword(userJson.password, function(err, isMatch) {
-            if (err) throw err;
+            if (err) {
+                logger.debug(err);
+                var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, err.message, 500));
+                resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            }
 
             if (isMatch) {
                 resEvents.emit('JsonResponse', req, res, user);
             } else {
+                logger.debug(constants.USER_PASSWORD_NOT_MATCH_MSG);
                 var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, '', 500));
-                resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+                resEvents.emit('ErrorJsonResponse', req, res, baseError);
             }
         });
     });
