@@ -9,7 +9,8 @@ var _ = require('lodash')
     , BaseError = require('../../../src/common/BaseError')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
-    , baseService = require('../../../src/common/base.service');
+    , baseService = require('../../../src/common/base.service')
+    , logger = require('../../../config/logger');
 
 var Project = require('../../../src/model/Project');
 
@@ -20,6 +21,7 @@ exports.getProjects = function(req, res, callback) {
         .populate({path : 'createdBy'})
         .exec( function (err, projects) {
             if (err) {
+                logger.debug(err);
                 var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
                 resEvents.emit('ErrorJsonResponse', req, res, baseError);
             }
@@ -37,17 +39,18 @@ exports.saveProject = function(req, res, next) {
     console.info('projectJson = ', projectJson);
 
     if (_.isEmpty(projectJson)) {
+        logger.debug(constants.PROJECT_OBJ_EMPTY_MSG);
         var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_OBJ_EMPTY, '', constants.PROJECT_OBJ_EMPTY_MSG, err.message, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
     Project.find({name : projectJson.name}, function (err, projects) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
-        console.info('projects = ', projects);
         if(_.isEmpty(projects)) {
             var project = ModelUtil.getProjectModel(req, res, projectJson)
 
@@ -55,7 +58,7 @@ exports.saveProject = function(req, res, next) {
             // save project to database
             project.save(function (err) {
                 if (err) {
-                    console.info('err = ', err);
+                    logger.debug(err);
                     var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_DUPLICATE, '', constants.PROJECT_DUPLICATE_MSG, err.message, 500));
                     resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
@@ -66,6 +69,7 @@ exports.saveProject = function(req, res, next) {
                 });
             });
         } else {
+            logger.debug(constants.PROJECT_NOT_AVAILABLE_MSG);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, constants.PROJECT_NOT_AVAILABLE_MSG, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
@@ -76,6 +80,7 @@ exports.updateProject = function(req, res, next) {
     Project.findById(req.body.id, function (err, project) {
         // Handle any possible database errors
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         } else {
@@ -93,6 +98,7 @@ exports.updateProject = function(req, res, next) {
             // Save the updated document back to the database
             project.save(function (err, result) {
                 if (err) {
+                    logger.debug(err);
                     var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, constants.PROJECT_NOT_AVAILABLE_MSG, 500));
                     resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
@@ -109,6 +115,7 @@ exports.updateProject = function(req, res, next) {
 exports.deleteProject = function(req, res, next) {
     Project.remove({ _id: req.body.id }, function(err) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_DUPLICATE, '', constants.PROJECT_DUPLICATE_MSG, constants.PROJECT_DUPLICATE_MSG, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
@@ -129,9 +136,9 @@ exports.addGroups = function (req, res, next) {
     Project.findById(req.body.id, function (err, project) {
         // Handle any possible database errors
         if (err) {
-            console.info('find project err = ', err);
-            throw err;
-            return;
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
             // If that attribute isn't in the request body, default back to whatever it was before.
@@ -141,9 +148,9 @@ exports.addGroups = function (req, res, next) {
             // Save the updated document back to the database
             project.save(function (err, result) {
                 if (err) {
-                    console.info('add group err = ', err);
-                    throw err;
-                    return;
+                    logger.debug(err);
+                    var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
+                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
 
                 res.status(constants.HTTP_OK).send({
@@ -158,34 +165,30 @@ exports.removeGroups = function(req, res, next) {
     var groupIdsJsonArray = req.body.groups;
 
     if (_.isEmpty(groupIdsJsonArray)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_OBJ_EMPTY, '', constants.COMPONENT_OBJ_EMPTY_MSG, err.message, 500));
+        logger.debug(err);
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_OBJ_EMPTY, '', constants.COMPONENT_OBJ_EMPTY_MSG, constants.COMPONENT_OBJ_EMPTY_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
     Project.findById(req.body.id, function (err, project) {
         // Handle any possible database errors
         if (err) {
-            console.info('find project err = ', err);
-            throw err;
-            return;
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
             // If that attribute isn't in the request body, default back to whatever it was before.
-            console.info('project.groups = ', project);
-
             var existingGroups = project.groups;
             //var newGroups = existingGroups.concat(groupIdsJsonArray);
-            console.info('existingGroups = ', existingGroups);
-
             var unionGroups = _.uniq(_.flatten([existingGroups, groupIdsJsonArray]));
-            console.info('unionGroups = ', unionGroups);
 
             project.groups = unionGroups;
             // Save the updated document back to the database
             project.save(function (err, result) {
                 if (err) {
-                    console.info('add group err = ', err);
-                    throw err;
-                    return;
+                    logger.debug(err);
+                    var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
+                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
 
                 res.status(constants.HTTP_OK).send({

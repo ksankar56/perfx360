@@ -12,6 +12,7 @@ var promise = require('bluebird');
 var parser = require('xml2json');
 var constants = require('../../../src/common/constants');
 var baseService = require('../../../src/common/base.service');
+var logger = require('../../../config/logger');
 
 exports.execute = function(req, res, next) {
 
@@ -29,7 +30,7 @@ exports.execute = function(req, res, next) {
         });
         //mvn.install();
     }  catch (err) {
-        throw err;
+        logger.debug(err);
     }
 
     //var promise = mvn.effectivePom();
@@ -86,7 +87,9 @@ exports.output = function(req, res) {
             }
         ],
         function (err, resultJson) {
-            if (err) throw err;
+            if (err) {
+                logger.debug(err);
+            }
             events.emit("JsonResponse", req, res, resultJson);
         }
     );

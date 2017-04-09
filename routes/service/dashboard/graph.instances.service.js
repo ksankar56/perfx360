@@ -9,7 +9,8 @@ var _ = require('lodash')
     , BaseError = require('../../../src/common/BaseError')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
-    , baseService = require('../../../src/common/base.service');
+    , baseService = require('../../../src/common/base.service')
+    , logger = require('../../../config/logger');
 
 var GraphInstance = require('../../../src/model/GraphInstance');
 
@@ -18,7 +19,8 @@ exports.getGraphInstances = function(req, res, callback) {
         .populate({path : 'graph', populate: { path: 'graphType' }})
         .exec( function (err, graphInstances) {
         if (err) {
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_OBJ_EMPTY, '', constants.GRAPH_INSTANCE_DUPLICATE_MSG, err.message, 500));
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_OBJ_EMPTY, '', constants.GRAPH_INSTANCE_OBJ_EMPTY_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
@@ -33,7 +35,8 @@ exports.getGraphInstance = function(req, res, callback) {
         .populate({path : 'graph', populate: { path: 'graphType' }})
         .exec( function (err, graphInstances) {
             if (err) {
-                var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_OBJ_EMPTY, '', constants.GRAPH_INSTANCE_DUPLICATE_MSG, err.message, 500));
+                logger.debug(err);
+                var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_OBJ_EMPTY, '', constants.GRAPH_INSTANCE_OBJ_EMPTY_MSG, err.message, 500));
                 resEvents.emit('ErrorJsonResponse', req, res, baseError);
             }
 
@@ -50,7 +53,8 @@ exports.saveGraphInstance = function(req, res, next) {
     console.info('graphInstanceJson = ', graphInstanceJson);
 
     if (_.isEmpty(graphInstanceJson)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_OBJ_EMPTY, '', constants.GRAPH_INSTANCE_DUPLICATE_MSG, err.message, 500));
+        logger.debug(constants.GRAPH_INSTANCE_DUPLICATE_MSG);
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_OBJ_EMPTY, '', constants.GRAPH_INSTANCE_DUPLICATE_MSG, constants.GRAPH_INSTANCE_DUPLICATE_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
@@ -78,10 +82,9 @@ exports.saveGraphInstance = function(req, res, next) {
     // save graph instanceto database
     graphInstance.save(function(err) {
         if (err) {
-            console.info('err = ', err);
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_DUPLICATE, '', constants.GRAPH_INSTANCE_DUPLICATE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
-            return;
         }
 
         res.status(constants.HTTP_OK).send({
@@ -95,7 +98,8 @@ exports.updateGraphInstance = function(req, res, next) {
     GraphInstance.findById(req.body.id, function (err, graphInstance) {
         // Handle any possible database errors
         if (err) {
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_NOT_AVAILABLE, '', constants.GRAPH_INSTANCE_NOT_AVAILABLE_MSG, err.message, 500));
+            logger.debug(constants.GRAPH_INSTANCE_NOT_AVAILABLE_MSG);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_NOT_AVAILABLE, '', constants.GRAPH_INSTANCE_NOT_AVAILABLE_MSG, constants.GRAPH_INSTANCE_NOT_AVAILABLE_MSG, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
@@ -122,6 +126,7 @@ exports.updateGraphInstance = function(req, res, next) {
             // Save the updated document back to the database
             graphInstance.save(function (err, result) {
                 if (err) {
+                    logger.debug(err);
                     var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_NOT_AVAILABLE, '', constants.GRAPH_INSTANCE_NOT_AVAILABLE_MSG, err.message, 500));
                     resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
@@ -138,6 +143,7 @@ exports.updateGraphInstance = function(req, res, next) {
 exports.deleteGraphInstance = function(req, res, next) {
     GraphInstance.remove({ _id: req.params.id }, function(err) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_INSTANCE_NOT_AVAILABLE, '', constants.GRAPH_INSTANCE_NOT_AVAILABLE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }

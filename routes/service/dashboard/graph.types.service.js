@@ -9,13 +9,15 @@ var _ = require('lodash')
     , BaseError = require('../../../src/common/BaseError')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
-    , baseService = require('../../../src/common/base.service');
+    , baseService = require('../../../src/common/base.service')
+    , logger = require('../../../config/logger');
 
 var GraphType = require('../../../src/model/GraphType');
 
 exports.getGraphTypes = function(req, res, callback) {
     GraphType.find(function (err, graphTypes) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_NOT_AVAILABLE, '', constants.GRAPH_TYPE_NOT_AVAILABLE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
@@ -29,6 +31,7 @@ exports.getGraphTypes = function(req, res, callback) {
 exports.getGraphType = function(req, res, callback) {
     GraphType.find({ _id: req.params.id }, function (err, graphTypes) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_NOT_AVAILABLE, '', constants.GRAPH_TYPE_NOT_AVAILABLE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
@@ -46,7 +49,8 @@ exports.saveGraphType = function(req, res, next) {
     console.info('graphTypeJson = ', graphTypeJson);
 
     if (_.isEmpty(graphTypeJson)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_OBJ_EMPTY, '', constants.GRAPH_TYPE_DUPLICATE_MSG, err.message, 500));
+        logger.debug(constants.GRAPH_TYPE_DUPLICATE_MSG);
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_OBJ_EMPTY, '', constants.GRAPH_TYPE_OBJ_EMPTY_MSG, constants.GRAPH_TYPE_OBJ_EMPTY_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
@@ -61,6 +65,7 @@ exports.saveGraphType = function(req, res, next) {
     // save component type to database
     graphType.save(function(err) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_DUPLICATE, '', constants.GRAPH_TYPE_DUPLICATE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
@@ -75,7 +80,8 @@ exports.updateGraphType = function(req, res, next) {
     GraphType.findById(req.body.id, function (err, graphType) {
         // Handle any possible database errors
         if (err) {
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_NOT_AVAILABLE, '', constants.GRAPH_TYPE_NOT_AVAILABLE_MSG, err.message, 500));
+            logger.debug(constants.GRAPH_TYPE_NOT_AVAILABLE_MSG);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_NOT_AVAILABLE, '', constants.GRAPH_TYPE_NOT_AVAILABLE_MSG, constants.GRAPH_TYPE_OBJ_EMPTY_MSG, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
@@ -88,7 +94,11 @@ exports.updateGraphType = function(req, res, next) {
 
             // Save the updated document back to the database
             graphType.save(function (err, result) {
-                if (err) throw err;
+                if (err) {
+                    logger.debug(err);
+                    var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
+                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
+                }
 
                 res.status(constants.HTTP_OK).send({
                     status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
@@ -102,6 +112,7 @@ exports.updateGraphType = function(req, res, next) {
 exports.deleteGraphType = function(req, res, next) {
     GraphType.remove({ _id: req.params.id }, function(err) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_TYPE_NOT_AVAILABLE, '', constants.GRAPH_TYPE_NOT_AVAILABLE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }

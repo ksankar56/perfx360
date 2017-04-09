@@ -9,7 +9,8 @@ var _ = require('lodash')
     , BaseError = require('../../../src/common/BaseError')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
-    , baseService = require('../../../src/common/base.service');
+    , baseService = require('../../../src/common/base.service')
+    , logger = require('../../../config/logger');
 
 var Graph = require('../../../src/model/Graph');
 
@@ -18,6 +19,7 @@ exports.getGraphs = function(req, res, next) {
         .populate('graphType')
         .exec( function (err, graphs) {
             if (err) {
+                logger.debug(err);
                 var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_NOT_AVAILABLE, '', constants.GRAPH_NOT_AVAILABLE_MSG, err.message, 500));
                 resEvents.emit('ErrorJsonResponse', req, res, baseError);
             }
@@ -33,6 +35,7 @@ exports.getGraph = function(req, res, next) {
         .populate('graphType')
         .exec( function (err, graphs) {
             if (err) {
+                logger.debug(err);
                 var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_NOT_AVAILABLE, '', constants.GRAPH_NOT_AVAILABLE_MSG, err.message, 500));
                 resEvents.emit('ErrorJsonResponse', req, res, baseError);
             }
@@ -50,7 +53,8 @@ exports.saveGraph = function(req, res, next) {
     console.info('graphJson = ', graphJson);
 
     if (_.isEmpty(graphJson)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_OBJ_EMPTY, '', constants.GRAPH_DUPLICATE_MSG, err.message, 500));
+        logger.debug(constants.GRAPH_OBJ_EMPTY_MSG);
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_OBJ_EMPTY, '', constants.GRAPH_OBJ_EMPTY_MSG, constants.GRAPH_OBJ_EMPTY_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
@@ -65,7 +69,8 @@ exports.saveGraph = function(req, res, next) {
     // save graph type to database
     graph.save(function(err) {
         if (err) {
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_DUPLICATE, '', constants.GRAPH_DUPLICATE_MSG, err.message, 500));
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 

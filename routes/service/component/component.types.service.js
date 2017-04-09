@@ -9,13 +9,18 @@ var _ = require('lodash')
     , BaseError = require('../../../src/common/BaseError')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
-    , baseService = require('../../../src/common/base.service');
+    , baseService = require('../../../src/common/base.service')
+    , logger = require('../../../config/logger');
 
 var ComponentType = require('../../../src/model/ComponentType');
 
 exports.getComponentTypes = function(req, res, callback) {
     ComponentType.find(function (err, componentTypes) {
-        if (err) throw err;
+        if (err) {
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_NOT_AVAILABLE, '', constants.COMPONENT_TYPE_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        }
 
         res.status(constants.HTTP_OK).send({
             status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
@@ -25,12 +30,12 @@ exports.getComponentTypes = function(req, res, callback) {
 
 exports.saveComponentType = function(req, res, next) {
 
-    // create a user a new user
+    // create a component type
     var componentTypeJson = req.body;
-    console.info('componentTypeJson = ', componentTypeJson);
 
     if (_.isEmpty(componentTypeJson)) {
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_OBJ_EMPTY, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
+        logger.debug(constants.COMPONENT_TYPE_DUPLICATE_MSG);
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_OBJ_EMPTY, '', constants.COMPONENT_TYPE_OBJ_EMPTY_MSG, constants.COMPONENT_TYPE_OBJ_EMPTY_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
@@ -44,6 +49,7 @@ exports.saveComponentType = function(req, res, next) {
     // save component type to database
     componentType.save(function(err) {
         if (err) {
+            logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_DUPLICATE, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
@@ -58,7 +64,9 @@ exports.updateComponentType = function(req, res, next) {
     ComponentType.findById(req.body.id, function (err, componentType) {
         // Handle any possible database errors
         if (err) {
-            throw err;
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_OBJ_EMPTY, '', constants.COMPONENT_TYPE_OBJ_EMPTY_MSG, constants.COMPONENT_TYPE_OBJ_EMPTY_MSG, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
             // If that attribute isn't in the request body, default back to whatever it was before.
@@ -69,7 +77,11 @@ exports.updateComponentType = function(req, res, next) {
 
             // Save the updated document back to the database
             componentType.save(function (err, result) {
-                if (err) throw err;
+                if (err) {
+                    logger.debug(err);
+                    var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_DUPLICATE, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
+                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
+                }
 
                 res.status(constants.HTTP_OK).send({
                     status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
@@ -82,7 +94,11 @@ exports.updateComponentType = function(req, res, next) {
 
 exports.deleteComponentType = function(req, res, next) {
     ComponentType.remove({ _id: req.params.id }, function(err) {
-        if (err) throw err;
+        if (err) {
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_NOT_AVAILABLE, '', constants.COMPONENT_TYPE_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        }
 
         res.status(constants.HTTP_OK).send({
             status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Deleted"),

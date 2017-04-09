@@ -12,16 +12,7 @@ var express = require('express')
  * @api public
  */
 
-router.get('/:id', groupService.getGroup);
-
-/**
- * Expose group by id.
- *
- * @return {Function}
- * @api public
- */
-
-router.get('/:id', groupService.getGroup);
+router.get('/', groupService.getGroups);
 
 /**
  * Creates a group.
@@ -29,7 +20,7 @@ router.get('/:id', groupService.getGroup);
  * @return {Function}
  * @api public
  */
-router.post('/', groupService.saveGroup);
+router.post('/', groupService.saveGroups);
 
 /**
  * Modifies a group by passing the body object.
@@ -37,7 +28,7 @@ router.post('/', groupService.saveGroup);
  * @return {Function}
  * @api public
  */
-router.put('/', groupService.updateGroup);
+router.put('/', groupService.updateGroups);
 
 /**
  * Deletes a group by req.params.id.
@@ -45,6 +36,6 @@ router.put('/', groupService.updateGroup);
  * @return {Function}
  * @api public
  */
-router.delete('/:id', groupService.deleteGroup);
+router.delete('/:id', groupService.deleteGroups);
 
 module.exports = router;

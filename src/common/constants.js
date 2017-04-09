@@ -6,6 +6,9 @@ module.exports = Object.freeze({
 
     GLOBAL_DATE_FORMAT : 'YYYY-MM-DDTHH:mm:SSSZ',
 
+    FATAL_ERROR : "FATAL_ERROR",
+    FATAL_ERROR_MSG : "Fatal Error",
+
     //User Code and Messages
     USER_OBJ_EMPTY: "USER_OBJ_EMPTY",
     USER_OBJ_EMPTY_MSG : "User Object is Empty",
@@ -16,8 +19,8 @@ module.exports = Object.freeze({
     USER_PASSWORD_NOT_MATCH : "USER_PASSWORD_NOT_MATCH",
     USER_PASSWORD_NOT_MATCH_MSG : "Password Invalid!",
 
-    USER_TYPE_NOT_AVAILABLE : "COMPONENT_TYPE_NOT_AVAILABLE",
-    USER_TYPE_NOT_AVAILABLE_MSG : "User not available!",
+    USER_NOT_AVAILABLE : "COMPONENT_TYPE_NOT_AVAILABLE",
+    USER_NOT_AVAILABLE_MSG : "User not available!",
 
 
     //Component Code and Messages

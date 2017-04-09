@@ -8,7 +8,7 @@ winston.emitErrs = true;
 var logger = new winston.Logger({
     transports: [
         new winston.transports.File({
-            level: 'info',
+            level: 'debug',
             filename: './logs/perfx360-log.log',
             handleExceptions: true,
             json: true,
@@ -18,7 +18,7 @@ var logger = new winston.Logger({
             showLevel:false
         }),
         new (require('winston-daily-rotate-file'))({
-            level: 'info',
+            level: 'debug',
             filename: './logs/daily/daily-log.log',
             handleExceptions: true,
             json: true,
