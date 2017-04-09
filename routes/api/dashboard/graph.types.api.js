@@ -3,6 +3,7 @@
  */
 var express = require('express')
     , router = express.Router()
+    , graphService = require('../../service/dashboard/graph.service')
     , graphTypeService = require('../../service/dashboard/graph.types.service');
 
 /**
@@ -13,6 +14,24 @@ var express = require('express')
  */
 
 router.get('/types', graphTypeService.getGraphTypes);
+
+/**
+ * Expose graph by id.
+ *
+ * @return {Function}
+ * @api public
+ */
+router.get('/:id', graphService.getGraph);
+
+
+/**
+ * Expose graph type by id.
+ *
+ * @return {Function}
+ * @api public
+ */
+
+router.get('/type/:id', graphTypeService.getGraphType);
 
 /**
  * Creates a graph type.

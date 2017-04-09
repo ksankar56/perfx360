@@ -31,7 +31,7 @@ exports.saveComponentType = function(req, res, next) {
 
     if (_.isEmpty(componentTypeJson)) {
         var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_OBJ_EMPTY, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
-        resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+        resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
     var componentType = new ComponentType({
@@ -45,7 +45,7 @@ exports.saveComponentType = function(req, res, next) {
     componentType.save(function(err) {
         if (err) {
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_DUPLICATE, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
         res.status(constants.HTTP_OK).send({

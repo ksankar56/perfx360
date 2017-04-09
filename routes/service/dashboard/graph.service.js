@@ -17,12 +17,30 @@ exports.getGraphs = function(req, res, next) {
     Graph.find({})
         .populate('graphType')
         .exec( function (err, graphs) {
-            if (err) throw err;
+            if (err) {
+                var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_NOT_AVAILABLE, '', constants.GRAPH_NOT_AVAILABLE_MSG, err.message, 500));
+                resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            }
 
             res.status(constants.HTTP_OK).send({
                 status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
                 data: graphs});
     });
+};
+
+exports.getGraph = function(req, res, next) {
+    Graph.find({_id : req.params.id})
+        .populate('graphType')
+        .exec( function (err, graphs) {
+            if (err) {
+                var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_NOT_AVAILABLE, '', constants.GRAPH_NOT_AVAILABLE_MSG, err.message, 500));
+                resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            }
+
+            res.status(constants.HTTP_OK).send({
+                status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
+                data: graphs});
+        });
 };
 
 exports.saveGraph = function(req, res, next) {
@@ -33,7 +51,7 @@ exports.saveGraph = function(req, res, next) {
 
     if (_.isEmpty(graphJson)) {
         var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_OBJ_EMPTY, '', constants.GRAPH_DUPLICATE_MSG, err.message, 500));
-        resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+        resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
     var graph = new Graph({
@@ -48,7 +66,7 @@ exports.saveGraph = function(req, res, next) {
     graph.save(function(err) {
         if (err) {
             var baseError = new BaseError(Utils.buildErrorResponse(constants.GRAPH_DUPLICATE, '', constants.GRAPH_DUPLICATE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
         res.status(constants.HTTP_OK).send({

@@ -4,7 +4,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var environmentSchema = new Schema({
+var projectSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -12,31 +12,19 @@ var environmentSchema = new Schema({
     description: {
         type: String
     },
-    protocol: {
-        type: String
-    },
-    host: {
-        type: String
-    },
-    port: {
-        type: String
-    },
-    context: {
-        type: String
-    },
-    order: {
-        type: Number
-    },
     status: {
         type: Boolean
     },
+    groups: [{type: Schema.ObjectId, ref: 'Group', unique : true}],
+    components: [{type: Schema.ObjectId, ref: 'Component'}],
+    createdBy: {type: Schema.ObjectId, ref: 'User'},
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }
-}, { collection: 'environments' });
+}, { collection: 'projects' });
 
-environmentSchema.pre('save', function(next) {
+projectSchema.pre('save', function(next) {
     if (!this.created) this.created = new Date;
     next();
 });
 
-module.exports = mongoose.model('Environment', environmentSchema);
+module.exports = mongoose.model('Project', projectSchema);

@@ -13,7 +13,6 @@ var express = require('express')
  */
 router.get('/', graphService.getGraphs);
 
-
 /**
  * Creates a graph.
  *

@@ -12,7 +12,7 @@ var express = require('express')
  * @api public
  */
 
-router.get('/', graphInstanceService.getGraphInstances);
+router.get('/:id', graphInstanceService.getGraphInstance);
 
 /**
  * Creates a graph instance.
@@ -20,7 +20,7 @@ router.get('/', graphInstanceService.getGraphInstances);
  * @return {Function}
  * @api public
  */
-router.post('/', graphInstanceService.saveGraphInstances);
+router.post('/', graphInstanceService.saveGraphInstance);
 
 /**
  * Modifies a graph instance by passing the body object.
@@ -28,7 +28,7 @@ router.post('/', graphInstanceService.saveGraphInstances);
  * @return {Function}
  * @api public
  */
-router.put('/', graphInstanceService.updateGraphInstances);
+router.put('/', graphInstanceService.updateGraphInstance);
 
 /**
  * Deletes a graph instance by req.params.id.
@@ -36,6 +36,6 @@ router.put('/', graphInstanceService.updateGraphInstances);
  * @return {Function}
  * @api public
  */
-router.delete('/:id', graphInstanceService.deleteGraphInstances);
+router.delete('/:id', graphInstanceService.deleteGraphInstance);
 
 module.exports = router;

@@ -35,7 +35,7 @@ exports.saveUser = function(req, res, next) {
 
     if (_.isEmpty(userJson)) {
         var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_DUPLICATE_MSG, err.message, 500));
-        resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+        resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
     var user = new User({
@@ -50,7 +50,7 @@ exports.saveUser = function(req, res, next) {
     user.save(function(err) {
         if (err) {
             var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_DUPLICATE, '', constants.USER_DUPLICATE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
         res.status(constants.HTTP_OK).send({
@@ -66,12 +66,15 @@ exports.authenticate = function(req, res, next) {
 
     if (_.isEmpty(userJson)) {
         var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
-        resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+        resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
     winston.info('Hello again distributed logs');
 
         User.findOne({ username: userJson.username }, function(err, user) {
-        if (err) throw err;
+        if (err) {
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        }
 
         user.comparePassword(userJson.password, function(err, isMatch) {
             if (err) throw err;

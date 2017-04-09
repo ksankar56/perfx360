@@ -33,7 +33,7 @@ exports.saveComponent = function(req, res, next) {
 
     if (_.isEmpty(componentJson)) {
         var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_OBJ_EMPTY, '', constants.COMPONENT_DUPLICATE_MSG, err.message, 500));
-        resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+        resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
     var component = new Component({
@@ -48,7 +48,7 @@ exports.saveComponent = function(req, res, next) {
     component.save(function(err) {
         if (err) {
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_DUPLICATE, '', constants.COMPONENT_DUPLICATE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
         res.status(constants.HTTP_OK).send({

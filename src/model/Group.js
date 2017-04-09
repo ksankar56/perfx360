@@ -18,7 +18,14 @@ var groupSchema = new Schema({
     status: {
         type: Boolean
     },
-    component: [{type: Schema.ObjectId, ref: 'Component'}]
+    components: [{type: Schema.ObjectId, ref: 'Component'}],
+    created: { type: Date, default: Date.now },
+    updated: { type: Date, default: Date.now }
 }, { collection: 'groups' });
+
+groupSchema.pre('save', function(next) {
+    if (!this.created) this.created = new Date;
+    next();
+});
 
 module.exports = mongoose.model('Group', groupSchema);

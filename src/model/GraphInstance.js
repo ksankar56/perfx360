@@ -57,7 +57,14 @@ var graphInstanceSchema = new Schema({
     },
     updatedBy: {
         type: String
-    }
+    },
+    created: { type: Date, default: Date.now },
+    updated: { type: Date, default: Date.now }
 }, { collection: 'graph_instances' });
+
+graphInstanceSchema.pre('save', function(next) {
+    if (!this.created) this.created = new Date;
+    next();
+});
 
 module.exports = mongoose.model('GraphInstance', graphInstanceSchema);

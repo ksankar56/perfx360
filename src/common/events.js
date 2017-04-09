@@ -12,7 +12,7 @@ rem.on('JsonResponse', function (req, res, data) {
 });
 
 rem.on('ErrorJsonResponse', function (req, res, err) {
-    res.status(500).send({sucess: false, data: err});
+    res.status(500).send({"status" : err});
 });
 
 module.exports = rem;

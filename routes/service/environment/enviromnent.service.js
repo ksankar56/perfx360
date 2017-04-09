@@ -31,7 +31,7 @@ exports.saveEnvironment = function(req, res, next) {
 
     if (_.isEmpty(environmentJson)) {
         var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_OBJ_EMPTY, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
-        resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+        resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
     var environment = new Environment({
@@ -49,7 +49,7 @@ exports.saveEnvironment = function(req, res, next) {
     environment.save(function(err) {
         if (err) {
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_DUPLICATE, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, {"status" : baseError});
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
         res.status(constants.HTTP_OK).send({
@@ -62,7 +62,8 @@ exports.updateEnvironment = function(req, res, next) {
     Environment.findById(req.body.id, function (err, environment) {
         // Handle any possible database errors
         if (err) {
-            throw err;
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
             // If that attribute isn't in the request body, default back to whatever it was before.

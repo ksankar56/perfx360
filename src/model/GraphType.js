@@ -20,7 +20,14 @@ var graphTypeSchema = new Schema({
     },
     status: {
         type: Boolean
-    }
+    },
+    created: { type: Date, default: Date.now },
+    updated: { type: Date, default: Date.now }
 }, { collection: 'graph_types' });
+
+graphTypeSchema.pre('save', function(next) {
+    if (!this.created) this.created = new Date;
+    next();
+});
 
 module.exports = mongoose.model('GraphType', graphTypeSchema);

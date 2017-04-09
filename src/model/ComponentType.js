@@ -17,7 +17,14 @@ var compomentTypeSchema = new Schema({
     },
     status: {
         type: Boolean
-    }
+    },
+    created: { type: Date, default: Date.now },
+    updated: { type: Date, default: Date.now }
 }, { collection: 'component_types' });
+
+compomentTypeSchema.pre('save', function(next) {
+    if (!this.created) this.created = new Date;
+    next();
+});
 
 module.exports = mongoose.model('ComponentType', compomentTypeSchema);

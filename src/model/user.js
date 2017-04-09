@@ -22,11 +22,14 @@ var UserSchema = new Schema({
     },
     emailAddress: {
         type: String
-    }
+    },
+    created: { type: Date, default: Date.now },
+    updated: { type: Date, default: Date.now }
 }, { collection: 'users' });
 
 UserSchema.pre('save', function(next) {
     var user = this;
+    if (!this.created) this.created = new Date;
 
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('password')) return next();

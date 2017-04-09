@@ -15,6 +15,15 @@ var express = require('express')
 router.get('/', groupService.getGroups);
 
 /**
+ * Expose group by id.
+ *
+ * @return {Function}
+ * @api public
+ */
+
+router.get('/:id', groupService.getGroup);
+
+/**
  * Creates a group.
  *
  * @return {Function}
