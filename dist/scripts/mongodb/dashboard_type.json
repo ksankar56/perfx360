@@ -1,0 +1,2 @@
+{"_id":{"$oid":"58eaa6d3c41e02a7cefb50a4"},"name":"REAL_TIME_ANALYTICS","description":"Real Time Analytics Dashboard","order":1,"status":true}
+{"_id":{"$oid":"58eaa6d3c41e02a7cefb50a5"},"name":"COMPARISON","description":"Comparison Dashboard","order":2,"status":true}
