@@ -14,44 +14,34 @@ var _ = require('lodash')
 
 var Test = require('../../../src/model/Test');
 
-exports.getTests = function(req, res, callback) {
-    Test.find({})
-        .populate({path : 'project', populate: { path: 'groups' }})
-        .populate({path : 'component', populate: { path: 'componentType' }})
-        .populate({path : 'graphInstances', populate: { path: 'graph' }})
-        .populate({path : 'testType'})
-        .populate({path : 'updatedBy'})
-        .exec( function (err, tests) {
-            if (err) {
-                logger.debug(err);
-                var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_NOT_AVAILABLE, '', constants.TEST_NOT_AVAILABLE_MSG, err.message, 500));
-                resEvents.emit('ErrorJsonResponse', req, res, baseError);
-            }
+var testServiceImpl = require('./test.service.impl');
 
-            res.status(constants.HTTP_OK).send({
-                status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
-                data: tests});
-    });
+exports.getTests = function(req, res, callback) {
+    testServiceImpl.getTestObjects(function (err, tests) {
+        if (err) {
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_NOT_AVAILABLE, '', constants.TEST_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        }
+
+        res.status(constants.HTTP_OK).send({
+            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
+            data: tests});
+    })
 };
 
 exports.getTest = function(req, res, callback) {
-    Test.find({_id : req.params.id})
-        .populate({path : 'project', populate: { path: 'groups' }})
-        .populate({path : 'component', populate: { path: 'componentType' }})
-        .populate({path : 'graphInstances', populate: { path: 'graph' }})
-        .populate({path : 'testType'})
-        .populate({path : 'updatedBy'})
-        .exec( function (err, tests) {
-            if (err) {
-                logger.debug(err);
-                var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_NOT_AVAILABLE, '', constants.TEST_NOT_AVAILABLE_MSG, err.message, 500));
-                resEvents.emit('ErrorJsonResponse', req, res, baseError);
-            }
+    testServiceImpl.getTestObject(req.params.testId, function (err, tests) {
+        if (err) {
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_NOT_AVAILABLE, '', constants.TEST_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        }
 
-            res.status(constants.HTTP_OK).send({
-                status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
-                data: tests});
-        });
+        res.status(constants.HTTP_OK).send({
+            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
+            test: tests});
+    });
 };
 
 exports.saveTest = function(req, res, next) {
@@ -115,7 +105,7 @@ exports.updateTest = function(req, res, next) {
             test.save(function (err, result) {
                 if (err) {
                     logger.debug(err);
-                    var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_NOT_AVAILABLE, '', constants.TEST_NOT_AVAILABLE_MSG, constants.TEST_NOT_AVAILABLE_MSG, 500));
+                    var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_DUPLICATE, '', constants.TEST_DUPLICATE_MSG, err.message, 500));
                     resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
 

@@ -2,10 +2,13 @@ var _ = require('lodash')
     , mongoose = require('mongoose')
     , winston = require('winston')
     , moment = require('moment')
+    , path = require('path')
+    , ncp = require('ncp').ncp
     , resEvents = require('../../../src/common/events')
     , Utils = require('../../../src/util/util')
     , DateUtil = require('../../../src/util/date.util')
     , ModelUtil = require('../../../src/util/model.util')
+    , FileUtil = require('../../../src/util/file.util')
     , BaseError = require('../../../src/common/BaseError')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
@@ -40,7 +43,7 @@ exports.saveProject = function(req, res, next) {
 
     if (_.isEmpty(projectJson)) {
         logger.debug(constants.PROJECT_OBJ_EMPTY_MSG);
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_OBJ_EMPTY, '', constants.PROJECT_OBJ_EMPTY_MSG, err.message, 500));
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_OBJ_EMPTY, '', constants.PROJECT_OBJ_EMPTY_MSG, constants.PROJECT_OBJ_EMPTY_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
@@ -56,16 +59,33 @@ exports.saveProject = function(req, res, next) {
 
             console.info('project = ', project);
             // save project to database
-            project.save(function (err) {
+            project.save(function (err, dbProject) {
                 if (err) {
                     logger.debug(err);
                     var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_DUPLICATE, '', constants.PROJECT_DUPLICATE_MSG, err.message, 500));
                     resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
 
-                res.status(constants.HTTP_OK).send({
-                    status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Saved"),
-                    data: project
+                console.info('project._id = ', dbProject.id);
+                var source = path.join(process.env.PWD, "/dist/plugins/maven-jmeter");
+                var projectPath = path.join(process.env.PWD, "/dist/projects/" + dbProject.id);
+
+                //FileUtil.copySync(pluginsPath, projectPath);
+                ncp.limit = 16;
+
+                ncp(source, projectPath, function (err) {
+                    if (err) {
+                        //return console.error(err);
+                        logger.debug(err);
+                        var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
+                        resEvents.emit('ErrorJsonResponse', req, res, baseError);
+                    }
+
+                    console.log('done!');
+                    res.status(constants.HTTP_OK).send({
+                        status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Saved"),
+                        data: project
+                    });
                 });
             });
         } else {

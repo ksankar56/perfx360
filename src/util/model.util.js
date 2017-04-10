@@ -122,7 +122,7 @@ ModelUtil.getTestUpdateModel = function (req, res, test) {
     return test;
 };
 
-ModelUtil.getTestExecutionModel = function (req, res, testExecutionJson) {
+ModelUtil.getTestExecutionModel = function (req, testExecutionJson) {
     var testExecution = new TestExecution({
         name: testExecutionJson.name,
         description: testExecutionJson.description,
@@ -137,7 +137,7 @@ ModelUtil.getTestExecutionModel = function (req, res, testExecutionJson) {
     return testExecution;
 };
 
-ModelUtil.getTestExecutionUpdateModel = function (req, res, testExecution) {
+ModelUtil.getTestExecutionUpdateModel = function (req, testExecution) {
     testExecution.name  = req.body.name || testExecution.name;
     testExecution.description  = req.body.description || testExecution.description;
     testExecution.test  = req.body.test || testExecution.test;

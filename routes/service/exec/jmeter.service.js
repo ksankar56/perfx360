@@ -13,21 +13,70 @@ var parser = require('xml2json');
 var constants = require('../../../src/common/constants');
 var baseService = require('../../../src/common/base.service');
 var logger = require('../../../config/logger');
+var Test = require('../../../src/model/Test');
+var TestExecution = require('../../../src/model/TestExecution');
+
+var testServiceImpl = require('../test/test.service.impl');
+var testExecutionServiceImpl = require('../test/test.execution.service.impl');
 
 exports.execute = function(req, res, next) {
 
-    var project = 'dist/projects/' + req.params.projectId;
+    //var projectDir = 'dist/projects/' + req.params.projectId;
 
     try {
-        const maven = mvn.create({
-            cwd: project
+
+
+        async.waterfall([
+            function(callback) {
+                var testId = req.params.testId;
+
+                testServiceImpl.getTestObject(testId, function (err, tests) {
+                    if (!_.isEmpty(tests)) {
+                        console.info('ProjectId = ', tests[0].project._id);
+
+                        //testService.getTest
+                        var project = tests[0].project;
+                        var projectId = project._id;
+                        var projectDir = 'dist/projects/' + projectId;
+                        const maven = mvn.create({
+                            cwd: projectDir
+                        });
+                        var testExecutionJson = {};
+                        testExecutionJson.name = project.name;
+                        testExecutionJson.description = project.description;
+                        testExecutionJson.test = testId;
+                        testExecutionJson.project = project;
+                        testExecutionJson.executedComponents = project.components;
+
+                        testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecution) {
+                            console.info('testExecution callback = ', testExecution)
+                            callback(null, projectId, projectDir, maven, req);
+                        });
+                    }
+                });
+            },
+            mySecondFunction,
+            myLastFunction,
+        ], function (err, result) {
+            // result now equals 'done'
+            console.info('done');
         });
 
-        maven.execute(['clean', 'install'], {'skipTests': true}).then(function (result) {
+
+        /*var testExecutionJson = {};
+        testExecutionJson.description = ,
+            test: testExecutionJson.test,
+            project: testExecutionJson.project,
+            executedBy: testExecutionJson.executedBy,
+            resultStatus: testExecutionJson.resultStatus,
+            timeTaken: testExecutionJson.timeTaken,
+            executedComponents: testExecutionJson.executedComponents*/
+
+        /*maven.execute(['clean', 'install'], {'skipTests': true}).then(function (result) {
             // As mvn.execute(..) returns a promise, you can use this block to continue
             // your stuff, once the execution of the command has been finished successfully.
             console.info('result = ', result);
-        });
+        });*/
         //mvn.install();
     }  catch (err) {
         logger.debug(err);
@@ -36,6 +85,19 @@ exports.execute = function(req, res, next) {
     //var promise = mvn.effectivePom();
     res.json({ title: 'jMeter' + req.params.testId });
 };
+
+function mySecondFunction(projectId, projectDir, maven, req, callback) {
+    // arg1 now equals 'one' and arg2 now equals 'two'
+    console.info('second arg1 = ', projectId);
+    console.info('second arg2 = ', projectDir);
+    callback(null, projectId, projectDir, maven, req);
+}
+
+function myLastFunction(projectId, projectDir, maven, req, callback) {
+    // arg1 now equals 'three'
+    console.info('last arg1 = ', projectId);
+    callback(null, 'done');
+}
 
 exports.output = function(req, res) {
     var projectId = req.params.projectId;

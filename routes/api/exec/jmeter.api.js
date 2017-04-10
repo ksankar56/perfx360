@@ -13,7 +13,7 @@ var maven = require('../../service/exec/jmeter.service')
  * @return {Function}
  * @api public
  */
-router.get('/mvn/exec/:projectId/:testId', maven.execute);
+router.get('/mvn/exec/:testId', maven.execute);
 
 /**
  * Expose maven execution result output.

@@ -12,7 +12,7 @@ var express = require('express')
  * @api public
  */
 
-router.get('/:id', testService.getTest);
+router.get('/:testId', testService.getTest);
 
 /**
  * Creates a test.
