@@ -66,14 +66,14 @@ exports.saveProject = function(req, res, next) {
                     resEvents.emit('ErrorJsonResponse', req, res, baseError);
                 }
 
-                console.info('project._id = ', dbProject.id);
+                /*console.info('project._id = ', dbProject.id);
                 var source = path.join(process.env.PWD, "/dist/plugins/maven-jmeter");
                 var projectPath = path.join(process.env.PWD, "/dist/projects/" + dbProject.id);
 
                 //FileUtil.copySync(pluginsPath, projectPath);
                 ncp.limit = 16;
 
-                ncp(source, projectPath, function (err) {
+                ncp(source, projectPath, function (err) {*/
                     if (err) {
                         //return console.error(err);
                         logger.debug(err);
@@ -86,7 +86,7 @@ exports.saveProject = function(req, res, next) {
                         status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Saved"),
                         data: project
                     });
-                });
+                //});
             });
         } else {
             logger.debug(constants.PROJECT_NOT_AVAILABLE_MSG);

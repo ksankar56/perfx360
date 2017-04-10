@@ -8,6 +8,7 @@ var parseString = require('xml2js').parseString;
 var mvn = require('maven');
 var async = require('async');
 var microtime = require('microtime');
+var ncp = require('ncp').ncp;
 var events = require('../../../src/common/events');
 var promise = require('bluebird');
 var parser = require('xml2json');
@@ -37,11 +38,6 @@ exports.execute = function(req, res, next) {
 
                 //testService.getTest
                 var project = tests[0].project;
-                var projectId = project._id;
-                var projectDir = 'dist/projects/' + projectId;
-                const maven = mvn.create({
-                    cwd: projectDir
-                });
 
                 var testExecutionJson = {};
                 testExecutionJson.name = project.name;
@@ -51,11 +47,27 @@ exports.execute = function(req, res, next) {
                 testExecutionJson.executedComponents = project.components;
 
                 testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecution) {
-                    console.info('testExecution callback = ', testExecution)
+                    console.info('testExecution callback = ', testExecution[0]._id);
+                    var textExecutionId = testExecution[0]._id;
+
                     //callback(null, projectId, projectDir, maven, req, testExecution, startTime);
-                    testSetup(projectId, projectDir, maven, req, testExecution, startTime, function (err, result) {
-                        console.info('done done');
-                    })
+                    var source = path.join(process.env.PWD, "/dist/plugins/maven-jmeter");
+                    var projectPath = path.join(process.env.PWD, "/dist/projects/" + textExecutionId);
+
+                    //FileUtil.copySync(pluginsPath, projectPath);
+                    ncp.limit = 16;
+
+                    ncp(source, projectPath, function (err) {
+                        var projectId = textExecutionId;
+                        var projectDir = 'dist/projects/' + textExecutionId;
+                        console.info("projectDir = ", projectDir);;
+                        const maven = mvn.create({
+                            cwd: projectDir
+                        });
+                        testSetup(projectId, projectDir, maven, req, testExecution, startTime, function (err, result) {
+                            console.info('done done');
+                        });
+                    });
                     res.json(testExecution);
                 });
             }
