@@ -10,6 +10,7 @@ var testExecutionSchema = new Schema({
     test: {type: Schema.ObjectId, ref: 'Test'},
     project: {type: Schema.ObjectId, ref: 'Project'},
     executedBy: {type: Schema.ObjectId, ref: 'User'},
+    executed: {type: Boolean, default: false},
     resultStatus: {type: Boolean, default: false},
     timeTaken: {type: Number, default: 0},
     executedComponents: [{type: Schema.ObjectId, ref: 'Component'}],

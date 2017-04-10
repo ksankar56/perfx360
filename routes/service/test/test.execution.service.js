@@ -67,33 +67,18 @@ exports.saveTestExecution = function(req, res, next) {
 };
 
 exports.updateTestExecution = function(req, res, next) {
-    TestExecution.findById(req.body.id, function (err, testExecution) {
-        // Handle any possible database errors
+    testExecutionServiceImpl.updateTestExecutionObject(testExecution, function(err, result){
         if (err) {
             logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_EXECUTION_NOT_AVAILABLE, '', constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, err.message, 500));
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_EXECUTION_NOT_AVAILABLE, '', constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
-        } else {
-            // Update each attribute with any possible attribute that may have been submitted in the body of the request
-            // If that attribute isn't in the request body, default back to whatever it was before.
-            testExecution = ModelUtil.getTestExecutionUpdateModel(req, res, testExecution);
-
-            // Save the updated document back to the database
-            testExecution.save(function (err, result) {
-                if (err) {
-                    logger.debug(err);
-                    var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_EXECUTION_NOT_AVAILABLE, '', constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, 500));
-                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
-                }
-
-                res.status(constants.HTTP_OK).send({
-                    status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
-                    data: result});
-            });
         }
+
+        res.status(constants.HTTP_OK).send({
+            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
+            data: result});
     });
 };
-
 
 exports.deleteTestExecution = function(req, res, next) {
     TestExecution.remove({ _id: req.params.id }, function(err) {

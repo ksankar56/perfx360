@@ -7,12 +7,14 @@ var _ = require('lodash');
 var parseString = require('xml2js').parseString;
 var mvn = require('maven');
 var async = require('async');
+var microtime = require('microtime');
 var events = require('../../../src/common/events');
 var promise = require('bluebird');
 var parser = require('xml2json');
 var constants = require('../../../src/common/constants');
 var baseService = require('../../../src/common/base.service');
 var logger = require('../../../config/logger');
+
 var Test = require('../../../src/model/Test');
 var TestExecution = require('../../../src/model/TestExecution');
 
@@ -24,91 +26,85 @@ exports.execute = function(req, res, next) {
     //var projectDir = 'dist/projects/' + req.params.projectId;
 
     try {
+        //console.info('microtime.now() = ',  microtime.now());
 
+        var testId = req.params.testId;
+        var startTime = microtime.now();
 
-        async.waterfall([
-            function(callback) {
-                var testId = req.params.testId;
+        testServiceImpl.getTestObject(testId, function (err, tests) {
+            if (!_.isEmpty(tests)) {
+                //console.info('ProjectId = ', tests[0].project._id);
 
-                testServiceImpl.getTestObject(testId, function (err, tests) {
-                    if (!_.isEmpty(tests)) {
-                        //console.info('ProjectId = ', tests[0].project._id);
-
-                        //testService.getTest
-                        var project = tests[0].project;
-                        var projectId = project._id;
-                        var projectDir = 'dist/projects/' + projectId;
-                        const maven = mvn.create({
-                            cwd: projectDir
-                        });
-                        var paramObj = {}
-                        paramObj.projectId = projectId;
-                        paramObj.projectDir = projectDir;
-                        paramObj.project = project;
-
-
-                        var testExecutionJson = {};
-                        testExecutionJson.name = project.name;
-                        testExecutionJson.description = project.description;
-                        testExecutionJson.test = testId;
-                        testExecutionJson.project = project;
-                        testExecutionJson.executedComponents = project.components;
-
-                        testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecution) {
-                            //console.info('testExecution callback = ', testExecution)
-                            paramObj.testExecution = testExecution;
-                            callback(null, projectId, projectDir, maven, req, testExecution);
-                        });
-                    }
+                //testService.getTest
+                var project = tests[0].project;
+                var projectId = project._id;
+                var projectDir = 'dist/projects/' + projectId;
+                const maven = mvn.create({
+                    cwd: projectDir
                 });
-            },
-            executeTest,
-            resultUpdate,
-        ], function (err, result) {
-            // result now equals 'done'
-            console.info('done');
+
+                var testExecutionJson = {};
+                testExecutionJson.name = project.name;
+                testExecutionJson.description = project.description;
+                testExecutionJson.test = testId;
+                testExecutionJson.project = project;
+                testExecutionJson.executedComponents = project.components;
+
+                testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecution) {
+                    console.info('testExecution callback = ', testExecution)
+                    //callback(null, projectId, projectDir, maven, req, testExecution, startTime);
+                    testSetup(projectId, projectDir, maven, req, testExecution, startTime, function (err, result) {
+                        console.info('done done');
+                    })
+                    res.json(testExecution);
+                });
+            }
         });
 
-
-        /*var testExecutionJson = {};
-        testExecutionJson.description = ,
-            test: testExecutionJson.test,
-            project: testExecutionJson.project,
-            executedBy: testExecutionJson.executedBy,
-            resultStatus: testExecutionJson.resultStatus,
-            timeTaken: testExecutionJson.timeTaken,
-            executedComponents: testExecutionJson.executedComponents*/
-
-        /*maven.execute(['clean', 'install'], {'skipTests': true}).then(function (result) {
-            // As mvn.execute(..) returns a promise, you can use this block to continue
-            // your stuff, once the execution of the command has been finished successfully.
-            console.info('result = ', result);
-        });*/
         //mvn.install();
     }  catch (err) {
         logger.debug(err);
     }
 
     //var promise = mvn.effectivePom();
-    res.json({ title: 'jMeter' + req.params.testId });
+
 };
 
-function executeTest(projectId, projectDir, maven, req, testExecution, callback) {
+function testSetup(projectId, projectDir, maven, req, testExecution, startTime, cb) {
+    async.waterfall([
+        function(callback) {
+            callback(null, projectId, projectDir, maven, req, testExecution, startTime);
+        },
+        executeTest,
+        resultUpdate,
+    ], function (err, result) {
+        // result now equals 'done'
+        console.info('done done');
+        //res.json(result);
+        cb(err, result);
+    });
+}
+
+function executeTest(projectId, projectDir, maven, req, testExecution, startTime, callback) {
     // arg1 now equals 'one' and arg2 now equals 'two'
-    console.info('testExecution = ', testExecution);
+    //console.info('testExecution = ', testExecution);
     maven.execute(['clean', 'install'], {'skipTests': true}).then(function (result) {
         // As mvn.execute(..) returns a promise, you can use this block to continue
         // your stuff, once the execution of the command has been finished successfully.
         //console.info('result = ', result);
-        callback(null, projectId, projectDir, maven, testExecution, req);
+        callback(null, projectId, projectDir, maven, req, testExecution, startTime);
     });
 
 }
 
-function resultUpdate(projectId, projectDir, maven, req, testExecution, callback) {
+function resultUpdate(projectId, projectDir, maven, req, testExecution, startTime, callback) {
     // arg1 now equals 'three'
-    console.info('last arg1 = ', projectId);
-    callback(null, 'done');
+    console.info('last arg1 = ', testExecution);
+    testExecution.updated = new Date();
+
+    var endTime = microtime.now();
+    console.info('time taken = ', (endTime - startTime));
+    callback(null, testExecution);
 }
 
 exports.output = function(req, res) {

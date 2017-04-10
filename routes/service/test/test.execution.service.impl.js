@@ -25,29 +25,16 @@ function saveTestExecutionObject (testExecutionJson, req, callback) {
         callback(baseError, null);
     }
 
-    TestExecution.find({name : testExecutionJson.name}, function (err, testExecution) {
-        if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_EXECUTION_NOT_AVAILABLE, '', constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, err.message, 500));
-            //resEvents.emit('ErrorJsonResponse', req, res, baseError);
-            callback(baseError, null);
-        }
+    console.info('testExecutionJson.name = ', testExecutionJson.name);
 
-        if(_.isEmpty(testExecution)) {
-            var testExecution = ModelUtil.getTestExecutionModel(req, testExecutionJson)
+    var testExecution = ModelUtil.getTestExecutionModel(req, testExecutionJson)
 
-            // save testExecution to database
-            testExecution.save(function (err, dbTestExecution) {
-                getTestExecutionObject(dbTestExecution._id, function(err, result) {
-                    callback(err, result);
-                });
-            });
-        } else {
-            logger.debug(constants.TEST_EXECUTION_NOT_AVAILABLE_MSG);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_EXECUTION_NOT_AVAILABLE, '', constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, 500));
-            //resEvents.emit('ErrorJsonResponse', req, res, baseError);
-            callback(baseError, null);
-        }
+    // save testExecution to database
+    testExecution.save(function (err, dbTestExecution) {
+        getTestExecutionObject(dbTestExecution._id, function (err, result) {
+            console.info('sending result = ', result);
+            callback(err, result);
+        });
     });
 }
 
@@ -65,3 +52,24 @@ function getTestExecutionObject (testExecutionId, callback) {
         });
 };
 exports.getTestExecutionObject = getTestExecutionObject;
+
+function updateTestExecutionObject (testExecution, callback) {
+    TestExecution.findById(testExecution._id, function (err, testExecution) {
+        // Handle any possible database errors
+        if (err) {
+            logger.debug(err);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.TEST_EXECUTION_NOT_AVAILABLE, '', constants.TEST_EXECUTION_NOT_AVAILABLE_MSG, err.message, 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        } else {
+            // Update each attribute with any possible attribute that may have been submitted in the body of the request
+            // If that attribute isn't in the request body, default back to whatever it was before.
+            testExecution = ModelUtil.getTestExecutionUpdateModel(req, res, testExecution);
+
+            // Save the updated document back to the database
+            testExecution.save(function (err, result) {
+                callback(err, result);
+            });
+        }
+    });
+}
+exports.updateTestExecutionObject = updateTestExecutionObject;

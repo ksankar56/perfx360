@@ -143,9 +143,11 @@ ModelUtil.getTestExecutionUpdateModel = function (req, testExecution) {
     testExecution.test  = req.body.test || testExecution.test;
     testExecution.project  = req.body.project || testExecution.project;
     testExecution.executedBy  = req.body.executedBy || testExecution.executedBy;
+    testExecution.executed  = testExecution.executed;
     testExecution.resultStatus  = req.body.resultStatus || testExecution.resultStatus;
     testExecution.timeTaken  = req.body.timeTaken || testExecution.timeTaken;
     testExecution.executedComponents  = req.body.executedComponents || testExecution.executedComponents;
+    testExecution.updated  = new Date();
 
     return testExecution;
 };
