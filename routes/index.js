@@ -19,12 +19,15 @@ var express = require('express')
     , testApi = require('./api/test/test.api')
     , testsApi = require('./api/test/tests.api')
     , testExecutionApi = require('./api/test/test.execution.api')
-    , testExecutionsApi = require('./api/test/test.executions.api');
+    , testExecutionsApi = require('./api/test/test.executions.api')
+    , accessibilityApi = require('./api/exec/accessibility.api')
+    , elasticSearchApi = require('./api/elasticsearch/es.api');
 
 var restVersionV1 = '/rest/api/v1/perf';
 
 router.use(restVersionV1 + '/ping', ping);
 router.use(restVersionV1 + '/jmeter', jmeter);
+router.use(restVersionV1 + '/accessibility', accessibilityApi);
 router.use(restVersionV1 + '/user', users);
 router.use(restVersionV1 + '/component', componentTypesApi);
 router.use(restVersionV1 + '/components', componentsApi);
@@ -43,5 +46,6 @@ router.use(restVersionV1 + '/test', testApi);
 router.use(restVersionV1 + '/tests', testsApi);
 router.use(restVersionV1 + '/execution/test', testExecutionApi);
 router.use(restVersionV1 + '/execution/tests', testExecutionsApi);
+router.use(restVersionV1 + '/es', elasticSearchApi);
 
 module.exports = router;

@@ -17,7 +17,6 @@ var TestExecution = require('../../../src/model/TestExecution');
 function saveTestExecutionObject (testExecutionJson, req, callback) {
 
     // create a testExecution
-    console.info('testExecutionJson = ', testExecutionJson);
 
     if (_.isEmpty(testExecutionJson)) {
         logger.debug(constants.TEST_EXECUTION_OBJ_EMPTY_MSG);
@@ -37,7 +36,6 @@ function saveTestExecutionObject (testExecutionJson, req, callback) {
         if(_.isEmpty(testExecution)) {
             var testExecution = ModelUtil.getTestExecutionModel(req, testExecutionJson)
 
-            console.info('testExecution = ', testExecution);
             // save testExecution to database
             testExecution.save(function (err, dbTestExecution) {
                 getTestExecutionObject(dbTestExecution._id, function(err, result) {

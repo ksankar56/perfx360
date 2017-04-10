@@ -32,7 +32,7 @@ exports.execute = function(req, res, next) {
 
                 testServiceImpl.getTestObject(testId, function (err, tests) {
                     if (!_.isEmpty(tests)) {
-                        console.info('ProjectId = ', tests[0].project._id);
+                        //console.info('ProjectId = ', tests[0].project._id);
 
                         //testService.getTest
                         var project = tests[0].project;
@@ -41,6 +41,12 @@ exports.execute = function(req, res, next) {
                         const maven = mvn.create({
                             cwd: projectDir
                         });
+                        var paramObj = {}
+                        paramObj.projectId = projectId;
+                        paramObj.projectDir = projectDir;
+                        paramObj.project = project;
+
+
                         var testExecutionJson = {};
                         testExecutionJson.name = project.name;
                         testExecutionJson.description = project.description;
@@ -49,14 +55,15 @@ exports.execute = function(req, res, next) {
                         testExecutionJson.executedComponents = project.components;
 
                         testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecution) {
-                            console.info('testExecution callback = ', testExecution)
-                            callback(null, projectId, projectDir, maven, req);
+                            //console.info('testExecution callback = ', testExecution)
+                            paramObj.testExecution = testExecution;
+                            callback(null, projectId, projectDir, maven, req, testExecution);
                         });
                     }
                 });
             },
-            mySecondFunction,
-            myLastFunction,
+            executeTest,
+            resultUpdate,
         ], function (err, result) {
             // result now equals 'done'
             console.info('done');
@@ -86,14 +93,19 @@ exports.execute = function(req, res, next) {
     res.json({ title: 'jMeter' + req.params.testId });
 };
 
-function mySecondFunction(projectId, projectDir, maven, req, callback) {
+function executeTest(projectId, projectDir, maven, req, testExecution, callback) {
     // arg1 now equals 'one' and arg2 now equals 'two'
-    console.info('second arg1 = ', projectId);
-    console.info('second arg2 = ', projectDir);
-    callback(null, projectId, projectDir, maven, req);
+    console.info('testExecution = ', testExecution);
+    maven.execute(['clean', 'install'], {'skipTests': true}).then(function (result) {
+        // As mvn.execute(..) returns a promise, you can use this block to continue
+        // your stuff, once the execution of the command has been finished successfully.
+        //console.info('result = ', result);
+        callback(null, projectId, projectDir, maven, testExecution, req);
+    });
+
 }
 
-function myLastFunction(projectId, projectDir, maven, req, callback) {
+function resultUpdate(projectId, projectDir, maven, req, testExecution, callback) {
     // arg1 now equals 'three'
     console.info('last arg1 = ', projectId);
     callback(null, 'done');
@@ -139,10 +151,12 @@ exports.output = function(req, res) {
                     var resultXML = fs.readFileSync(jtlFiles[i], 'utf8');
 
                     var json = parser.toJson(resultXML);
+                    //convertXMLToJSON(resultXML, function(err, result) {
                     var test = {}
-                    test[items[i]] = JSON.parse(json)
+                    test[items[i]] = JSON.parse(json);
 
                     resultJson.results.push(test);
+                    //});
                 }
 
                 callback(null, resultJson);
@@ -155,4 +169,10 @@ exports.output = function(req, res) {
             events.emit("JsonResponse", req, res, resultJson);
         }
     );
+}
+
+function convertXMLToJSON(resultXML, callback) {
+    parseString(resultXML, function (err, result) {
+        callback(err, result);
+    });
 }

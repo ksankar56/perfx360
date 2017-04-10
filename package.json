@@ -33,6 +33,7 @@
     "morgan": "^1.7.0",
     "mpromise": "^0.5.5",
     "ncp": "^2.0.0",
+    "pa11y": "^4.9.0",
     "serve-favicon": "~2.3.2",
     "winston": "^2.3.1",
     "winston-daily-rotate-file": "^1.4.6",

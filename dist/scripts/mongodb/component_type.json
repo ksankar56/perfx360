@@ -5,3 +5,4 @@
 {"_id":{"$oid":"58e940c2c41e02a7cefb1387"},"name":"WEBPAGE","description":"Web Page","order":5,"status":true}
 {"_id":{"$oid":"58e940c2c41e02a7cefb1388"},"name":"WEB_AUTOMATION","description":"Web Automation","order":6,"status":true}
 {"_id":{"$oid":"58e940c2c41e02a7cefb1389"},"name":"MOBILE_AUTOMATION","description":"Mobile Automation","order":7,"status":true}
+{"_id":{"$oid":"58e940c2c41e02a7cefb1390"},"name":"ACCESSIBILITY","description":"Accessibility Testing","order":8,"status":true}
