@@ -350,35 +350,15 @@ builderutil.constructMappings = function(req) {
                     test_type: { type: "string" },
                     execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
                     version : { type: "float" },
-                    group: { type: "boolean" },
-                    file_name: { type: "string" },
-                    t: { type: "long" },
-                    lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
-                    s: { type: "boolean"},
-                    lb: { type: "string" },
-                    rc: { type: "long" },
-                    rm: { type: "string" },
-                    tn: { type: "string" },
-                    dt: { type: "string" },
-                    by: {type : "long"},
+                    test_url : { type: "string" },
+                    code: { type: "string" },
+                    context: { type: "string" },
+                    message: { type: "string" },
+                    selector: { type: "string" },
+                    type: { type: "string" },
+                    typeCode: { type: "integer" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
-                    property : {
-                        type : "object",
-                        properties : {
-                            xs : {type : "string", index : "not_analyzed"},
-                            name : {type : "string", index : "not_analyzed"}
-                        }
-                    },
-                    assertion_result : {
-                        type : "object",
-                        properties : {
-                            fm : {type : "string", index : "not_analyzed"},
-                            error : {type : "boolean", index : "not_analyzed"},
-                            failure : {type : "boolean", index : "not_analyzed"}
-                        }
-                    },
                     status: { type: "boolean", index : "not_analyzed" }
                 }
             }
