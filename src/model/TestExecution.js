@@ -9,10 +9,13 @@ var testExecutionSchema = new Schema({
     description: {type: String},
     test: {type: Schema.ObjectId, ref: 'Test'},
     project: {type: Schema.ObjectId, ref: 'Project'},
-    updatedBy: {type: Schema.ObjectId, ref: 'User'},
+    executedBy: {type: Schema.ObjectId, ref: 'User'},
+    resultStatus: {type: Boolean, default: false},
+    timeTaken: {type: Number, default: 0},
+    executedComponents: [{type: Schema.ObjectId, ref: 'Component'}],
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }
-}, { collection: 'tests' });
+}, { collection: 'test_executions' });
 
 testExecutionSchema.pre('save', function(next) {
     if (!this.created) this.created = new Date;

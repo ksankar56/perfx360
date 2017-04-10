@@ -6,6 +6,7 @@ var constants = require('../../src/common/constants');
 var Project = require('../../src/model/Project');
 var Group = require('../../src/model/Group');
 var Test = require('../../src/model/Test');
+var TestExecution = require('../../src/model/TestExecution');
 var Dashboard = require('../../src/model/Dashboard');
 var DateUtil = require('./date.util');
 
@@ -119,6 +120,34 @@ ModelUtil.getTestUpdateModel = function (req, res, test) {
     test.updatedBy  = req.body.updatedBy || test.updatedBy;
 
     return test;
+};
+
+ModelUtil.getTestExecutionModel = function (req, res, testExecutionJson) {
+    var testExecution = new TestExecution({
+        name: testExecutionJson.name,
+        description: testExecutionJson.description,
+        test: testExecutionJson.test,
+        project: testExecutionJson.project,
+        executedBy: testExecutionJson.executedBy,
+        resultStatus: testExecutionJson.resultStatus,
+        timeTaken: testExecutionJson.timeTaken,
+        executedComponents: testExecutionJson.executedComponents
+    });
+
+    return testExecution;
+};
+
+ModelUtil.getTestExecutionUpdateModel = function (req, res, testExecution) {
+    testExecution.name  = req.body.name || testExecution.name;
+    testExecution.description  = req.body.description || testExecution.description;
+    testExecution.test  = req.body.test || testExecution.test;
+    testExecution.project  = req.body.project || testExecution.project;
+    testExecution.executedBy  = req.body.executedBy || testExecution.executedBy;
+    testExecution.resultStatus  = req.body.resultStatus || testExecution.resultStatus;
+    testExecution.timeTaken  = req.body.timeTaken || testExecution.timeTaken;
+    testExecution.executedComponents  = req.body.executedComponents || testExecution.executedComponents;
+
+    return testExecution;
 };
 
 module.exports = ModelUtil;

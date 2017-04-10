@@ -29,7 +29,17 @@ var graphInstanceSchema = new Schema({
         type: Number
     },
     esQuery: {
-        type: Object
+        type: String,
+        get: function(data) {
+            try {
+                return JSON.parse(data);
+            } catch(err) {
+                return data;
+            }
+        },
+        set: function(data) {
+            return JSON.stringify(data);
+        }
     },
     xAxis : {
         type: String
@@ -58,6 +68,7 @@ var graphInstanceSchema = new Schema({
     updatedBy: {
         type: String
     },
+    instanceType : {type: String, default: "GRAPH"},
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }
 }, { collection: 'graph_instances' });

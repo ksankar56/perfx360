@@ -133,7 +133,7 @@
 				{
 					"name": "Get Groups",
 					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/group",
+						"url": "http://localhost:8642/rest/api/v1/perf/groups",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -412,7 +412,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"graphInstanceId\" : 1,\n    \"name\" : \"Line Graph\",\n    \"description\" : \"Line Graph\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"graph\" : \"58e933edc41e02a7cefb109a\",\n    \"autoRefresh\" : true,\n    \"autoRefreshDefSec\" : 5,\n    \"esQuery\" : {},\n    \"xAxis\" : \"time\",\n    \"xAxisCaption\" : \"Time Series\",\n    \"y1Axis\" : \"milliseconds\",\n    \"y1AxisCaption\" : \"Millis\",\n    \"y2Axis\" : \"count\",\n    \"y2AxisCaption\" : \"Count\",\n    \"createdDate\" : \"09/04/2017\",\n    \"updatedDate\" : \"09/04/2017\",\n    \"updatedBy\" : \"Admin\"\n}"
+							"raw": "{\n\t\"graphInstanceId\" : 3,\n    \"name\" : \"Line Graph 3\",\n    \"description\" : \"Line Graph\",\n    \"order\" : 1,\n    \"status\" : true,\n    \"graph\" : \"58e933edc41e02a7cefb109a\",\n    \"autoRefresh\" : true,\n    \"autoRefreshDefSec\" : 5,\n    \"esQuery\" : {},\n    \"xAxis\" : \"time\",\n    \"xAxisCaption\" : \"Time Series\",\n    \"y1Axis\" : \"milliseconds\",\n    \"y1AxisCaption\" : \"Millis\",\n    \"y2Axis\" : \"count\",\n    \"y2AxisCaption\" : \"Count\",\n    \"createdDate\" : \"09/04/2017\",\n    \"updatedDate\" : \"09/04/2017\",\n    \"updatedBy\" : \"Admin\"\n}"
 						},
 						"description": ""
 					},
@@ -421,7 +421,7 @@
 				{
 					"name": "Get Graph Instance",
 					"request": {
-						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/graph/instance/58ea836d2ac05e49bcaba284",
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/graph/instance/58eaac7d0aee8d50b8c43b8a",
 						"method": "GET",
 						"header": [
 							{
@@ -483,6 +483,64 @@
 							}
 						],
 						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dashboard Types",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/types",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard/58eaaf56b5c0ab52e2bab835",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Dashboard",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/dashboard",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"dashboardId\" : 1,\n\t\"name\" : \"Result Dashboard\",\n\t\"description\" : \"Test Execution Result Dashboard\",\n\t\"order\" : 1,\n\t\"status\" : true,\n\t\"system\" : true,\n\t\"project\" : \"58eaaa7e0aee8d50b8c43b89\",\n\t\"component\" : \"58ea8b9890f1904ab7c16f82\",\n\t\"dashboardType\" : \"58eaa6d3c41e02a7cefb50a4\",\n\t\"graphInstances\" : \"58eaac7d0aee8d50b8c43b8a\",\n\t\"updatedBy\" : \"58ea7e48e3fc6848c6f87cbd\"\n}"
+						},
 						"description": ""
 					},
 					"response": []
@@ -559,7 +617,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\" : \"58ea800b14cf9d4922d568be\",\n    \"name\" : \"QA1\",\n    \"description\" : \"QA1 Environment\",\n    \"protocol\" : \"https\",\n    \"host\" : \"qa1.site.com\",\n    \"port\" : \"8080\",\n    \"context\" : \"apps\",\n    \"order\" : 2,\n    \"status\" : false\n}"
+							"raw": "{\n\t\"id\" : \"58eab7a79232e4539e5a4270\",\n    \"name\" : \"QA1\",\n    \"description\" : \"QA1 Environment\",\n    \"protocol\" : \"https\",\n    \"host\" : \"qa1.site.com\",\n    \"port\" : \"8080\",\n    \"context\" : \"apps\",\n    \"order\" : 2,\n    \"status\" : false\n}"
 						},
 						"description": ""
 					},
@@ -662,7 +720,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"Project6\",\n    \"description\" : \"Project6 Description\",\n    \"status\" : true,\n    \"groups\" : \"58e96c770a67a732bb754660\",\n    \"components\" : \"58e96b0c9c50273245a3347c\",\n    \"createdBy\" : \"58e36333b390e01c9cb07ea2\"\n}"
+							"raw": "{\n    \"name\" : \"Project6\",\n    \"description\" : \"Project6 Description\",\n    \"status\" : true,\n    \"groups\" : \"58eaaa110aee8d50b8c43b88\",\n    \"components\" : \"58ea8b9890f1904ab7c16f82\",\n    \"createdBy\" : \"58ea7e48e3fc6848c6f87cbd\"\n}"
 						},
 						"description": ""
 					},
@@ -739,6 +797,222 @@
 							"mode": "raw",
 							"raw": "{\n\t\"id\" : \"58e9ed90a2ccf836c114af86\",\n\t\"groups\" : [\"58e96c770a67a732bb754660\"]\n}"
 						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Tests",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/tests",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Con",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save Test",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/test",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"testId\" : 1,\n    \"name\" : \"Perf Test 10 April\",\n    \"description\" : \"Perf Test 10 April\",\n    \"project\" : \"58eaaa7e0aee8d50b8c43b89\",\n    \"components\" : \"58ea8b9890f1904ab7c16f82\",\n    \"groups\" : \"58eaaa110aee8d50b8c43b88\",\n    \"environment\" : \"58eab7a79232e4539e5a4270\",\n    \"updatedBy\" : \"58ea7e48e3fc6848c6f87cbd\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Test",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/test/58eabd0fb87871565c6acbbd",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Test",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/test",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58eabd0fb87871565c6acbbd\",\n\t\"testId\": 1,\n    \"name\": \"Perf Test 11 April\",\n    \"description\": \"Perf Test 11 April\",\n    \"project\": \"58eaaa7e0aee8d50b8c43b89\",\n    \"environment\": \"58eab7a79232e4539e5a4270\",\n    \"updatedBy\": \"58ea7e48e3fc6848c6f87cbd\",\n    \"groups\": \"58eaaa110aee8d50b8c43b88\",\n    \"components\": \"58ea8b9890f1904ab7c16f82\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Test",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/test/58eabd0fb87871565c6acbbd",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Test Executions",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/execution/tests",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Test Execution",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/execution/test",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Perf Test 10 April\",\n    \"description\" : \"Perf Test 10 April\",\n    \"test\" : \"58eacd992fac0a5977d0624d\",\n    \"project\" : \"58eaaa7e0aee8d50b8c43b89\",\n    \"executedBy\" : \"58ea7e48e3fc6848c6f87cbd\",\n    \"executedComponents\" : \"58ea8b9890f1904ab7c16f82\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Test Execution",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/execution/test",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\" : \"58eacf327d656259b23d7bc6\",\n    \"resultStatus\": true,\n    \"_updated\": \"2017-04-10T00:15:00.000Z\",\n    \"timeTaken\" : 15000\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Test Execution",
+					"request": {
+						"url": "http://localhost:8642/rest/api/v1/perf/execution/test/58eace2c7d656259b23d7bc5",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
 						"description": ""
 					},
 					"response": []

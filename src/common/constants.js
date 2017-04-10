@@ -132,6 +132,17 @@ module.exports = Object.freeze({
     DASHBOARD_NOT_AVAILABLE_MSG : "Dashboard not available",
 
 
+    //Test Execution Code and Messages
+    TEST_EXECUTION_OBJ_EMPTY: "TEST_EXECUTION_OBJ_EMPTY",
+    TEST_EXECUTION_OBJ_EMPTY_MSG : "Test Execution Object is Empty",
+
+    TEST_EXECUTION_DUPLICATE : "TEST_EXECUTION_DUPLICATE",
+    TEST_EXECUTION_DUPLICATE_MSG : "Duplicate Test Execution",
+
+    TEST_EXECUTION_NOT_AVAILABLE : "TEST_EXECUTION_NOT_AVAILABLE",
+    TEST_EXECUTION_NOT_AVAILABLE_MSG : "Test Execution not available",
+
+
     //Test Code and Messages
     TEST_OBJ_EMPTY: "TEST_OBJ_EMPTY",
     TEST_OBJ_EMPTY_MSG : "Test Object is Empty",
