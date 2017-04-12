@@ -3,6 +3,7 @@ var express = require('express')
     , ping = require('./api/ping')
     , jmeter = require('./api/exec/jmeter.api')
     , users = require('./api/user/users.api')
+    , componentApi = require('./api/component/component.api')
     , componentsApi = require('./api/component/components.api')
     , componentTypesApi = require('./api/component/component.types.api')
     , graphsApi = require('./api/dashboard/graph.api')
@@ -29,7 +30,8 @@ router.use(restVersionV1 + '/ping', ping);
 router.use(restVersionV1 + '/jmeter', jmeter);
 router.use(restVersionV1 + '/accessibility', accessibilityApi);
 router.use(restVersionV1 + '/user', users);
-router.use(restVersionV1 + '/component', componentTypesApi);
+router.use(restVersionV1 + '/component', componentApi);
+router.use(restVersionV1 + '/comp', componentTypesApi);
 router.use(restVersionV1 + '/components', componentsApi);
 router.use(restVersionV1 + '/graph', graphApi);
 router.use(restVersionV1 + '/graphs', graphsApi);

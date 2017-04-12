@@ -15,6 +15,7 @@ var parser = require('xml2json');
 var constants = require('../../../src/common/constants');
 var baseService = require('../../../src/common/base.service');
 var logger = require('../../../config/logger');
+var ModelUtil = require('../../../src/util/model.util');
 
 var Test = require('../../../src/model/Test');
 var TestExecution = require('../../../src/model/TestExecution');
@@ -47,7 +48,7 @@ exports.execute = function(req, res, next) {
                 testExecutionJson.executedComponents = project.components;
 
                 testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecution) {
-                    console.info('testExecution callback = ', testExecution[0]._id);
+                    //console.info('testExecution callback = ', testExecution[0]._id);
                     var textExecutionId = testExecution[0]._id;
 
                     //callback(null, projectId, projectDir, maven, req, testExecution, startTime);
@@ -60,10 +61,11 @@ exports.execute = function(req, res, next) {
                     ncp(source, projectPath, function (err) {
                         var projectId = textExecutionId;
                         var projectDir = 'dist/projects/' + textExecutionId;
-                        console.info("projectDir = ", projectDir);;
+                        //console.info("projectDir = ", projectDir);
                         const maven = mvn.create({
                             cwd: projectDir
                         });
+
                         testSetup(projectId, projectDir, maven, req, testExecution, startTime, function (err, result) {
                             console.info('done done');
                         });
@@ -88,7 +90,8 @@ function testSetup(projectId, projectDir, maven, req, testExecution, startTime, 
             callback(null, projectId, projectDir, maven, req, testExecution, startTime);
         },
         executeTest,
-        resultUpdate,
+        testExecutionUpdate,
+        testResultUpdate,
     ], function (err, result) {
         // result now equals 'done'
         console.info('done done');
@@ -109,19 +112,53 @@ function executeTest(projectId, projectDir, maven, req, testExecution, startTime
 
 }
 
-function resultUpdate(projectId, projectDir, maven, req, testExecution, startTime, callback) {
+function testExecutionUpdate(projectId, projectDir, maven, req, testExecution, startTime, callback) {
     // arg1 now equals 'three'
-    console.info('last arg1 = ', testExecution);
-    testExecution.updated = new Date();
-
+    //console.info('last arg1 = ', testExecution);
     var endTime = microtime.now();
-    console.info('time taken = ', (endTime - startTime));
-    callback(null, testExecution);
+    var timeTaken = parseInt(endTime - startTime);
+
+    //console.info('testExecution._id = ', testExecution[0]._id);
+
+    var testExecutionJson = {};
+    testExecutionJson.id = testExecution[0]._id;
+    testExecutionJson.timeTaken = timeTaken;
+    testExecutionJson.resultStatus = true;
+    testExecutionJson.executed = true;
+    testExecutionJson.updated = new Date();
+
+    testExecutionServiceImpl.updateTestExecutionObject(testExecutionJson, function (err, result) {
+        callback(null, projectId, projectDir, maven, req, testExecution, startTime);
+    });
 }
 
-exports.output = function(req, res) {
-    var projectId = req.params.projectId;
-    var project = path.join(process.env.PWD, "/dist/projects/" + projectId);
+function testResultUpdate(projectId, projectDir, maven, req, testExecutions, startTime, callback) {
+    getResultJson(testExecutions[0]._id, function(err, data) {
+        console.info('result = ', data.results);
+        var results = data.results;
+
+        //for (i = 0; i < results.length; i++) {
+        for(var key in results){
+            console.info(' filename = ', results[key]);
+        }
+
+        //callback(null, projectId, projectDir, maven, req, testExecutions, startTime)
+    });
+};
+
+exports.result = function(req, res) {
+    getResultJson(req.params.testExecutionId, function (err, result) {
+        events.emit("JsonResponse", req, res, result);
+    });
+}
+
+function getTestResultObject (paramObj, testResultObject, testExecution) {
+    ModelUtil.getTestResultModel(paramObj, testResultObject, testExecution);
+}
+exports.getTestResultObject = getTestResultObject;
+
+function getResultJson(testExecutionId, callback) {
+    var project = path.join(process.env.PWD, "/dist/projects/" + testExecutionId);
     var resultsPath = project + constants.JMETER_TARGET_RESULT_PATH;
 
     async.waterfall(
@@ -131,9 +168,8 @@ exports.output = function(req, res) {
                     var files = [];
 
                     if(!items) {
-                        res.status(constants.HTTP_OK).send({
-                            status: baseService.getStatus(req, res, constants.HTTP_OK, "No Results found.")});
-                        return;
+                        var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, constants.FATAL_ERROR_MSG, 500));
+                        callback(baseError, null);
                     }
                     for(var i = 0; i < items.length; i++) {
                         if(_.endsWith(items[i], 'jtl')) {
@@ -174,10 +210,12 @@ exports.output = function(req, res) {
             if (err) {
                 logger.debug(err);
             }
-            events.emit("JsonResponse", req, res, resultJson);
+            //events.emit("JsonResponse", req, res, resultJson);
+            callback(err, resultJson);
         }
     );
 }
+exports.getResultJson = getResultJson;
 
 function convertXMLToJSON(resultXML, callback) {
     parseString(resultXML, function (err, result) {

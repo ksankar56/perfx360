@@ -17,7 +17,8 @@ var Component = require('../../../src/model/Component');
 
 exports.getComponents = function(req, res, next) {
     Component.find({})
-        .populate('component')
+        .populate({path : 'componentType'})
+        .populate({path : 'group'})
         .exec( function (err, components) {
             if (err) {
                 logger.debug(err);
@@ -31,22 +32,42 @@ exports.getComponents = function(req, res, next) {
     });
 };
 
+exports.getComponent = function(req, res, next) {
+    Component.find({_id: req.params.id})
+        .populate({path : 'componentType'})
+        .populate({path : 'group'})
+        .exec( function (err, component) {
+            if (err) {
+                logger.debug(err);
+                var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_NOT_AVAILABLE, '', constants.COMPONENT_NOT_AVAILABLE_MSG, err.message, 500));
+                resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            }
+
+            res.status(constants.HTTP_OK).send({
+                status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
+                data: component});
+        });
+};
+
+
 exports.saveComponent = function(req, res, next) {
 
     // create a component
     var componentJson = req.body;
 
+    console.info('componentJson = ', componentJson);
     if (_.isEmpty(componentJson)) {
         logger.debug(constants.COMPONENT_OBJ_EMPTY_MSG);
         var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_OBJ_EMPTY, '', constants.COMPONENT_OBJ_EMPTY_MSG, constants.COMPONENT_OBJ_EMPTY_MSG, 500));
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
-    var component = ModelUtil.getCompomentModel(req, res, componentJson);
-
+    var component = ModelUtil.getCompomentModel(componentJson);
+    console.info('component = ', component);
     // save component to database
     component.save(function(err) {
         if (err) {
+            console.info('err = ', err);
             logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_DUPLICATE, '', constants.COMPONENT_DUPLICATE_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
@@ -76,6 +97,7 @@ exports.updateComponent = function(req, res, next) {
             component.perfLog = req.body.perfLog || component.perfLog;
             component.metricLog = req.body.metricLog || component.metricLog;
             component.networkLog = req.body.networkLog || component.networkLog;
+            component.group = req.body.group || component.group;
 
             // Save the updated document back to the database
             component.save(function (err, result) {

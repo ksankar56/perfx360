@@ -21,6 +21,6 @@ router.get('/mvn/exec/:testId', maven.execute);
  * @return {Function}
  * @api public
  */
-router.get('/mvn/output/:projectId/:testName', maven.output);
+router.get('/mvn/result/:testExecutionId', maven.result);
 
 module.exports = router;

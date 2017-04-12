@@ -53,8 +53,8 @@ function getTestExecutionObject (testExecutionId, callback) {
 };
 exports.getTestExecutionObject = getTestExecutionObject;
 
-function updateTestExecutionObject (testExecution, callback) {
-    TestExecution.findById(testExecution._id, function (err, testExecution) {
+function updateTestExecutionObject (testExecutionJson, callback) {
+    TestExecution.findById(testExecutionJson.id, function (err, testExecution) {
         // Handle any possible database errors
         if (err) {
             logger.debug(err);
@@ -63,7 +63,11 @@ function updateTestExecutionObject (testExecution, callback) {
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
             // If that attribute isn't in the request body, default back to whatever it was before.
-            testExecution = ModelUtil.getTestExecutionUpdateModel(req, res, testExecution);
+            //var testExecution = ModelUtil.getTestExecutionUpdateModel(req, res, testExecution);
+            testExecution.timeTaken = testExecutionJson.timeTaken;
+            testExecution.resultStatus = testExecutionJson.resultStatus;
+            testExecution.executed = testExecutionJson.executed;
+            testExecution.updated = testExecutionJson.updated;
 
             // Save the updated document back to the database
             testExecution.save(function (err, result) {

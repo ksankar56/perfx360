@@ -32,7 +32,6 @@ builderutil.constructMappings = function(req) {
                     environment: { type: "string" },
                     test_id: { type: "string" },
                     test_execution_id : { type: "string" },
-                    test_type: { type: "string" },
                     execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
                     version : { type: "float" },
                     group: { type: "boolean" },

@@ -5,6 +5,7 @@
 var constants = require('../../src/common/constants');
 var Project = require('../../src/model/Project');
 var Group = require('../../src/model/Group');
+var Component = require('../../src/model/Component');
 var Test = require('../../src/model/Test');
 var TestExecution = require('../../src/model/TestExecution');
 var Dashboard = require('../../src/model/Dashboard');
@@ -41,17 +42,23 @@ ModelUtil.getGroupModel = function(req, res, groupJson) {
     return group;
 };
 
-ModelUtil.getCompomentModel = function(req, res, componentJson) {
-    var component = new Component({
-        name: componentJson.name,
-        description: componentJson.description,
-        order : componentJson.order,
-        status : componentJson.status,
-        componentType: componentJson.componentType,
-        perfLog : componentJson.perfLog,
-        metricLog : componentJson.metricLog,
-        networkLog : componentJson.networkLog
-    });
+ModelUtil.getCompomentModel = function(componentJson) {
+
+    try {
+        var component = new Component({
+            name: componentJson.name,
+            description: componentJson.description,
+            order: componentJson.order,
+            status: componentJson.status,
+            componentType: componentJson.componentType,
+            perfLog: componentJson.perfLog,
+            metricLog: componentJson.metricLog,
+            networkLog: componentJson.networkLog,
+            group: componentJson.group
+        });
+    } catch(err) {
+        console.info('err = ', err);
+    }
 
     return component;
 };
@@ -148,6 +155,47 @@ ModelUtil.getTestExecutionUpdateModel = function (req, testExecution) {
     testExecution.timeTaken  = req.body.timeTaken || testExecution.timeTaken;
     testExecution.executedComponents  = req.body.executedComponents || testExecution.executedComponents;
     testExecution.updated  = new Date();
+
+    return testExecution;
+};
+
+ModelUtil.getTestResultModel = function (paramObj, testResultJson, testExecution) {
+    var testResult = new TestResult({
+        test_execution_id : testExecution._id,
+        test_id: testExecution.test._id,
+        project_id: testExecution.project._id,
+        component_id: paramObj.componentId,
+        group_id: testResultJson.groupId,
+        project_name: testResultJson.projectName,
+        project_description: testResultJson.projectDescription,
+        environment: testResultJson.environmentId,
+        type: testResultJson.type,
+        version : testResultJson.version,
+        group: testResultJson.group,
+        file_name: testResultJson.fileName,
+        t: testResultJson.t,
+        lt: testResultJson.lt,
+        ts : testResultJson.ts,
+        s: testResultJson.s,
+        lb: testResultJson.lb,
+        rc: testResultJson.rc,
+        rm: testResultJson.rm,
+        tn: testResultJson.tn,
+        dt: testResultJson.dt,
+        by: testResultJson.by,
+        start_time: testResultJson.startTime,
+        end_time: testResultJson.endTime,
+        property : {
+            xs : testResultJson.property.xs,
+            name : testResultJson.property.name
+        },
+        assertion_result : {
+            fm : testResultJson.assertionResult.fm,
+            error: testResultJson.assertionResult.error,
+            failure: testResultJson.assertionResult.failure
+        },
+        status: { type: Boolean},
+    });
 
     return testExecution;
 };
