@@ -13,6 +13,6 @@ var accessibilityService = require('../../service/exec/accessibility.service')
  * @return {Function}
  * @api public
  */
-router.get('/test/exec/:testId', accessibilityService.executeAccessibility);
+router.post('/test/exec', accessibilityService.executeAccessibility);
 
 module.exports = router;

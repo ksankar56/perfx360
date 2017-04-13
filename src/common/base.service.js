@@ -83,7 +83,8 @@ exports.assignTestResultValues =  function(documents, testExecutions, callback) 
     var assignedDocuments = [];
 
     for(var key in documents) {
-        //console.info(key + ' json = ', documents[key]);
+        console.info(key + ' key = ', key);
+        console.info(key + ' json = ', key instanceof Array);
         var results = documents[key];
         //console.info('result = ', results.length);
         var testExecution = testExecutions[0];
@@ -91,138 +92,7 @@ exports.assignTestResultValues =  function(documents, testExecutions, callback) 
 
         for (var i = 0; i < results.length; i++) {
             var result = results[i];
-            var assignedDocument = {};
-            assignedDocument.project_id = testExecution.project._id.toString();
-            assignedDocument.component_id = key;
-            assignedDocument.group_id = key;
-            assignedDocument.project_name = testExecution.name;
-            assignedDocument.project_description = testExecution.description;
-            assignedDocument.environment_id = testExecution.test.environment._id.toString();
-            assignedDocument.environment_name = testExecution.test.environment.name;
-            assignedDocument.test_id = testExecution.test._id.toString();
-            assignedDocument.test_name = testExecution.test.name;
-            assignedDocument.test_execution_id = testExecution._id.toString();
-            assignedDocument.execution_time = 1; //testExecution.executedComponents.timeTaken;
-            assignedDocument.version = 1.0;
-            if (result.parent) {
-                assignedDocument.group = true;
-            } else {
-                assignedDocument.group = false;
-            }
-            assignedDocument.file_name = key + '.jtl';
-            if (result.t) {
-                assignedDocument.t = parseInt(result.t);
-            }
-            if (result.it) {
-                assignedDocument.it = parseInt(result.it);
-            }
-            if (result.lt) {
-                assignedDocument.lt = parseInt(result.lt);
-            }
-            if (result.ct) {
-                assignedDocument.ct = parseInt(result.ct);
-            }
-            if (result.ts) {
-                assignedDocument.ts = result.ts;
-            }
-            if (result.s) {
-                assignedDocument.s = Boolean(result.s);
-            }
-            if (result.lb) {
-                assignedDocument.lb = result.lb;
-            }
-            if (result.rc) {
-                assignedDocument.rc = parseInt(result.rc);
-            }
-
-            if (result.rm) {
-                assignedDocument.rm = result.rm;
-            }
-            if (result.tn) {
-                assignedDocument.tn = result.tn;
-            }
-            if (result.dt) {
-                assignedDocument.dt = result.dt;
-            }
-            if (result.de) {
-                assignedDocument.de = result.de;
-            }
-            if (result.by) {
-                assignedDocument.by = parseInt(result.by);
-            }
-            if (result.sby) {
-                assignedDocument.sby = parseInt(result.sby);
-            }
-            if (result.sc) {
-                assignedDocument.sc = parseInt(result.sc);
-            }
-            if (result.ec) {
-                assignedDocument.ec = parseInt(result.ec);
-            }
-            if (result.ng) {
-                assignedDocument.ng = parseInt(result.ng);
-            }
-            if (result.na) {
-                assignedDocument.na = parseInt(result.na);
-            }
-
-            if (result.hn) {
-                assignedDocument.hn = result.hn;
-            }
-
-            if (result.requestHeader) {
-                var requestHeader = {}
-                requestHeader.class = result.requestHeader.class;
-                requestHeader.t = result.requestHeader.$t;
-
-                assignedDocument.requestHeader = requestHeader;
-            }
-
-            if (result.responseData) {
-                var responseData = {}
-                responseData.class = result.responseData.class;
-                responseData.t = result.responseData.$t;
-
-                assignedDocument.responseData = responseData;
-            }
-            if (result.responseFile) {
-                var responseFile = {}
-                responseFile.class = result.responseFile.class;
-
-                assignedDocument.responseFile = responseFile;
-            }
-            if (result.cookies) {
-                var cookies = {}
-                cookies.class = result.cookies.class;
-
-                assignedDocument.cookies = cookies;
-            }
-            if (result.method) {
-                var method = {}
-                method.class = result.method.class;
-
-                assignedDocument.method = method;
-            }
-            if (result.queryString) {
-                var queryString = {}
-                queryString.class = result.queryString.class;
-
-                assignedDocument.queryString = queryString;
-            }
-            if (result.redirectLocation) {
-                var redirectLocation = {}
-                redirectLocation.class = result.redirectLocation.class;
-                redirectLocation.t = result.redirectLocation.$t;
-
-                assignedDocument.redirectLocation = redirectLocation;
-            }
-
-            if (result.url) {
-                assignedDocument.url = result.url;
-            }
-            assignedDocument.created = new Date();
-
-            assignedDocuments.push(assignedDocument);
+            assignedDocuments.push(_getDocument(key, testExecution, result));
         }
     }
 
@@ -230,6 +100,178 @@ exports.assignTestResultValues =  function(documents, testExecutions, callback) 
     callback(null, assignedDocuments);
 }
 
+exports.getAccessibilityTestResultValues =  function(documents, testExecutions, callback) {
+
+    var assignedDocuments = [];
+
+    for (var i = 0; i < documents.length; i++) {
+        var testExecution = testExecutions[0];
+        var result = documents[i];
+        assignedDocuments.push(_getDocument("58eaaa110aee8d50b8c43b88", testExecution, result));
+    }
+
+    //console.info('assignedDocuments = ', assignedDocuments);
+    callback(null, assignedDocuments);
+}
+
+function _getDocument(key, testExecution, result) {
+    var assignedDocument = {};
+
+    assignedDocument = _getBaseDocument(key, testExecution, assignedDocument);
+    assignedDocument.file_name = key + '.jtl';
+    if (result.t) {
+        assignedDocument.t = parseInt(result.t);
+    }
+    if (result.it) {
+        assignedDocument.it = parseInt(result.it);
+    }
+    if (result.lt) {
+        assignedDocument.lt = parseInt(result.lt);
+    }
+    if (result.ct) {
+        assignedDocument.ct = parseInt(result.ct);
+    }
+    if (result.ts) {
+        assignedDocument.ts = result.ts;
+    }
+    if (result.s) {
+        assignedDocument.s = Boolean(result.s);
+    }
+    if (result.lb) {
+        assignedDocument.lb = result.lb;
+    }
+    if (result.rc) {
+        assignedDocument.rc = parseInt(result.rc);
+    }
+
+    if (result.rm) {
+        assignedDocument.rm = result.rm;
+    }
+    if (result.tn) {
+        assignedDocument.tn = result.tn;
+    }
+    if (result.dt) {
+        assignedDocument.dt = result.dt;
+    }
+    if (result.de) {
+        assignedDocument.de = result.de;
+    }
+    if (result.by) {
+        assignedDocument.by = parseInt(result.by);
+    }
+    if (result.sby) {
+        assignedDocument.sby = parseInt(result.sby);
+    }
+    if (result.sc) {
+        assignedDocument.sc = parseInt(result.sc);
+    }
+    if (result.ec) {
+        assignedDocument.ec = parseInt(result.ec);
+    }
+    if (result.ng) {
+        assignedDocument.ng = parseInt(result.ng);
+    }
+    if (result.na) {
+        assignedDocument.na = parseInt(result.na);
+    }
+
+    if (result.hn) {
+        assignedDocument.hn = result.hn;
+    }
+
+    if (result.requestHeader) {
+        var requestHeader = {}
+        requestHeader.class = result.requestHeader.class;
+        requestHeader.t = result.requestHeader.$t;
+
+        assignedDocument.requestHeader = requestHeader;
+    }
+
+    if (result.responseData) {
+        var responseData = {}
+        responseData.class = result.responseData.class;
+        responseData.t = result.responseData.$t;
+
+        assignedDocument.responseData = responseData;
+    }
+    if (result.responseFile) {
+        var responseFile = {}
+        responseFile.class = result.responseFile.class;
+
+        assignedDocument.responseFile = responseFile;
+    }
+    if (result.cookies) {
+        var cookies = {}
+        cookies.class = result.cookies.class;
+
+        assignedDocument.cookies = cookies;
+    }
+    if (result.method) {
+        var method = {}
+        method.class = result.method.class;
+
+        assignedDocument.method = method;
+    }
+    if (result.queryString) {
+        var queryString = {}
+        queryString.class = result.queryString.class;
+
+        assignedDocument.queryString = queryString;
+    }
+    if (result.redirectLocation) {
+        var redirectLocation = {}
+        redirectLocation.class = result.redirectLocation.class;
+        redirectLocation.t = result.redirectLocation.$t;
+
+        assignedDocument.redirectLocation = redirectLocation;
+    }
+
+    if (result.url) {
+        assignedDocument.url = result.url;
+    }
+
+    if (result.context) {
+        assignedDocument.context = result.context;
+    }
+
+    if (result.message) {
+        assignedDocument.message = result.message;
+    }
+
+    if (result.selector) {
+        assignedDocument.selector = result.selector;
+    }
+
+    if (result.type) {
+        assignedDocument.type = result.type;
+    }
+
+    if (result.typeCode) {
+        assignedDocument.typeCode = parseInt(result.typeCode);
+    }
+
+    assignedDocument.created = new Date();
+
+    return assignedDocument;
+}
+
+function _getBaseDocument(componentId, testExecution, assignedDocument) {
+    assignedDocument.project_id = testExecution.project._id.toString();
+    assignedDocument.component_id = componentId;
+    assignedDocument.group_id = componentId;
+    assignedDocument.project_name = testExecution.name;
+    assignedDocument.project_description = testExecution.description;
+    assignedDocument.environment_id = testExecution.test.environment._id.toString();
+    assignedDocument.environment_name = testExecution.test.environment.name;
+    assignedDocument.test_id = testExecution.test._id.toString();
+    assignedDocument.test_name = testExecution.test.name;
+    assignedDocument.test_execution_id = testExecution._id.toString();
+    assignedDocument.execution_time = 1; //testExecution.executedComponents.timeTaken;
+    assignedDocument.version = 1.0;
+    assignedDocument.group = false;
+
+    return assignedDocument;
+}
 function _isArray(ob) {
     return ob.constructor === Array;
 }

@@ -7,31 +7,128 @@ var _ = require('lodash');
 var parseString = require('xml2js').parseString;
 var mvn = require('maven');
 var async = require('async');
+var microtime = require('microtime');
+var ncp = require('ncp').ncp;
 var events = require('../../../src/common/events');
 var promise = require('bluebird');
 var parser = require('xml2json');
 var constants = require('../../../src/common/constants');
 var baseService = require('../../../src/common/base.service');
 var logger = require('../../../config/logger');
-
+var ModelUtil = require('../../../src/util/model.util');
+var BaseError = require('../../../src/common/BaseError');
+var Utils = require('../../../src/util/util');
 var pa11y = require('pa11y');
 
-exports.executeAccessibility = function(req, res, next) {
-    testAccessibility(function (err, results) {
-        if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
-        }
+var Test = require('../../../src/model/Test');
+var TestExecution = require('../../../src/model/TestExecution');
 
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
-            data: results});
-        //console.info('done done');
-    });
+var testServiceImpl = require('../test/test.service.impl');
+var testExecutionServiceImpl = require('../test/test.execution.service.impl');
+var testResultServiceImpl = require('../test/test.results.service.impl');
+var esServiceImpl = require('../elasticsearch/es.service.impl');
+
+exports.executeAccessibility = function(req, res, next) {
+    var urls = req.body.urls;
+
+    console.info('urls = ', urls);
+    try {
+        //console.info('microtime.now() = ',  microtime.now());
+
+        var testId = req.body.testId;
+        var startTime = microtime.now();
+
+        console.info('testId = ', testId);
+
+        testServiceImpl.getTestObject(testId, function (err, tests) {
+            if (!_.isEmpty(tests)) {
+                //console.info('ProjectId = ', tests[0].project._id);
+                console.info('tests = ', tests);
+                //testService.getTest
+                var project = tests[0].project;
+
+                var testExecutionJson = {};
+                testExecutionJson.name = project.name;
+                testExecutionJson.description = project.description;
+                testExecutionJson.test = testId;
+                testExecutionJson.project = project;
+                testExecutionJson.executedComponents = project.components;
+
+                testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecutions) {
+                    //console.info('testExecution callback = ', testExecution[0]._id);
+                    var textExecutionId = testExecutions[0]._id;
+
+                    testSetup(req, testExecutions, startTime, function (err, result) {
+                        console.info('done done');
+                    });
+
+                    res.json(testExecutions);
+                });
+            }
+        });
+
+        //mvn.install();
+    }  catch (err) {
+        logger.debug(err);
+    }
+
 };
 
-function testAccessibility(callback) {
+function testSetup(req, testExecutions, startTime, cb) {
+    async.waterfall([
+        function(callback) {
+            console.info('function');
+            callback(null, req, testExecutions, startTime);
+        },
+        executeTest,
+        testResultUpdate,
+        //testResultDBPublish,
+        //testResultElasticSearchPublish,
+    ], function (err, result) {
+        // result now equals 'done'
+        console.info('Process Completed');
+        //res.json(result);
+        cb(err, result);
+    });
+}
+
+function executeTest (req, testExecutions, startTime, callback) {
+    console.info('calling testAccessibility');
+    testAccessibility(req.body.urls, function(err, results) {
+        var endTime = microtime.now();
+        var timeTaken = parseInt(endTime - startTime);
+        callback(null, req, testExecutions, startTime, endTime, timeTaken, results);
+    });
+}
+
+function testResultUpdate (req, testExecutions, startTime, endTime, timeTaken, results, callback) {
+    console.info('calling testResultUpdate');
+
+    var docs = [];
+    for (var key in results) {
+        var json = results;
+        var accValues = results[key];
+        console.info('acc values = ', accValues);
+        baseService.getAccessibilityTestResultValues(accValues, testExecutions, function (err, doc) {
+            docs.push(doc);
+        });
+    }
+
+    testResultServiceImpl.saveTestResultObject(docs[0], function (err, result) {
+        //console.info('result = ', result);
+        //callback(null, projectId, projectDir, maven, req, testExecutions, startTime)
+        esServiceImpl.bulkInsertAccessibility(docs[0], function (err, result) {
+            //console.info('err = ', err);
+            //callback(null, projectId, projectDir, maven, req, testExecutions, startTime)
+            console.info('docs = ', docs);
+            callback(null, results, testExecutions);
+        });
+    });
+
+
+}
+
+function testAccessibility(urlList, callback) {
     /*var test = pa11y({});
 
     test.run('luxepick.com', function (err, results) {
@@ -53,11 +150,7 @@ function testAccessibility(callback) {
     });
 
     // Define some URLs to test, and a concurrency
-    var urls = [
-        'http://www.google.com/',
-        'http://www.twitter.com/',
-        'http://www.github.com/'
-    ];
+    var urls = urlList;
     var concurrency = 2; // Run two tests at a time
 
     // Use the async library to create a queue. This accepts a
@@ -84,7 +177,7 @@ function testAccessibility(callback) {
     // Add a function that is triggered when the queue
     // drains (it runs out of URLs to process)
     queue.drain = function() {
-        console.log('All done!' , resultJson);
+        //console.log('All done!' , resultJson);
         callback(null, resultJson)
     };
 

@@ -14,5 +14,11 @@ function bulkInsert(documents, callback) {
         callback(err, result);
     })
 };
-
 exports.bulkInsert = bulkInsert;
+
+function bulkInsertAccessibility(documents, callback) {
+    esDocuments.createAccessibility(documents, function(err, result) {
+        callback(err, result);
+    })
+};
+exports.bulkInsertAccessibility = bulkInsertAccessibility;

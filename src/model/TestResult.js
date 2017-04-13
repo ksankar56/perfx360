@@ -78,6 +78,16 @@ var jmeterTestResultSchema = new Schema({
         failure: { type: Boolean }
     },
     status: { type: Boolean},
+    test_url : { type: String },
+    code: { type: String },
+    context: { type: String },
+    message: { type: String },
+    selector: { type: String },
+    type: { type: String },
+    typeCode: { type: Number },
+    start_time: {type: Date, default: Date.now},
+    end_time: {type: Date},
+    status: { type: Boolean},
     created: { type: Date, default: Date.now }
 }, { collection: 'test_results' });
 
