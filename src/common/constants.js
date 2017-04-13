@@ -153,6 +153,16 @@ module.exports = Object.freeze({
     TEST_NOT_AVAILABLE : "TEST_NOT_AVAILABLE",
     TEST_NOT_AVAILABLE_MSG : "Test not available",
 
+    //Test Result Code and Messages
+    TEST_RESULT_OBJ_EMPTY: "TEST_RESULT_OBJ_EMPTY",
+    TEST_RESULT__OBJ_EMPTY_MSG : "Test Result Object is Empty",
+
+    TEST_RESULT_DUPLICATE : "TEST_RESULT_DUPLICATE",
+    TEST_RESULT_DUPLICATE_MSG : "Duplicate Test Result",
+
+    TEST_RESULT_NOT_AVAILABLE : "TEST_RESULT_NOT_AVAILABLE",
+    TEST_RESULT_NOT_AVAILABLE_MSG : "Test Result not available",
+
     /* HTTP Response Codes */
     HTTP_OK: 200,
     HTTP_CREATED: 201,

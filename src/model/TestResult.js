@@ -14,22 +14,58 @@ var jmeterTestResultSchema = new Schema({
     group_id: {type: Schema.ObjectId, ref: 'Group'},
     project_name: { type: String },
     project_description: { type: String },
-    environment: {type: Schema.ObjectId, ref: 'Environment'},
+    environment_id: { type: String },
+    environment_name: { type: String },
     type: { type: String },
     test_type: { type: String },
     version : { type: SchemaTypes.Double },
     group: { type: Boolean },
     file_name: { type: String },
     t: { type: Number },
-    lt: { type: String },
-    ts : {type:   Date},
+    it: { type: Number },
+    lt: { type: Number },
+    ct: { type: Number },
+    ts : {type:   String},
     s: { type: Boolean},
     lb: { type: String },
     rc: { type: Number },
     rm: { type: String },
     tn: { type: String },
     dt: { type: String },
+    de: { type: String },
     by: {type : Number},
+    sby: {type : Number},
+    sc: {type : Number},
+    ec: {type : Number},
+    ng: {type : Number},
+    na: {type : Number},
+    hn: { type: String },
+    requestHeader : {
+        class : {type : String},
+        t : {type : String}
+    },
+    responseData : {
+        class : {type : String},
+        t : {type : String}
+    },
+    responseFile : {
+        class : {type : String}
+    },
+    cookies : {
+        class : {type : String}
+    },
+    method : {
+        class : {type : String},
+        t : {type : String}
+    },
+    queryString : {
+        class : {type : String}
+    },
+    redirectLocation : {
+        class : {type : String},
+        t : {type : String}
+    },
+    url: { type: String },
     start_time: {type: Date},
     end_time: {type: Date},
     property : {
@@ -42,8 +78,7 @@ var jmeterTestResultSchema = new Schema({
         failure: { type: Boolean }
     },
     status: { type: Boolean},
-    created: { type: Date, default: Date.now },
-    updated: { type: Date, default: Date.now }
+    created: { type: Date, default: Date.now }
 }, { collection: 'test_results' });
 
 jmeterTestResultSchema.pre('save', function(next) {
@@ -51,4 +86,4 @@ jmeterTestResultSchema.pre('save', function(next) {
     next();
 });
 
-module.exports = mongoose.model('TestExecution', jmeterTestResultSchema);
+module.exports = mongoose.model('TestResult', jmeterTestResultSchema);

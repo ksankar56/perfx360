@@ -67,7 +67,7 @@ function updateTestExecutionObject (testExecutionJson, callback) {
             testExecution.timeTaken = testExecutionJson.timeTaken;
             testExecution.resultStatus = testExecutionJson.resultStatus;
             testExecution.executed = testExecutionJson.executed;
-            testExecution.updated = testExecutionJson.updated;
+            testExecution.updated = testExecution.updated;
 
             // Save the updated document back to the database
             testExecution.save(function (err, result) {

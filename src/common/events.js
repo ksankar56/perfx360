@@ -7,7 +7,7 @@ var events = require('events');
 var rem = new events.EventEmitter();
 
 rem.on('JsonResponse', function (req, res, data) {
-    console.info('data = ', data);
+    console.info('JsonResponse = ', data);
     res.status(200).send({sucess: true, data: data});
 });
 

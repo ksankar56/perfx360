@@ -29,23 +29,81 @@ builderutil.constructMappings = function(req) {
                     group_id: { type: "string" },
                     project_name: { type: "string" },
                     project_description: { type: "string" },
-                    environment: { type: "string" },
+                    environment_id: { type: "string" },
+                    environment_name: { type: "string" },
                     test_id: { type: "string" },
+                    test_name: { type: "string" },
                     test_execution_id : { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     group: { type: "boolean" },
                     file_name: { type: "string" },
-                    t: { type: "long" },
+                    t: { type: "integer" },
+                    it: { type: "integer" },
                     lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
+                    ct: { type: "integer" },
+                    ts : {type:   "string"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
-                    rc: { type: "long" },
+                    rc: { type: "integer" },
                     rm: { type: "string" },
                     tn: { type: "string" },
                     dt: { type: "string" },
+                    de: { type: "string" },
                     by: {type : "long"},
+                    sby: {type : "long"},
+                    sc: { type: "integer" },
+                    ec: { type: "integer" },
+                    ng: { type: "integer" },
+                    na: { type: "integer" },
+                    hn: { type: "string" },
+                    requestHeader : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseData : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseFile : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    cookies : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    method : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    queryString : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    redirectLocation : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    url: { type: "string" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     property : {
@@ -63,7 +121,7 @@ builderutil.constructMappings = function(req) {
                             failure : {type : "boolean", index : "not_analyzed"}
                         }
                     },
-                    status: { type: "boolean", index : "not_analyzed" }
+                    binary: { type: "string" }
                 }
             },
             REST_XML: {
@@ -75,22 +133,78 @@ builderutil.constructMappings = function(req) {
                     project_description: { type: "string" },
                     environment: { type: "string" },
                     test_id: { type: "string" },
+                    test_name: { type: "string" },
                     test_execution_id : { type: "string" },
-                    test_type: { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     group: { type: "boolean" },
                     file_name: { type: "string" },
-                    t: { type: "long" },
+                    t: { type: "integer" },
+                    it: { type: "integer" },
                     lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
+                    ct: { type: "integer" },
+                    ts : {type:   "string"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
-                    rc: { type: "long" },
+                    rc: { type: "integer" },
                     rm: { type: "string" },
                     tn: { type: "string" },
                     dt: { type: "string" },
+                    de: { type: "string" },
                     by: {type : "long"},
+                    sby: {type : "long"},
+                    sc: { type: "integer" },
+                    ec: { type: "integer" },
+                    ng: { type: "integer" },
+                    na: { type: "integer" },
+                    hn: { type: "string" },
+                    requestHeader : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseData : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseFile : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    cookies : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    method : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    queryString : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    redirectLocation : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    url: { type: "string" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     property : {
@@ -108,7 +222,7 @@ builderutil.constructMappings = function(req) {
                             failure : {type : "boolean", index : "not_analyzed"}
                         }
                     },
-                    status: { type: "boolean", index : "not_analyzed" }
+                    binary: { type: "string" }
                 }
             },
             SOAP: {
@@ -120,22 +234,78 @@ builderutil.constructMappings = function(req) {
                     project_description: { type: "string" },
                     environment: { type: "string" },
                     test_id: { type: "string" },
+                    test_name: { type: "string" },
                     test_execution_id : { type: "string" },
-                    test_type: { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     group: { type: "boolean" },
                     file_name: { type: "string" },
-                    t: { type: "long" },
+                    t: { type: "integer" },
+                    it: { type: "integer" },
                     lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
+                    ct: { type: "integer" },
+                    ts : {type:   "string"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
-                    rc: { type: "long" },
+                    rc: { type: "integer" },
                     rm: { type: "string" },
                     tn: { type: "string" },
                     dt: { type: "string" },
+                    de: { type: "string" },
                     by: {type : "long"},
+                    sby: {type : "long"},
+                    sc: { type: "integer" },
+                    ec: { type: "integer" },
+                    ng: { type: "integer" },
+                    na: { type: "integer" },
+                    hn: { type: "string" },
+                    requestHeader : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseData : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseFile : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    cookies : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    method : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    queryString : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    redirectLocation : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    url: { type: "string" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     property : {
@@ -153,7 +323,7 @@ builderutil.constructMappings = function(req) {
                             failure : {type : "boolean", index : "not_analyzed"}
                         }
                     },
-                    status: { type: "boolean", index : "not_analyzed" }
+                    binary: { type: "string" }
                 }
             },
             WEBUI: {
@@ -165,22 +335,78 @@ builderutil.constructMappings = function(req) {
                     project_description: { type: "string" },
                     environment: { type: "string" },
                     test_id: { type: "string" },
+                    test_name: { type: "string" },
                     test_execution_id : { type: "string" },
-                    test_type: { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     group: { type: "boolean" },
                     file_name: { type: "string" },
-                    t: { type: "long" },
+                    t: { type: "integer" },
+                    it: { type: "integer" },
                     lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
+                    ct: { type: "integer" },
+                    ts : {type:   "string"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
-                    rc: { type: "long" },
+                    rc: { type: "integer" },
                     rm: { type: "string" },
                     tn: { type: "string" },
                     dt: { type: "string" },
+                    de: { type: "string" },
                     by: {type : "long"},
+                    sby: {type : "long"},
+                    sc: { type: "integer" },
+                    ec: { type: "integer" },
+                    ng: { type: "integer" },
+                    na: { type: "integer" },
+                    hn: { type: "string" },
+                    requestHeader : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseData : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseFile : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    cookies : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    method : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    queryString : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    redirectLocation : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    url: { type: "string" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     property : {
@@ -198,7 +424,7 @@ builderutil.constructMappings = function(req) {
                             failure : {type : "boolean", index : "not_analyzed"}
                         }
                     },
-                    status: { type: "boolean", index : "not_analyzed" }
+                    binary: { type: "string" }
                 }
             },
             WEBPAGE: {
@@ -210,22 +436,78 @@ builderutil.constructMappings = function(req) {
                     project_description: { type: "string" },
                     environment: { type: "string" },
                     test_id: { type: "string" },
+                    test_name: { type: "string" },
                     test_execution_id : { type: "string" },
-                    test_type: { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     group: { type: "boolean" },
                     file_name: { type: "string" },
-                    t: { type: "long" },
+                    t: { type: "integer" },
+                    it: { type: "integer" },
                     lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
+                    ct: { type: "integer" },
+                    ts : {type:   "string"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
-                    rc: { type: "long" },
+                    rc: { type: "integer" },
                     rm: { type: "string" },
                     tn: { type: "string" },
                     dt: { type: "string" },
+                    de: { type: "string" },
                     by: {type : "long"},
+                    sby: {type : "long"},
+                    sc: { type: "integer" },
+                    ec: { type: "integer" },
+                    ng: { type: "integer" },
+                    na: { type: "integer" },
+                    hn: { type: "string" },
+                    requestHeader : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseData : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseFile : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    cookies : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    method : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    queryString : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    redirectLocation : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    url: { type: "string" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     property : {
@@ -243,7 +525,7 @@ builderutil.constructMappings = function(req) {
                             failure : {type : "boolean", index : "not_analyzed"}
                         }
                     },
-                    status: { type: "boolean", index : "not_analyzed" }
+                    binary: { type: "string" }
                 }
             },
             WEB_AUTOMATION: {
@@ -255,22 +537,78 @@ builderutil.constructMappings = function(req) {
                     project_description: { type: "string" },
                     environment: { type: "string" },
                     test_id: { type: "string" },
+                    test_name: { type: "string" },
                     test_execution_id : { type: "string" },
-                    test_type: { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     group: { type: "boolean" },
                     file_name: { type: "string" },
-                    t: { type: "long" },
+                    t: { type: "integer" },
+                    it: { type: "integer" },
                     lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
+                    ct: { type: "integer" },
+                    ts : {type:   "string"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
-                    rc: { type: "long" },
+                    rc: { type: "integer" },
                     rm: { type: "string" },
                     tn: { type: "string" },
                     dt: { type: "string" },
+                    de: { type: "string" },
                     by: {type : "long"},
+                    sby: {type : "long"},
+                    sc: { type: "integer" },
+                    ec: { type: "integer" },
+                    ng: { type: "integer" },
+                    na: { type: "integer" },
+                    hn: { type: "string" },
+                    requestHeader : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseData : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseFile : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    cookies : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    method : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    queryString : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    redirectLocation : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    url: { type: "string" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     property : {
@@ -288,7 +626,7 @@ builderutil.constructMappings = function(req) {
                             failure : {type : "boolean", index : "not_analyzed"}
                         }
                     },
-                    status: { type: "boolean", index : "not_analyzed" }
+                    binary: { type: "string" }
                 }
             },
             MOBILE_AUTOMATION: {
@@ -300,22 +638,78 @@ builderutil.constructMappings = function(req) {
                     project_description: { type: "string" },
                     environment: { type: "string" },
                     test_id: { type: "string" },
+                    test_name: { type: "string" },
                     test_execution_id : { type: "string" },
-                    test_type: { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     group: { type: "boolean" },
                     file_name: { type: "string" },
-                    t: { type: "long" },
+                    t: { type: "integer" },
+                    it: { type: "integer" },
                     lt: { type: "string" },
-                    ts : {type:   "date", format: "epoch_millis"},
+                    ct: { type: "integer" },
+                    ts : {type:   "string"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
-                    rc: { type: "long" },
+                    rc: { type: "integer" },
                     rm: { type: "string" },
                     tn: { type: "string" },
                     dt: { type: "string" },
+                    de: { type: "string" },
                     by: {type : "long"},
+                    sby: {type : "long"},
+                    sc: { type: "integer" },
+                    ec: { type: "integer" },
+                    ng: { type: "integer" },
+                    na: { type: "integer" },
+                    hn: { type: "string" },
+                    requestHeader : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseData : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "binary", index : "no"}
+                        }
+                    },
+                    responseFile : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    cookies : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    method : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    queryString : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    redirectLocation : {
+                        type : "object",
+                        properties : {
+                            class : {type : "string", index : "not_analyzed"},
+                            t : {type : "string", index : "not_analyzed"}
+                        }
+                    },
+                    url: { type: "string" },
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     property : {
@@ -333,7 +727,7 @@ builderutil.constructMappings = function(req) {
                             failure : {type : "boolean", index : "not_analyzed"}
                         }
                     },
-                    status: { type: "boolean", index : "not_analyzed" }
+                    binary: { type: "string" }
                 }
             },
             ACCESSIBILITY: {
@@ -347,7 +741,7 @@ builderutil.constructMappings = function(req) {
                     test_id: { type: "string" },
                     test_execution_id : { type: "string" },
                     test_type: { type: "string" },
-                    execution_time : {type: "date", format: "yyyyMMdd'T'HHmmssZ"},
+                    execution_time : { type: "integer" },
                     version : { type: "float" },
                     test_url : { type: "string" },
                     code: { type: "string" },
