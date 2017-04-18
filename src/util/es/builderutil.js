@@ -57,6 +57,9 @@ builderutil.constructMappings = function(req) {
                     ng: { type: "integer" },
                     na: { type: "integer" },
                     hn: { type: "string" },
+                    httpSample: {
+                        type: "nested"
+                    },
                     requestHeader : {
                         type : "object",
                         properties : {
@@ -158,6 +161,9 @@ builderutil.constructMappings = function(req) {
                     ng: { type: "integer" },
                     na: { type: "integer" },
                     hn: { type: "string" },
+                    httpSample: {
+                        type: "nested"
+                    },
                     requestHeader : {
                         type : "object",
                         properties : {
@@ -259,6 +265,9 @@ builderutil.constructMappings = function(req) {
                     ng: { type: "integer" },
                     na: { type: "integer" },
                     hn: { type: "string" },
+                    httpSample: {
+                        type: "nested"
+                    },
                     requestHeader : {
                         type : "object",
                         properties : {
@@ -360,6 +369,9 @@ builderutil.constructMappings = function(req) {
                     ng: { type: "integer" },
                     na: { type: "integer" },
                     hn: { type: "string" },
+                    httpSample: {
+                        type: "nested"
+                    },
                     requestHeader : {
                         type : "object",
                         properties : {
@@ -461,6 +473,9 @@ builderutil.constructMappings = function(req) {
                     ng: { type: "integer" },
                     na: { type: "integer" },
                     hn: { type: "string" },
+                    httpSample: {
+                        type: "nested"
+                    },
                     requestHeader : {
                         type : "object",
                         properties : {
@@ -562,6 +577,9 @@ builderutil.constructMappings = function(req) {
                     ng: { type: "integer" },
                     na: { type: "integer" },
                     hn: { type: "string" },
+                    httpSample: {
+                        type: "nested"
+                    },
                     requestHeader : {
                         type : "object",
                         properties : {
@@ -663,6 +681,9 @@ builderutil.constructMappings = function(req) {
                     ng: { type: "integer" },
                     na: { type: "integer" },
                     hn: { type: "string" },
+                    httpSample: {
+                        type: "nested"
+                    },
                     requestHeader : {
                         type : "object",
                         properties : {

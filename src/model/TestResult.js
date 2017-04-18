@@ -40,6 +40,7 @@ var jmeterTestResultSchema = new Schema({
     ng: {type : Number},
     na: {type : Number},
     hn: { type: String },
+    httpSample : {type: Array},
     requestHeader : {
         class : {type : String},
         t : {type : String}

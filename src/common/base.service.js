@@ -16,27 +16,42 @@ exports.getStatus = function(req, res, statusCode, statusMessage) {
 exports.getJmeterResultObjects =  function(result) {
 
     var jmeterResults = [];
+    var testResults = result.testResults;
     var parentHttpSample = result.testResults.httpSample;
     //parentHttpSample.parent = true;
     var parent;
     var children;
 
-    console.info("parentHttpSample instanceof Array = ", parentHttpSample instanceof Array);
-    if (parentHttpSample instanceof Array) {
+    if (testResults) {
+        console.info('test results = ', testResults.httpSample instanceof Array);
+       if (testResults.httpSample instanceof Array) {
+            var i = 0;
+            console.info('parentHttpSample.length = ', parentHttpSample.length);
+            _.forEach(parentHttpSample, function(httpSamples) {
+                children = parentHttpSample[i];
+                jmeterResults.push(_getResultObject(children, false));
+                i++;
+            });
+        } else {
+
+           //_.forEach(testResults.httpSample, function(httpSample) {
+           //console.log('httpSample = ', httpSample);
+           console.info('for each = ', testResults.httpSample);
+           jmeterResults.push(_getResultObject(testResults.httpSample, false));
+           //});
+           //}
+       }
+    }
+    //console.info("parentHttpSample instanceof Array = ", parentHttpSample instanceof Array);
+    /*if (parentHttpSample instanceof Array) {
         var i = 0;
         console.info('parentHttpSample.length = ', parentHttpSample.length);
         _.forEach(parentHttpSample, function(httpSamples) {
             children = parentHttpSample[i];
             console.info('children.httpSample = ', children.httpSample);
-            if (children.httpSample) {
-                _.forEach(children.httpSample, function (httpSample) {
-                    //console.log('httpSample = ', httpSample);
-                    console.info('for each = ', httpSample);
-                    jmeterResults.push(httpSample);
-                });
-            } else {
-                jmeterResults.push(children);
-            }
+
+                jmeterResults.push(_getResultObject(children, false));
+
             i++;
         });
     } else {
@@ -44,9 +59,9 @@ exports.getJmeterResultObjects =  function(result) {
         _.forEach(children.httpSample, function(httpSample) {
             //console.log('httpSample = ', httpSample);
             console.info('for each');
-            jmeterResults.push(httpSample);
+            jmeterResults.push(_getResultObject(httpSample, false));
         });
-    }
+    }*/
 
     //jmeterResults.push(_getResultObject(parentHttpSample, true));
     //console.info ('parentHttpSample = ', parentHttpSample instanceof Array);
@@ -70,6 +85,8 @@ function _getResultObject (httpSample, parent) {
     jmr.tn = httpSample.tn;
     jmr.dt = httpSample.dt;
     jmr.by = httpSample.by;
+    jmr.it = httpSample.it;
+    jmr.httpSample = httpSample.httpSample;
 
     if (parent) {
         jmr.parent = true;
@@ -177,6 +194,10 @@ function _getDocument(key, testExecution, result) {
 
     if (result.hn) {
         assignedDocument.hn = result.hn;
+    }
+
+    if (result.httpSample) {
+        assignedDocument.httpSample = result.httpSample;
     }
 
     if (result.requestHeader) {
