@@ -16,6 +16,14 @@ var express = require('express')
     , resEvents = require('./events');
 
 exports.init = function(app) {
+    app.use(cookieParser());
+    app.use(session({
+        secret: 'secretkey',
+        name: 'perfx360',
+        proxy: true,
+        resave: true,
+        saveUninitialized: true
+    }));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -34,7 +42,7 @@ exports.init = function(app) {
 
     // uncomment after placing your favicon in /public
     //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-    app.use(cookieParser());
+
     app.use(express.static(path.join(__dirname, '../../public')));
     app.use(function(req, res, next) {
         res.locals.stuff = {
@@ -44,16 +52,11 @@ exports.init = function(app) {
 
         next();
     });
-    app.use(session({
-        secret: 'secretkey',
-        name: 'perfx360',
-        proxy: true,
-        resave: true,
-        saveUninitialized: true
-    }));
 
     app.use(function (err, req, res, next) {
         //res.status(500).send({"Error": err.stack});
         resEvents.emit('ErrorJsonResponse', req, res, {"status" : err});
     });
+
+    app.locals.context = '/';
 }

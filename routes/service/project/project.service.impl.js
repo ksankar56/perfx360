@@ -13,43 +13,31 @@ var _ = require('lodash')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
     , baseService = require('../../../src/common/base.service')
-    , projectServiceImpl = require('./project.service.impl')
     , logger = require('../../../config/logger');
 
 var Project = require('../../../src/model/Project');
 
-exports.getAllProjects = function(req, res, callback) {
-
-    projectServiceImpl.getAllProjects(function(err, projects) {
-        if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
-        }
-
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
-            data: projects
+function getAllProjects(req, res, callback) {
+    Project.find({})
+        .populate({path : 'group', populate: { path: 'component' }})
+        .populate({path : 'component', populate: { path: 'componentType' }})
+        .populate({path : 'createdBy'})
+        .exec( function (err, projects) {
+            callback(err, projects);
         });
+};
+exports.getAllProjects = getAllProjects;
+
+function getProjects(projectJson, callback) {
+    Project.find({createdBy : projectJson.createdBy})
+        .populate({path : 'group', populate: { path: 'component' }})
+        .populate({path : 'component', populate: { path: 'componentType' }})
+        .populate({path : 'createdBy'})
+        .exec( function (err, projects) {
+            callback(err, projects);
     });
 };
-
-exports.getProjects = function(req, res, callback) {
-    var projectJson = req.body;
-
-    projectServiceImpl.getProjects(projectJson, function(err, projects) {
-        if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
-        }
-
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
-            data: projects
-        });
-    });
-};
+exports.getProjects = getProjects;
 
 exports.saveProject = function(req, res, next) {
 

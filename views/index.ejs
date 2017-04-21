@@ -1,135 +1,77 @@
 <div class="content-wrapper">
 
-  <div class="row">
-    <div class="col-xs-12 right">
-      <div class="form-group">
-        <div class="btn-group pull-right" role="group" aria-label="Basic example">
-          <!-- Button group with icons -->
-          <button class="btn btn-danger btn-sm side-panel-trigger"><i class="icon-plus4 white"></i> Add Project</button>
+    <div class="row">
+        <div class="col-xs-12 right">
+            <div class="form-group">
+                <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                    <!-- Button group with icons -->
+                    <button class="btn btn-danger btn-sm side-panel-trigger"><i class="icon-plus4 white"></i> Add
+                        Project
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-12 right">
-      <div class="content-body"><!-- Minimal statistics section start -->
+    <div class="row">
+        <div class="col-xs-12 right">
+            <div class="content-body"><!-- Minimal statistics section start -->
 
-        <!-- stats with subtitle section start -->
-        <section id="stats-subtitle">
-          <div class="row">
-            <div class="col-xs-12 mb-1">
-              <h4>Projects</h4>
-              <hr>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-xl-6 col-md-12">
-              <div class="card overflow-hidden">
-                <div class="card-body">
-                  <div class="card-block cleartfix">
-                    <div class="media">
-                      <div class="media-left media-middle">
-                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
-                      </div>
-                      <div class="media-body">
-                        <h4>Project 1</h4>
-                        <span>Project 1 Description </span>
-                      </div>
-                      <div class="btn-group-vertical">
-                        <div class="" role="group" aria-label="First Group">
-                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
-                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
-                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
+                <!-- stats with subtitle section start -->
+                <section id="stats-subtitle">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>Projects</h4>
+                            <hr>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="col-xl-6 col-md-12">
-              <div class="card overflow-hidden">
-                <div class="card-body">
-                  <div class="card-block cleartfix">
-                    <div class="media">
-                      <div class="media-left media-middle">
-                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
-                      </div>
-                      <div class="media-body">
-                        <h4>Project 2</h4>
-                        <span>Project 2 Description </span>
-                      </div>
-                      <div class="btn-group-vertical">
-                        <div class="" role="group" aria-label="First Group">
-                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
-                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
-                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
-                        </div>
-                      </div>
+                    <div class="row">
+                        <% if (locals.projects && locals.projects.length > 0) {
+                            for(var i=0; i < locals.projects.length; i++) {
+                            var project = locals.projects[i];
+                        %>
+                            <div class="col-xl-6 col-md-12">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="card-block cleartfix">
+                                            <div class="media">
+                                                <div class="media-left media-middle">
+                                                    <i class="icon-trending_up pink font-large-2 mr-2"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4><%= project.name %></h4>
+                                                    <span><%= project.description %></span>
+                                                </div>
+                                                <div class="btn-group-vertical">
+                                                    <div class="" role="group" aria-label="First Group">
+                                                        <button type="button" class="btn btn-icon btn-success" onclick="location.href='/project?id=<%= project._id %>';"><i class="icon-eye"></i></button>
+                                                        <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
+                                                        <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% } %>
+                        <% } else { %>
+                            <div class="col-md-12">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="card-block cleartfix">
+                                            <div class="bs-callout-info callout-border-left callout-bordered mt-1 mb-1 p-1">
+                                                <h3><strong>No Projects available<strong></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
                     </div>
-                  </div>
-                </div>
-              </div>
+                </section>
             </div>
-
-            <div class="col-xl-6 col-md-12">
-              <div class="card overflow-hidden">
-                <div class="card-body">
-                  <div class="card-block cleartfix">
-                    <div class="media">
-                      <div class="media-left media-middle">
-                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
-                      </div>
-                      <div class="media-body">
-                        <h4>Project 3</h4>
-                        <span>Project 3 Description </span>
-                      </div>
-                      <div class="btn-group-vertical">
-                        <div class="" role="group" aria-label="First Group">
-                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
-                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
-                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-xl-6 col-md-12">
-              <div class="card overflow-hidden">
-                <div class="card-body">
-                  <div class="card-block cleartfix">
-                    <div class="media">
-                      <div class="media-left media-middle">
-                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
-                      </div>
-                      <div class="media-body">
-                        <h4>Project 4</h4>
-                        <span>Project 4 Description </span>
-                      </div>
-                      <div class="btn-group-vertical">
-                        <div class="" role="group" aria-label="First Group">
-                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
-                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
-                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </section>
-        <!-- // stats with subtitle section end -->
-
-      </div>
+        </div>
     </div>
-  </div>
-</div>

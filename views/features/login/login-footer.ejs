@@ -28,9 +28,9 @@
     $(function () {
         var body = $('body');
         var backgrounds = [
-            'url(/app-assets/images/backgrounds/bg-2f.jpg) no-repeat center center fixed',
-            'url(/app-assets/images/backgrounds/bg-2d.jpg) no-repeat center center fixed',
-            'url(/app-assets/images/backgrounds/bg-2e.jpg) no-repeat center center fixed'];
+            'url(<%= locals.context%>app-assets/images/backgrounds/bg-2f.jpg) no-repeat center center fixed',
+            'url(<%= locals.context%>app-assets/images/backgrounds/bg-2d.jpg) no-repeat center center fixed',
+            'url(<%= locals.context%>app-assets/images/backgrounds/bg-2e.jpg) no-repeat center center fixed'];
         var current = 0;
 
         function nextBackground() {

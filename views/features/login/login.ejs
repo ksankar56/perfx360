@@ -19,6 +19,12 @@
                         <%= locals.error.message%>
                     </div>
                 <% } %>
+
+                <% if (locals.status) { %>
+                    <div class="bs-callout-success callout-border-right mt-1 p-1">
+                        <strong><%= locals.status.message %>!</strong>
+                    </div>
+                <% } %>
                 <div class="card-block">
                     <form class="form-horizontal" action="/auth/index" method="post" novalidate>
                         <fieldset class="form-group position-relative has-icon-left">
