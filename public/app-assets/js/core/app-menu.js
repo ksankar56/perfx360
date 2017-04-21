@@ -178,7 +178,7 @@
               this.open();
             }
             else{
-              this.expand();
+              this.collapse();
             }
             break;
           case 'md':

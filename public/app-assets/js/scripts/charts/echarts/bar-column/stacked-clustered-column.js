@@ -61,7 +61,9 @@ $(window).on("load", function(){
                 legend: {
                     data: [
                         'ECharts1 - 2k Data','ECharts1 - 2w Data','ECharts1 - 20w Data','',
-                        'ECharts2 - 2k Data','ECharts2 - 2w Data','ECharts2 - 20w Data'
+                        'ECharts2 - 2k Data','ECharts2 - 2w Data','ECharts2 - 20w Data','',
+                        'ECharts3 - 2k Data','ECharts3 - 2w Data','ECharts3 - 20w Data','',
+                        'ECharts4 - 2k Data','ECharts4 - 2w Data','ECharts4 - 20w Data'
                     ]
                 },
 
@@ -129,6 +131,45 @@ $(window).on("load", function(){
                         type:'bar',
                         xAxisIndex:1,
                         itemStyle: {normal: {color:'rgba(255,132,124,0.7)', label:{show:true,formatter:function(p){return p.value > 0 ? (p.value +'+'):'';}}}},
+                        data:[3000,3000,2817,3000,0]
+                    },
+                     {
+                        name:'ECharts3 - 2k Data',
+                        type:'bar',
+                        itemStyle: {normal: {color:'rgba(124,184,152,1)', label:{show:true}}},
+                        data:[40,155,95,75, 0]
+                    },
+                    {
+                        name:'ECharts3 - 2w Data',
+                        type:'bar',
+                        itemStyle: {normal: {color:'rgba(244,106,168,1)', label:{show:true,textStyle:{color:'#27727B'}}}},
+                        data:[100,200,105,100,156]
+                    },
+                    {
+                        name:'ECharts3 - 20w Data',
+                        type:'bar',
+                        itemStyle: {normal: {color:'rgba(155,102,124,1)', label:{show:true,textStyle:{color:'#E87C25'}}}},
+                        data:[906,911,908,778,0]
+                    },
+                    {
+                        name:'ECharts4 - 2k Data',
+                        type:'bar',
+                        xAxisIndex:1,
+                        itemStyle: {normal: {color:'rgba(15,14,150,0.7)', label:{show:true,formatter:function(p){return p.value > 0 ? (p.value +'\n'):'';}}}},
+                        data:[96,224,164,124,0]
+                    },
+                    {
+                        name:'ECharts4 - 2w Data',
+                        type:'bar',
+                        xAxisIndex:1,
+                        itemStyle: {normal: {color:'rgba(154,106,68,0.7)', label:{show:true}}},
+                        data:[491,2035,389,955,347]
+                    },
+                    {
+                        name:'ECharts4 - 20w Data',
+                        type:'bar',
+                        xAxisIndex:1,
+                        itemStyle: {normal: {color:'rgba(55,152,204,0.7)', label:{show:true,formatter:function(p){return p.value > 0 ? (p.value +'+'):'';}}}},
                         data:[3000,3000,2817,3000,0]
                     }
                 ]

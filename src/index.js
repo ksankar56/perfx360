@@ -5,22 +5,18 @@ var express = require('express')
     , router = express.Router();
 
 var index = require('../routes/index');
+var webIndex = require('../src/web/controller');
 
+// API Index
 router.use('/', index);
+
 //router.use('/users', users);
 //router.use('/about', about);
 
+//Web UI Index
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    var locals = {
-        title: 'Page Title',
-        description: 'Page Description',
-        header: 'Page Header'
-    };
-    console.info('home');
-    res.render('index', locals);
-});
+router.use('/', webIndex);
 
 /*
  router.get('/info', function(req, res, next) {

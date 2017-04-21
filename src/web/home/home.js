@@ -1,0 +1,18 @@
+/**
+ * Created by senthil on 21/04/17.
+ */
+
+var express = require('express')
+    , router = express.Router();
+
+router.get('/', function(req, res, next) {
+    var locals = {
+        title: 'Page Title',
+        description: 'Page Description',
+        header: 'Page Header'
+    };
+    console.info('home');
+    res.render('index', locals);
+});
+
+module.exports = router;

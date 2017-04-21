@@ -220,7 +220,7 @@
       if (!state.id) { return state.text; }
       else{
         var $state = $(
-          '<span><img src="../../../app-assets/images/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+          '<span><img src="app-assets/images/flags/' + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
         );
         return $state;
       }

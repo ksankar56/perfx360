@@ -6,16 +6,16 @@ html {
   height: 100%; }
   html body {
     height: 100%;
-    background-color: #F3F3F3;
+    background-color: #f2f2f2;
     direction: ltr; }
     html body.fixed-navbar {
-      padding-top: 4rem; }
+      padding-top: 3rem; }
     html body .content {
       padding: 0;
       transition: 300ms ease all;
       backface-visibility: hidden; }
       html body .content .content-wrapper {
-        padding: 1.8rem; }
+        padding: 0.8rem; }
         html body .content .content-wrapper .content-header-right {
           margin-top: 6px; }
     html body[data-col="1-column"]:not(.vertical-content-menu) .content,
@@ -572,59 +572,6 @@ footer.footer-dark {
       .main-menu-footer .content .actions > a:hover, .main-menu-footer .content .actions > a:focus {
         color: #FFFFFF; }
 
-body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content {
-  margin-left: 0; }
-
-.vertical-layout.menu-expanded .menu-icon-right ul.navigation li > a:after {
-  left: 2px;
-  right: initial !important; }
-
-.vertical-layout.menu-expanded .menu-icon-right ul.navigation li > a > i {
-  float: right !important;
-  margin: 0 0 0 12px; }
-
-.horizontal-layout .navbar-icon-right ul.nav > li > a:after {
-  float: left;
-  position: relative;
-  top: 27px;
-  left: -16px; }
-
-.horizontal-layout .navbar-icon-right ul.nav > li > a > i {
-  float: right;
-  margin: 0px 4px 0 8px; }
-
-.horizontal-layout .navbar-fixed {
-  z-index: 999 !important; }
-
-@media (max-width: 767px) {
-  .menu-hide .main-menu,
-  .menu-open .main-menu {
-    transition: transform .25s, top .35s, height .35s; }
-  .main-menu {
-    transform: translate3d(-240px, 0, 0);
-    backface-visibility: hidden;
-    perspective: 1000; }
-  .menu-open .main-menu {
-    transform: translate3d(0, 0, 0); } }
-
-@media (max-width: 991px) {
-  .horizontal-layout.vertical-overlay-menu .main-menu-content {
-    padding: 0; }
-    .horizontal-layout.vertical-overlay-menu .main-menu-content .mega-dropdown-menu {
-      margin: 0;
-      width: 100%; }
-      .horizontal-layout.vertical-overlay-menu .main-menu-content .mega-dropdown-menu > li {
-        padding: 0; }
-  .horizontal-layout.vertical-overlay-menu .navbar .navbar-container {
-    margin-left: 0px; } }
-
-/* @import "menu-types/vertical-menu"; // 1. Vertical Menu
-@import "menu-types/vertical-overlay-menu"; // 2. Vertical Overlay Menu
-@import "menu-types/vertical-compact-menu"; // 3. Vertical Compact Menu
-@import "menu-types/vertical-mmenu"; // 4. Vertical MMenu
-@import "menu-types/vertical-content-menu"; // 5. Vertical Content Menu
-@import "menu-types/horizontal-menu"; // 6. Horizontal Menu
-@import "menu-types/horizontal-top-icon-menu"; // 7. Horizontal Top Icons Menu */
 .display-inline {
   display: inline !important; }
 

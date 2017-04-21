@@ -111,7 +111,7 @@
         numLines: 6,
         lineWidth: 2,
         fillOpacity: 0.1,
-        lineColors: ['#FF5722'],
+        lineColors: ['#016ca5'],
         hideHover: true,
         hoverCallback: function (index, options, content, row) {
             return "";
@@ -138,6 +138,32 @@
         lineWidth: 2,
         fillOpacity: 0.1,
         lineColors: ['#E91E63'],
+        hideHover: true,
+        hoverCallback: function (index, options, content, row) {
+            return "";
+        }
+    });
+
+    /******************************************
+     *               Total Views new          *
+     ******************************************/
+    Morris.Area({
+        element: 'morris-views-new',
+        data: [{y: '1', a: 14, }, {y: '2', a: 12 }, {y: '3', a: 4 }, {y: '4', a: 9 }, {y: '5', a: 3 }, {y: '6', a: 6 }, {y: '7', a: 11 }, {y: '8', a: 10 }, {y: '9', a: 13 }, {y: '10', a: 9 }, {y: '11', a: 14 },{y: '12', a: 11 }, {y: '13', a: 16 }, {y: '14', a: 20 }, {y: '15', a: 15 }],
+        xkey: 'y',
+        ykeys: ['a'],
+        labels: ['Views'],
+        axes: false,
+        grid: false,
+        behaveLikeLine: true,
+        ymax: 20,
+        resize: true,
+        pointSize: 0,
+        smooth: true,
+        numLines: 6,
+        lineWidth: 2,
+        fillOpacity: 0.1,
+        lineColors: ['#e9e730'],
         hideHover: true,
         hoverCallback: function (index, options, content, row) {
             return "";

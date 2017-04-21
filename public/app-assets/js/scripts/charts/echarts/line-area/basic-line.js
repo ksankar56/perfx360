@@ -59,11 +59,11 @@ $(window).on("load", function(){
 
                 // Add Legend
                 legend: {
-                    data:['Highest temperature','Minimum temperature']
+                    data:['Highest temperature','Minimum temperature', 'Low temperature']
                 },
 
                 // Add custom colors
-                color: ['#FF847C', '#99B898'],
+                color: ['#FF847C', '#99B898', 'b3er23'],
 
                 // Enable drag recalculate
                 calculable : true,
@@ -112,6 +112,21 @@ $(window).on("load", function(){
                         markPoint : {
                             data : [
                                 {name : 'Week low', value : -2, xAxis: 1, yAxis: -1.5}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name : 'Average'}
+                            ]
+                        }
+                    },
+                     {
+                        name:'Low temperature',
+                        type:'line',
+                        data:[-10, -20, -2, -5, -3, -2, -12],
+                        markPoint : {
+                            data : [
+                                {name : 'low', value : -10, xAxis: 1, yAxis: -15}
                             ]
                         },
                         markLine : {

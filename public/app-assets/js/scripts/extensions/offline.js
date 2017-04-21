@@ -16,8 +16,8 @@ $(document).ready(function(){
         doc = (this.contentWindow || this.documentWindow).document;
         doc.open();
         doc.write('' +
-            '<link rel="stylesheet" href="../../../app-assets/vendors/css/extensions/offline/themes/offline-theme-' + themeName + '.css" />' +
-            '<link rel="stylesheet" href="../../../app-assets/vendors/css/extensions/offline/themes/offline-language-english' + (themeName.match(/\-indicator$/) ? '-indicator' : '') + '.css" />' +
+            '<link rel="stylesheet" href="app-assets/vendors/css/extensions/offline/themes/offline-theme-' + themeName + '.css" />' +
+            '<link rel="stylesheet" href="app-assets/vendors/css/extensions/offline/themes/offline-language-english' + (themeName.match(/\-indicator$/) ? '-indicator' : '') + '.css" />' +
             '<div data-phase="0" class="offline-ui offline-ui-down offline-ui-down-5s"><div class="offline-ui-content"></div><a class="offline-ui-retry"></a></div>' +
         '');
         doc.close();

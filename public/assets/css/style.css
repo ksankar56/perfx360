@@ -1,0 +1,236 @@
+/*================================================================================
+	Item Name: Robust - Responsive Admin Theme
+	Version: 1.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+.btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus, .open > .btn-primary.dropdown-toggle:hover, .open > .btn-primary.dropdown-toggle:focus, .open > .btn-primary.dropdown-toggle.focus {
+    background-color: #969595;
+}
+
+.page-item.active .page-link, .page-item.active .page-link:focus {
+    background-color: #016ca5;
+    border-color: #016ca5;
+}
+
+.page-item.active .page-link:hover {
+    background-color: #484848;
+    border-color: #484848;
+}
+
+.card-block {
+    padding: 0.5rem;
+}
+
+.px-1 {
+    padding-right: 0rem !important;
+    padding-left: 0rem !important;
+}
+
+.border-radius-1 {
+    border-radius: 10px;
+    opacity: 0.95;
+}
+
+.form-group {
+    margin-bottom: 2.8rem;
+}
+
+.form-group-fixed-top {
+    top: 3rem;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 0.18rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-group, .btn-group-vertical {
+    float : right;
+}
+
+@charset "UTF-8";
+
+body.side-push-panel {
+    overflow-x: hidden
+}
+
+#side-panel {
+    position: fixed;
+    top: 0;
+    right: -70%;
+    z-index: 399;
+    width: 70%;
+    height: 100%;
+    background-color: #F5F5F5;
+    overflow: hidden
+}
+
+body.side-panel-left #side-panel {
+    left: -300px;
+    right: auto
+}
+
+body.side-push-panel.stretched #header.sticky-header .container,
+body.side-push-panel.stretched #wrapper {
+    right: 0
+}
+
+body.side-panel-left.side-push-panel.stretched #header.sticky-header .container,
+body.side-panel-left.side-push-panel.stretched #wrapper {
+    left: 0;
+    right: auto
+}
+
+.nav.nav-pills.nav-justified {
+    border-bottom: 1px solid #016ca5;
+}
+.nav-pills .nav-link.active, .nav-pills .nav-link.active:focus, .nav-pills .nav-item.open .nav-link, .nav-pills .nav-item.open .nav-link:focus {
+    background-color: #016ca5;
+}
+
+#side-panel .side-panel-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /*padding: 50px 70px 50px 40px;*/
+    background: #FFF;
+}
+
+body.device-touch #side-panel .side-panel-wrap {
+    overflow-y: scroll
+}
+
+#content,
+#page-title.page-title-video,
+#slider,
+.grid-container,
+.portfolio-notitle .iportfolio,
+.portfolio-notitle .portfolio-item,
+.swiper_wrapper,
+.swiper_wrapper .swiper-slide,
+.video-wrap {
+    overflow: hidden
+}
+
+#side-panel .widget {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid #E5E5E5
+}
+
+#side-panel .widget:first-child {
+    padding-top: 0;
+    border-top: 0;
+    margin: 0
+}
+
+body.side-panel-open #side-panel {
+    right: 0;
+    z-index :9999;
+}
+
+body.side-panel-left.side-panel-open #side-panel {
+    left: 0;
+    right: auto
+}
+
+body.side-push-panel.side-panel-open.stretched #header.sticky-header .container,
+body.side-push-panel.side-panel-open.stretched #wrapper {
+    right: 300px
+}
+
+body.side-push-panel.side-panel-open.stretched .slider-parallax-inner {
+    left: -300px
+}
+
+body.side-panel-left.side-push-panel.side-panel-open.stretched #header.sticky-header .container,
+body.side-panel-left.side-push-panel.side-panel-open.stretched #wrapper,
+body.side-panel-left.side-push-panel.side-panel-open.stretched .slider-parallax-inner {
+    left: 100%;
+    right: auto
+}
+
+#side-panel-trigger {
+    display: block;
+    cursor: pointer;
+    z-index: 11;
+    margin-right: 5px
+}
+
+#side-panel-trigger-close a {
+    display: none
+}
+
+#side-panel,
+body.side-push-panel.stretched #header .container,
+body.side-push-panel.stretched #wrapper {
+    -webkit-transition: right .4s ease;
+    -o-transition: right .4s ease;
+    transition: right .4s ease
+}
+
+body.side-panel-left #side-panel,
+body.side-panel-left.side-push-panel.stretched #header .container,
+body.side-panel-left.side-push-panel.stretched #wrapper,
+body.side-push-panel.stretched .slider-parallax-inner {
+    -webkit-transition: left .4s ease;
+    -o-transition: left .4s ease;
+    transition: left .4s ease
+}
+
+.body-overlay {
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: -1;
+    pointer-events: none;
+    -webkit-transition: opacity .3s ease;
+    -o-transition: opacity .3s ease;
+    transition: opacity .3s ease
+}
+
+#slider,
+.slider-parallax {
+    position: relative
+}
+
+body.side-panel-open .body-overlay {
+    opacity: 1;
+    z-index: 9998;
+    pointer-events: auto
+}
+
+body.side-panel-open:not(.device-xxs):not(.device-xs):not(.device-sm) .body-overlay:hover {
+    cursor: url(close.png) 15 15, default
+}
+
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
