@@ -18,6 +18,10 @@ function getData() {
 function showPartials(url, parameters, callback) {
 }
 
+function showToastr() {
+    toastr.success('Have fun storming the castle!', 'With Close Button', {"closeButton": true});
+}
+
 $('#click').on( "click", function() {
     var url = $(this).data("url");
     var parameters = 'param';
@@ -97,6 +101,11 @@ $(document).ready(function() {
         var url = $(this).data("url");
         var data = {};
         var type = $(this).data("type");
+        var destination = $(this).data("destination");
+
+        if (destination == undefined) {
+            destination = '#slide-result-view';
+        }
 
         $.ajax({
             url: url,
@@ -110,7 +119,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.info('success');
                 //$.unblockUI();
-                $('#slide-result-view').html(data);
+                $(destination).html(data);
                 $(block_ele).unblock();
             },
             type: type

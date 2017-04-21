@@ -59,9 +59,9 @@ var requesting = !1,
             })
         },
         sidePanel: function() {
-            e(".side-panel-trigger").click(function() {
+            e(document).on('click', '.side-panel-trigger', (function() {
                 return a.toggleClass("side-panel-open"), a.hasClass("device-touch") && a.hasClass("side-push-panel") && a.toggleClass("ohidden"), !1
-            })
+            }))
         },
         onePageScroll: function() {
             if (x.length > 0) {

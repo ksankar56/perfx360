@@ -15,31 +15,23 @@ var express = require('express')
 
 
 /**
- * Expose all users.
+ * Render project create page.
  *
  * @return {Function}
- * @api public
+ * @access private
  */
 router.get('/', function(req, res, next) {
-    var locals = {
-        title: 'Create Page',
-        description: 'Page Description',
-        header: 'Page Header'
-    };
-    console.info('auth get');
-    //res.render(renderConstants.PRODUCT_CREATE_PAGE);
     res.render(renderConstants.PRODUCT_CREATE_PAGE, { layout: 'panel-layout', data : 'value' });
 });
 
 
+/**
+ * Create project.
+ *
+ * @return {Function}
+ * @access private
+ */
 router.post('/', function(req, res, next) {
-    var locals = {
-        title: 'Page Title',
-        description: 'Page Description',
-        header: 'Page Header'
-    };
-    console.info('auth get');
-    //res.render(renderConstants.PRODUCT_CREATE_PAGE);
     res.render(renderConstants.PRODUCT_CREATE_PAGE, { layout: 'panel-layout' });
 
 });

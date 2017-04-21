@@ -223,7 +223,7 @@
   color: #030e13; }
   .bs-callout-info h1, .bs-callout-info h2, .bs-callout-info h3, .bs-callout-info h4, .bs-callout-info h5, .bs-callout-info h6 {
     margin-top: 0;
-    color: #3BAFDA; }
+    color: #000; }
   .bs-callout-info p:last-child {
     margin-bottom: 0; }
   .bs-callout-info code, .bs-callout-info .highlight {

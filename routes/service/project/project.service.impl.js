@@ -39,23 +39,16 @@ function getProjects(projectJson, callback) {
 };
 exports.getProjects = getProjects;
 
-exports.saveProject = function(req, res, next) {
+function saveProject(projectJson, callback) {
 
     // create a project
     var projectJson = req.body;
     console.info('projectJson = ', projectJson);
 
-    if (_.isEmpty(projectJson)) {
-        logger.debug(constants.PROJECT_OBJ_EMPTY_MSG);
-        var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_OBJ_EMPTY, '', constants.PROJECT_OBJ_EMPTY_MSG, constants.PROJECT_OBJ_EMPTY_MSG, 500));
-        resEvents.emit('ErrorJsonResponse', req, res, baseError);
-    }
-
     Project.find({name : projectJson.name}, function (err, projects) {
         if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            callback(err, null);
+            return;
         }
 
         if(_.isEmpty(projects)) {
@@ -64,41 +57,17 @@ exports.saveProject = function(req, res, next) {
             console.info('project = ', project);
             // save project to database
             project.save(function (err, dbProject) {
-                if (err) {
-                    logger.debug(err);
-                    var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_DUPLICATE, '', constants.PROJECT_DUPLICATE_MSG, err.message, 500));
-                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
-                }
-
-                /*console.info('project._id = ', dbProject.id);
-                var source = path.join(process.env.PWD, "/dist/plugins/maven-jmeter");
-                var projectPath = path.join(process.env.PWD, "/dist/projects/" + dbProject.id);
-
-                //FileUtil.copySync(pluginsPath, projectPath);
-                ncp.limit = 16;
-
-                ncp(source, projectPath, function (err) {*/
-                    if (err) {
-                        //return console.error(err);
-                        logger.debug(err);
-                        var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
-                        resEvents.emit('ErrorJsonResponse', req, res, baseError);
-                    }
-
-                    console.log('done!');
-                    res.status(constants.HTTP_OK).send({
-                        status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Saved"),
-                        data: project
-                    });
-                //});
+                callback(err, dbProject);
             });
         } else {
             logger.debug(constants.PROJECT_NOT_AVAILABLE_MSG);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, constants.PROJECT_NOT_AVAILABLE_MSG, 500));
+            //var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, constants.PROJECT_NOT_AVAILABLE_MSG, 500));
+            callback(err, null);
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
     });
 };
+exports.saveProject = saveProject;
 
 exports.updateProject = function(req, res, next) {
     Project.findById(req.body.id, function (err, project) {
