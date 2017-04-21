@@ -1,310 +1,135 @@
 <div class="content-wrapper">
 
   <div class="row">
-    <div class="col-sm-6">
-
-    </div>
-    <div class="col-sm-12 right">
-
+    <div class="col-xs-12 right">
       <div class="form-group">
         <div class="btn-group pull-right" role="group" aria-label="Basic example">
           <!-- Button group with icons -->
-          <div class="btn-group mr-1">
-            <select class="form-control" tabindex="-1" aria-hidden="true">
-              <option value="1">Application 1</option>
-              <option value="2" selected>Application 2</option>
-              <option value="3">Application 3</option>
-            </select>
-          </div>
-          <!--
-          <div class="btn-group mr-1 mb-1">
-              <div class="btn-group">
-                  <span class="dropdown">
-                  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Scrollable Menu <span class="caret"></span></button>
-                  <div class="dropdown-menu scrollable-menu mt-1 dropdown-menu-right" role="menu">
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Another action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Something else here</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Another action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Something else here</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Another action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Something else here</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Another action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Something else here</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Action</a>
-                      <a class="dropdown-item" href="#"><i class="icon-calendar5"></i> Another action</a>
-                  </div>
-                  </span>
-              </div>
-          </div>-->
-          <button type="button" class="btn btn-danger mr-1 side-panel-trigger"><i class="icon-rocket2"></i> Execute</button>
-          <div class="btn-group mr-1">
-                            <span class="dropdown">
-                                <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 white"></i> Application</button>
-                                <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                                    <a href="#" class="dropdown-item"><i class="icon-calendar5"></i> Due Date</a>
-                                    <a href="#" class="dropdown-item"><i class="icon-shuffle3"></i> Priority </a>
-                                    <a href="#" class="dropdown-item"><i class="icon-bar-graph"></i> Progress</a>
-                                    <a href="#" class="dropdown-item"><i class="icon-head"></i> Assign to</a>
-                                </span>
-                            </span>
-          </div>
-          <div class="btn-group mr-1">
-            <button type="button" class="btn btn-success"><i class="icon-eye6"></i> Results</button>
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#"><i class="icon-plus4"></i> Create</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
-          </div>
-          <button type="button" class="btn btn-info mr-1"><i class="icon-calendar5"></i> Schedule</button>
-          <button type="button" class="btn btn-danger"><i class="icon-eye"></i> Print</button>
+          <button class="btn btn-danger btn-sm side-panel-trigger"><i class="icon-plus4 white"></i> Add Project</button>
         </div>
       </div>
     </div>
   </div>
 
-  <section class="row">
-    <div class="col-xs-12">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title" id="heading-dropdown">PROJECT1 : APPLICATION 1</h4>
-          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-          <div class="heading-elements">
+  <div class="row">
+    <div class="col-xs-12 right">
+      <div class="content-body"><!-- Minimal statistics section start -->
 
+        <!-- stats with subtitle section start -->
+        <section id="stats-subtitle">
+          <div class="row">
+            <div class="col-xs-12 mb-1">
+              <h4>Projects</h4>
+              <hr>
+            </div>
           </div>
-        </div>
-        <div class="card-block">
-          <ul class="nav nav-tabs nav-top-border no-hover-bg">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab1" data-toggle="tab" href="#home1" aria-controls="home1" aria-expanded="true">Summary</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="dashboard-timeline.html">Timeline</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="system-statistics.html">System Statistics</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="network-metrics.html">Network Metrics</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                Logs
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="dashboard-errors.html">Errors</a>
-                <a class="dropdown-item" href="dashboard-success.html">Success</a>
+
+          <div class="row">
+            <div class="col-xl-6 col-md-12">
+              <div class="card overflow-hidden">
+                <div class="card-body">
+                  <div class="card-block cleartfix">
+                    <div class="media">
+                      <div class="media-left media-middle">
+                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
+                      </div>
+                      <div class="media-body">
+                        <h4>Project 1</h4>
+                        <span>Project 1 Description </span>
+                      </div>
+                      <div class="btn-group-vertical">
+                        <div class="" role="group" aria-label="First Group">
+                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
+                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
+                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-          </ul>
-          <div class="tab-content px-1 pt-1">
-            <div role="tabpanel" class="tab-pane fade active in" id="home1" aria-labelledby="home-tab1" aria-expanded="true">
-              <section id="minimal-statistics">
-                <div class="row">
-                  <div class="col-lg-12 col-xs-12">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="card-block">
-                          <div class="row">
-                            <div class="col-lg-3 col-md-6 col-xs-12 border-right-grey border-right-lighten-3">
-                              <div class="float-xs-left pl-1">
-                                <span class="font-large-1 text-bold-200">150</span>
-                              </div>
-                              <div class="float-xs-left mt-1 ml-1">
-                                <span class="grey darken-1 block">VU</span>
-                                <span class="grey darken-1 block">Max Users</span>
-                              </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-xs-12 border-right-grey border-right-lighten-3">
-                              <div class="float-xs-left pl-1">
-                                <span class="font-large-1 text-bold-200">8.55</span>
-                              </div>
-                              <div class="float-xs-left mt-1 ml-1">
-                                <span class="grey darken-1 block">Hits/s</span>
-                                <span class="grey darken-1 block">Avg. Throughput</span>
-                              </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-xs-12 border-right-grey border-right-lighten-3">
-                              <div class="float-xs-left pl-21">
-                                <span class="font-large-1 text-bold-200">93.3</span>
-                              </div>
-                              <div class="float-xs-left mt-1 ml-1">
-                                <span class="grey darken-1 block">ms</span>
-                                <span class="grey darken-1 block">Avg. Resp. Time</span>
-                              </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-xs-12">
-                              <div class="float-xs-left pl-1">
-                                <span class="font-large-1 text-bold-200">172</span>
-                              </div>
-                              <div class="float-xs-left mt-1 ml-1">
-                                <span class="grey darken-1 block">ms</span>
-                                <span class="grey darken-1 block">95% Resp. Time</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            </div>
 
-                  <div class="col-xl-6 col-md-12 col-sm-12">
-                    <div class="card no-border box-shadow-0">
-                      <div class="card-body collapse in">
-                        <div class="card-footer p-0 no-border">
-                          <div class="table-responsive">
-                            <table class="table table-bordered mb-0">
-                              <tbody>
-                              <tr>
-                                <td>
-                                  <div class="details-left float-xs-left">
-                                    <span class="font-small-1 grey text-bold-600 block">DURATION</span>
-                                    <span class="text-bold-500">45 minutes</span>
-                                  </div>
-                                  <div class="float-xs-right valign-middle">
-                                    <i class="icon-ios-timer pink lighten-1 font-large-1"></i>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div class="details-left float-xs-left">
-                                    <span class="font-small-1 grey text-bold-600 block">TEST TYPE</span>
-                                    <span class="text-bold-500">REST JSON</span>
-                                  </div>
-                                  <div class="float-xs-right valign-middle">
-                                    <i class="icon-wpforms pink lighten-1 font-large-1"></i>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div class="details-left float-xs-left">
-                                    <span class="font-small-1 grey text-bold-600 block">STARTED</span>
-                                    <span class="text-bold-500">Apr 18 2017 11:00:00 AM</span>
-                                  </div>
-                                  <div class="float-xs-right valign-middle">
-                                    <i class="icon-calendar5 pink lighten-1 font-large-1"></i>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div class="details-left float-xs-left">
-                                    <span class="font-small-1 grey text-bold-600 block">ENDED</span>
-                                    <span class="text-bold-500">Apr 18 2017 11:45:00 AM</span>
-                                  </div>
-                                  <div class="float-xs-right valign-middle">
-                                    <i class="icon-calendar5 pink lighten-1 font-large-1"></i>
-                                  </div>
-                                </td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
+            <div class="col-xl-6 col-md-12">
+              <div class="card overflow-hidden">
+                <div class="card-body">
+                  <div class="card-block cleartfix">
+                    <div class="media">
+                      <div class="media-left media-middle">
+                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-xs-12">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="card-block">
-                          <div class="row">
-                            <div class="col-lg-6 col-md-6 col-xs-12 border-right-grey border-right-lighten-3">
-                              <div class="float-xs-left pl-1">
-                                <span class="font-large-1 text-bold-200">0</span>
-                              </div>
-                              <div class="float-xs-left mt-1 ml-1">
-                                <span class="grey darken-1 block">%</span>
-                                <span class="grey darken-1 block">Errors</span>
-                              </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-xs-12 border-right-grey border-right-lighten-3">
-                              <div class="float-xs-left pl-1">
-                                <span class="font-large-1 text-bold-200">3.45</span>
-                              </div>
-                              <div class="float-xs-left mt-1 ml-1">
-                                <span class="grey darken-1 block">KB</span>
-                                <span class="grey darken-1 block">Avg. Bandwidth</span>
-                              </div>
-                            </div>
-                          </div>
+                      <div class="media-body">
+                        <h4>Project 2</h4>
+                        <span>Project 2 Description </span>
+                      </div>
+                      <div class="btn-group-vertical">
+                        <div class="" role="group" aria-label="First Group">
+                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
+                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
+                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4 class="card-title">Load</h4>
-                        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+            <div class="col-xl-6 col-md-12">
+              <div class="card overflow-hidden">
+                <div class="card-body">
+                  <div class="card-block cleartfix">
+                    <div class="media">
+                      <div class="media-left media-middle">
+                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
                       </div>
-                      <div class="card-body collapse in">
-                        <div class="card-block">
-                          <div id="summary-load" class="height-400 echart-container"></div>
-                        </div>
+                      <div class="media-body">
+                        <h4>Project 3</h4>
+                        <span>Project 3 Description </span>
                       </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4 class="card-title">Response Time</h4>
-                        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                      </div>
-                      <div class="card-body collapse in">
-                        <div class="card-block">
-                          <div id="summary-response" class="height-400 echart-container"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-xs-12 ">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4 class="card-title">Aggregate Graph</h4>
-                        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                      </div>
-                      <div class="card-body collapse in">
-                        <div class="card-block">
-                          <div id="aggregate-graph" class="height-400 echart-container"></div>
+                      <div class="btn-group-vertical">
+                        <div class="" role="group" aria-label="First Group">
+                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
+                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
+                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </section>
-            </div>
-            <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="profile-tab1" aria-expanded="false">
-            </div>
-            <div class="tab-pane fade" id="system-metrics" role="tabpanel" aria-labelledby="system-metrics-tab" aria-expanded="false">
-              <p>Chocolate croissant cupcake croissant jelly donut. Cheesecake toffee apple pie chocolate bar biscuit tart croissant. Lemon drops danish cookie. Oat cake macaroon icing tart lollipop cookie sweet bear claw.</p>
-            </div>
-            <div class="tab-pane fade" id="about1" role="tabpanel" aria-labelledby="about-tab1" aria-expanded="false">
-              <p>Carrot cake dragée chocolate. Lemon drops ice cream wafer gummies dragée. Chocolate bar liquorice cheesecake cookie chupa chups marshmallow oat cake biscuit. Dessert toffee fruitcake ice cream powder tootsie roll cake.</p>
-            </div>
-            <div class="tab-pane fade" id="dropdown12" role="tabpanel" aria-labelledby="dropdown12-tab" aria-expanded="false">
-              <p>Carrot cake dragée chocolate. Lemon drops ice cream wafer gummies dragée. Chocolate bar liquorice cheesecake cookie chupa chups marshmallow oat cake biscuit. Dessert toffee fruitcake ice cream powder tootsie roll cake.</p>
-            </div>
-            <div class="tab-pane fade" id="dropdown11" role="tabpanel" aria-labelledby="dropdown11-tab" aria-expanded="false">
-              <p>Cake croissant lemon drops gummi bears carrot cake biscuit cupcake croissant. Macaroon lemon drops muffin jelly sugar plum chocolate cupcake danish icing. Soufflé tootsie roll lemon drops sweet roll cake icing cookie halvah cupcake.</p>
+              </div>
             </div>
 
+            <div class="col-xl-6 col-md-12">
+              <div class="card overflow-hidden">
+                <div class="card-body">
+                  <div class="card-block cleartfix">
+                    <div class="media">
+                      <div class="media-left media-middle">
+                        <i class="icon-trending_up pink font-large-2 mr-2"></i>
+                      </div>
+                      <div class="media-body">
+                        <h4>Project 4</h4>
+                        <span>Project 4 Description </span>
+                      </div>
+                      <div class="btn-group-vertical">
+                        <div class="" role="group" aria-label="First Group">
+                          <button type="button" class="btn btn-icon btn-success" onclick="location.href='project.html';"><i class="icon-eye"></i></button>
+                          <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
+                          <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+
+        </section>
+        <!-- // stats with subtitle section end -->
 
       </div>
     </div>
-  </section>
+  </div>
 </div>

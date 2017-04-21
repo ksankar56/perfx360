@@ -1,0 +1,46 @@
+<!-- BEGIN VENDOR JS-->
+<script src="/app-assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/ui/tether.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/core/libraries/bootstrap.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/ui/unison.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/ui/blockUI.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/ui/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/ui/jquery-sliding-menu.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/sliders/slick/slick.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/ui/screenfull.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/extensions/pace.min.js" type="text/javascript"></script>
+<!-- BEGIN VENDOR JS-->
+<!-- BEGIN PAGE VENDOR JS-->
+<script src="/app-assets/vendors/js/ui/headroom.min.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js" type="text/javascript"></script>
+<script src="/app-assets/vendors/js/forms/icheck/icheck.min.js" type="text/javascript"></script>
+<!-- END PAGE VENDOR JS-->
+<!-- BEGIN ROBUST JS-->
+<script src="/app-assets/js/core/app-menu.js" type="text/javascript"></script>
+<script src="/app-assets/js/core/app.js" type="text/javascript"></script>
+<script src="/app-assets/js/scripts/ui/fullscreenSearch.js" type="text/javascript"></script>
+<!-- END ROBUST JS-->
+<!-- BEGIN PAGE LEVEL JS-->
+<script src="/app-assets/js/scripts/forms/form-login-register.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL JS-->
+<script>
+    $(function () {
+        var body = $('body');
+        var backgrounds = [
+            'url(/app-assets/images/backgrounds/bg-2f.jpg) no-repeat center center fixed',
+            'url(/app-assets/images/backgrounds/bg-2d.jpg) no-repeat center center fixed',
+            'url(/app-assets/images/backgrounds/bg-2e.jpg) no-repeat center center fixed'];
+        var current = 0;
+
+        function nextBackground() {
+            body.css(
+                'background',
+                backgrounds[current = ++current % backgrounds.length]);
+
+            setTimeout(nextBackground, 20000);
+        }
+        setTimeout(nextBackground, 20000);
+        body.css('background', backgrounds[0]);
+    });
+</script>

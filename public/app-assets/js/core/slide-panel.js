@@ -249,9 +249,5 @@ var requesting = !1,
         K = e(".portfolio-parallax").find(".portfolio-image"),
         Z = e(".text-rotater"),
         ee = e("#cookie-notification");
-    e(document).ready(SEMICOLON.documentOnReady.init), t.load(SEMICOLON.documentOnLoad.init), t.on("resize", SEMICOLON.documentOnResize.init)
+    e(document).ready(SEMICOLON.documentOnReady.init)
 }(jQuery);
-jQuery(document).ready(function(t) {
-    var i = t("#primary-menu").find('a[href="both-sidebar.php"]');
-    i.attr("href", "sticky-sidebar.php"), i.find("div").html('Sticky Sidebar <div class="label bgcolor nott" style="position: relative; top: -1px; margin-left: 5px;">New</div>')
-});

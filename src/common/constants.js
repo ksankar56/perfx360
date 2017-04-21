@@ -13,6 +13,9 @@ module.exports = Object.freeze({
     USER_OBJ_EMPTY: "USER_OBJ_EMPTY",
     USER_OBJ_EMPTY_MSG : "User Object is Empty",
 
+    USER_NAME_NOT_FOUND: "USER_NAME_NOT_FOUND",
+    USER_NAME_NOT_FOUND_MSG : "User Name not found",
+
     USER_DUPLICATE : "USER_DUPLICATE",
     USER_DUPLICATE_MSG : "Username already in use",
 

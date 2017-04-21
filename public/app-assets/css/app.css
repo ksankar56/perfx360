@@ -15,7 +15,7 @@ html {
       transition: 300ms ease all;
       backface-visibility: hidden; }
       html body .content .content-wrapper {
-        padding: 0.8rem; }
+        padding: 0.4rem; }
         html body .content .content-wrapper .content-header-right {
           margin-top: 6px; }
     html body[data-col="1-column"]:not(.vertical-content-menu) .content,
@@ -30,7 +30,6 @@ html {
       padding-left: 0;
       padding-right: 0; }
     html body.bg-full-screen-image {
-      background: url(../../app-assets/images/backgrounds/bg-2.jpg) no-repeat center center fixed;
       background-size: cover; }
     html body .pace .pace-progress {
       background: #3BAFDA; }

@@ -8,13 +8,14 @@ var mongoose = require('mongoose')
     , _ = require('lodash')
     , constants = require('../../../src/common/constants')
     , logger = require('../../../config/logger')
-    , baseService = require('../../../src/common/base.service');
+    , baseService = require('../../../src/common/base.service')
+    , userServiceImpl = require('./user.service.impl');
 
 var User = require('../../../src/model/user');
 
 exports.getUsers = function(req, res, next) {
 
-    User.find(function (err, users) {
+    userServiceImpl.getAllUsers(function(err, users) {
         if (err) {
             logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_NOT_AVAILABLE, '', constants.USER_NOT_AVAILABLE_MSG, err.message, 500));
@@ -24,7 +25,7 @@ exports.getUsers = function(req, res, next) {
         res.status(constants.HTTP_OK).send({
             status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
             data: users});
-    });
+    })
 };
 
 exports.saveUser = function(req, res, next) {
@@ -39,16 +40,7 @@ exports.saveUser = function(req, res, next) {
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
-    var user = new User({
-        username: userJson.username,
-        password: userJson.password,
-        firstName : userJson.firstName,
-        lastName : userJson.lastName,
-        emailAddress: userJson.emailAddress
-    });
-
-    // save user to database
-    user.save(function(err) {
+    userServiceImpl.saveUser(userJson, function (err, user) {
         if (err) {
             logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_DUPLICATE, '', constants.USER_DUPLICATE_MSG, err.message, 500));
@@ -72,27 +64,19 @@ exports.authenticate = function(req, res, next) {
         resEvents.emit('ErrorJsonResponse', req, res, baseError);
     }
 
-    User.findOne({ username: userJson.username }, function(err, user) {
+    userServiceImpl.authenticate(userJson, function(err, isMatch, user) {
         if (err) {
             logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_OBJ_EMPTY, '', constants.USER_OBJ_EMPTY_MSG, err.message, 500));
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, err.message, 500));
             resEvents.emit('ErrorJsonResponse', req, res, baseError);
         }
 
-        user.comparePassword(userJson.password, function(err, isMatch) {
-            if (err) {
-                logger.debug(err);
-                var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, err.message, 500));
-                resEvents.emit('ErrorJsonResponse', req, res, baseError);
-            }
-
-            if (isMatch) {
-                resEvents.emit('JsonResponse', req, res, user);
-            } else {
-                logger.debug(constants.USER_PASSWORD_NOT_MATCH_MSG);
-                var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, '', 500));
-                resEvents.emit('ErrorJsonResponse', req, res, baseError);
-            }
-        });
-    });
+        if (isMatch) {
+            resEvents.emit('JsonResponse', req, res, user);
+        } else {
+            logger.debug(constants.USER_PASSWORD_NOT_MATCH_MSG);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, '', 500));
+            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+        }
+    })
 };
