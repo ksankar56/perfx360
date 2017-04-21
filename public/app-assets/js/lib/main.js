@@ -51,6 +51,27 @@ $('#click').on( "click", function() {
 $(document).ready(function() {
     //var cardBlock = $('.card-block');
 
+    $('.nav-link-expand').on('click', function(e) {
+        if (typeof screenfull != 'undefined'){
+            if (screenfull.enabled) {
+                screenfull.toggle();
+            }
+        }
+    });
+
+    if (typeof screenfull != 'undefined'){
+        if (screenfull.enabled) {
+            $(document).on(screenfull.raw.fullscreenchange, function(){
+                if(screenfull.isFullscreen){
+                    $('.nav-link-expand').find('i').toggleClass('icon-contract icon-expand2');
+                }
+                else{
+                    $('.nav-link-expand').find('i').toggleClass('icon-expand2 icon-contract');
+                }
+            });
+        }
+    }
+
     $('.fetch-data').on('click', function() {
         //$(cardBlock).blockUI({ message: "<h1>Remote call in progress...</h1>" });
         var block_ele = $('.side-panel-wrap');
@@ -73,9 +94,9 @@ $(document).ready(function() {
                 color: '#b2b2b2'
             }});
         //$.ajax({ url: 'wait.php', cache: false });
-        var url = '/auth/test'; //obj.data("url");
+        var url = $(this).data("url");
         var data = {};
-        var type = 'GET'; //obj.data("type");
+        var type = $(this).data("type");
 
         $.ajax({
             url: url,
@@ -89,6 +110,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.info('success');
                 //$.unblockUI();
+                $('#slide-result-view').html(data);
                 $(block_ele).unblock();
             },
             type: type
@@ -98,9 +120,9 @@ $(document).ready(function() {
 
     function fetchData(obj) {
         //$.ajax({ url: 'wait.php', cache: false });
-        var url = '/auth/test'; //obj.data("url");
+        var url = '/project'; //obj.data("url");
         var data = {};
-        var type = 'GET'; //obj.data("type");
+        var type = 'POST'; //obj.data("type");
 
         $.ajax({
             url: url,

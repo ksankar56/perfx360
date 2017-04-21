@@ -50,6 +50,8 @@ exports.init = function(app) {
             url   : req.originalUrl
         }
 
+        res.locals.xhr = req.xhr;
+
         next();
     });
 

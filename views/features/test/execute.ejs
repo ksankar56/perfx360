@@ -1,0 +1,84 @@
+<div class="card-block">
+    <form class="form form-horizontal">
+        <div class="form-body">
+            <div class="form-group mb-3">
+                <label class="col-md-3 label-control" for="testName">Name</label>
+                <div class="col-md-9">
+                    <input type="text" id="testName" class="form-control required" placeholder="Test Name" name="testName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 label-control">Component</label>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <select name="component" class="form-control">
+                            <option value="component1" selected="" disabled="">Component 1</option>
+                            <option value="component2">Component 2</option>
+                            <option value="component3">Component 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 label-control">Environment</label>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <select name="environment" class="form-control">
+                            <option value="none" selected="" disabled="">QA</option>
+                            <option value="design">Staging</option>
+                            <option value="development">Prod Like</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-body mr-1 ml-1">
+            <h4 class="form-section"><i class="icon-eye6"></i> Load Configuration </h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="users">Number of Users</label>
+                        <input type="text" id="users" class="form-control" placeholder="Users" name="users">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="rampUpPeriod">Ramp-Up Period</label>
+                        <input type="text" id="rampUpPeriod" class="form-control" placeholder="Ramp Up Period" name="rampUpPeriod">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="iterations">Iterations</label>
+                        <input type="text" id="iterations" class="form-control" placeholder="Iterations" name="iterations">
+                        <label for="forever">Forever</label>
+                        <input type="checkbox" id="forever" class="form-control" name="forever" Value="Forever">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="duration">Duration</label>
+                        <input type="text" id="duration" class="form-control" placeholder="Duration" name="duration">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions mr-1 ml-1 right">
+            <button type="button" class="btn btn-danger btn-min-width mr-1 ladda-button" data-style="slide-left">
+                                        <span class="ladda-label"><i class="icon-android-checkbox-outline"></i> Execute
+                                        </span>
+            </button>
+
+            <button type="button" class="btn btn-warning mr-1 side-panel-trigger">
+                <i class="icon-cross2"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-primary side-panel-trigger">
+                <i class="icon-check2"></i> Save
+            </button>
+        </div>
+    </form>
+</div>

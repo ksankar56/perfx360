@@ -21,7 +21,7 @@ $( document ).ready(function() {
 
     require.config({
         paths: {
-            echarts: 'app-assets/vendors/js/charts/echarts'
+            echarts: '/app-assets/vendors/js/charts/echarts'
         }
     });
 
