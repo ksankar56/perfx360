@@ -76,14 +76,9 @@ $(document).ready(function() {
         }
     }
 
-    $('.fetch-data').on('click', function() {
-        //$(cardBlock).blockUI({ message: "<h1>Remote call in progress...</h1>" });
-        var block_ele = $('.side-panel-wrap');
-        /*$(block_ele).block({
-            message: '<h1>Fetching data...</h1>'
-        });*/
-
-        $(block_ele).block({ message: '<h3>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h3>',
+    $(document.body).on('click', '.process-page', function() {
+        var loadingBlock = $('.side-panel-wrap');
+        $(loadingBlock).block({ message: '<h3>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h3>',
             overlayCSS: {
                 backgroundColor: '#fff',
                 opacity: 0.6,
@@ -97,65 +92,56 @@ $(document).ready(function() {
                 backgroundColor: '#000',
                 color: '#b2b2b2'
             }});
-        //$.ajax({ url: 'wait.php', cache: false });
-        var url = $(this).data("url");
+        var title = $(this).data("title");
+
+        if(title) {
+            $('#slide-header-view').html(title);
+        }
+
+        fetchData($(this), loadingBlock);
+    });
+
+
+    function fetchData(currentObj, loadingBlock) {
+        var url = currentObj.data("url");
         var data = {};
-        var type = $(this).data("type");
-        var destination = $(this).data("destination");
+        var type = currentObj.data("method");
+        var destination = currentObj.data("destination");
+        var formSubmit = currentObj.data("form");
+
+        console.info('url = ', url);
 
         if (destination == undefined) {
             destination = '#slide-result-view';
         }
 
+        console.info('type = ', type);
+
+        if (formSubmit) {
+            var formElement = currentObj.closest('form');
+            data = $(formElement).serialize();
+            console.info('data = ', data);
+        }
+
         $.ajax({
             url: url,
             data: data,
-            error: function() {
+            error: function(err) {
                 //$('#info').html('<p>An error has occurred</p>');
                 //$.unblockUI();
-                console.info('failed');
-                $(block_ele).unblock();
+                console.info('failed = ', err);
+                $(loadingBlock).unblock();
             },
             success: function(data) {
                 console.info('success');
                 //$.unblockUI();
                 $(destination).html(data);
-                $(block_ele).unblock();
+                $(loadingBlock).unblock();
             },
             type: type
         });
-    });
-
-
-    function fetchData(obj) {
-        //$.ajax({ url: 'wait.php', cache: false });
-        var url = '/project'; //obj.data("url");
-        var data = {};
-        var type = 'POST'; //obj.data("type");
-
-        $.ajax({
-            url: url,
-            data: data,
-            error: function() {
-                //$('#info').html('<p>An error has occurred</p>');
-                //$.unblockUI();
-                console.info('failed');
-                $.unblockUI('.card-bloc');
-            },
-            success: function(data) {
-                console.info('success');
-            },
-            type: type
-        });
-        /*$.ajax({
-         url: '',
-         cache: false,
-         complete: function() {
-         // unblock when remote call returns
-         $.unblockUI();
-         }
-         });*/
     }
+
 });
 
 

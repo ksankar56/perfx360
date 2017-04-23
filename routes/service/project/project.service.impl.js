@@ -17,6 +17,15 @@ var _ = require('lodash')
 
 var Project = require('../../../src/model/Project');
 
+function getProject(id, callback) {
+    console.info('id = ', id);
+
+    Project.findById(id, function (err, project) {
+        callback(err, project);
+    });
+};
+exports.getProject = getProject;
+
 function getAllProjects(req, res, callback) {
     Project.find({})
         .populate({path : 'group', populate: { path: 'component' }})
@@ -42,7 +51,6 @@ exports.getProjects = getProjects;
 function saveProject(projectJson, callback) {
 
     // create a project
-    var projectJson = req.body;
     console.info('projectJson = ', projectJson);
 
     Project.find({name : projectJson.name}, function (err, projects) {
@@ -52,7 +60,7 @@ function saveProject(projectJson, callback) {
         }
 
         if(_.isEmpty(projects)) {
-            var project = ModelUtil.getProjectModel(req, res, projectJson)
+            var project = ModelUtil.getProjectModel(projectJson);
 
             console.info('project = ', project);
             // save project to database
@@ -60,50 +68,38 @@ function saveProject(projectJson, callback) {
                 callback(err, dbProject);
             });
         } else {
-            logger.debug(constants.PROJECT_NOT_AVAILABLE_MSG);
-            //var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, constants.PROJECT_NOT_AVAILABLE_MSG, 500));
-            callback(err, null);
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            logger.debug(constants.PROJECT_DUPLICATE);
+            var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_DUPLICATE, '', constants.PROJECT_DUPLICATE_MSG, constants.PROJECT_DUPLICATE_MSG, 500));
+            callback(baseError, null);
         }
     });
 };
 exports.saveProject = saveProject;
 
-exports.updateProject = function(req, res, next) {
+function updateProject(req, callback) {
+    console.info('req.body.id = ', req.body.id);
+
     Project.findById(req.body.id, function (err, project) {
         // Handle any possible database errors
         if (err) {
             logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            callback(baseError, null);
+            return;
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
             // If that attribute isn't in the request body, default back to whatever it was before.
-            project.name = req.body.name || project.name;
-            project.description = req.body.description || project.description;
-            project.status  = req.body.status || project.status;
-            project.groups = req.body.groups || project.groups;
-            project.components = req.body.components || project.components;
-            project.createdDate = req.body.createdDate || project.createdDate;
-            project.updatedDate = req.body.updatedDate || project.updatedDate;
-            project.createdBy = req.body.createdBy || project.createdBy;
+
+            var project = ModelUtil.updateProjectModel(req, project);
 
             // Save the updated document back to the database
             project.save(function (err, result) {
-                if (err) {
-                    logger.debug(err);
-                    var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_NOT_AVAILABLE, '', constants.PROJECT_NOT_AVAILABLE_MSG, constants.PROJECT_NOT_AVAILABLE_MSG, 500));
-                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
-                }
-
-                res.status(constants.HTTP_OK).send({
-                    status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
-                    data: result});
+                callback(err, result);
             });
         }
     });
 };
-
+exports.updateProject = updateProject;
 
 exports.deleteProject = function(req, res, next) {
     Project.remove({ _id: req.body.id }, function(err) {

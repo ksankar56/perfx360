@@ -12,9 +12,7 @@ var projectSchema = new Schema({
     description: {
         type: String
     },
-    status: {
-        type: Boolean
-    },
+    status: { type: Boolean, default: true },
     groups: [{type: Schema.ObjectId, ref: 'Group', unique : true}],
     components: [{type: Schema.ObjectId, ref: 'Component'}],
     createdBy: {type: Schema.ObjectId, ref: 'User'},

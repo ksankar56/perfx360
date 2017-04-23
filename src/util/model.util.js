@@ -15,7 +15,7 @@ var ModelUtil = function f(options) {
     var self = this;
 };
 
-ModelUtil.getProjectModel = function(req, res, projectJson) {
+ModelUtil.getProjectModel = function(projectJson) {
     var project = new Project({
         name: projectJson.name,
         description: projectJson.description,
@@ -26,6 +26,20 @@ ModelUtil.getProjectModel = function(req, res, projectJson) {
         updatedDate: DateUtil.getCurrentDate(),
         createdBy: projectJson.createdBy
     });
+
+    return project;
+};
+
+ModelUtil.updateProjectModel = function(req, project) {
+
+    project.name = req.body.name || project.name;
+    project.description = req.body.description || project.description;
+    project.status  = req.body.status || project.status;
+    project.groups = req.body.groups || project.groups;
+    project.components = req.body.components || project.components;
+    project.createdDate = req.body.createdDate || project.createdDate;
+    project.updatedDate = req.body.updatedDate || project.updatedDate;
+    project.createdBy = req.body.createdBy || project.createdBy;
 
     return project;
 };

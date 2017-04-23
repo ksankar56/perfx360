@@ -10,13 +10,14 @@
                 <label class="col-md-3 label-control" for="projectName">Name</label>
                 <div class="col-md-9">
                     <input type="hidden" id="createdBy" class="form-control required" name="createdBy" value="<%= req.session.user._id %>">
-                    <input type="text" id="name" class="form-control required" placeholder="Project Name" name="name">
+                    <input type="hidden" id="id" class="form-control required" name="id" value="<%= locals.project._id %>">
+                    <input type="text" id="name" class="form-control required" placeholder="Project Name" name="name" value="<%= locals.project.name %>">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-md-3 label-control" for="projectDesc">Description</label>
                 <div class="col-md-9">
-                    <textarea id="description" rows="5" class="form-control" name="description" placeholder="Project Description"></textarea>
+                    <textarea id="description" rows="5" class="form-control" name="description" placeholder="Project Description"><%= locals.project.description %></textarea>
                 </div>
             </div>
         </div>
@@ -25,7 +26,7 @@
             <button type="button" class="btn btn-warning mr-1 side-panel-trigger">
                 <i class="icon-cross2"></i> Cancel
             </button>
-            <button type="button" class="btn btn-primary process-page" data-url="/project" data-method="POST" data-title="Create Project" data-form="true">
+            <button type="button" class="btn btn-primary process-page" data-url="/project" data-method="PUT" data-title="Edit Project" data-form="true">
                 <i class="icon-check2"></i> Save
             </button>
         </div>

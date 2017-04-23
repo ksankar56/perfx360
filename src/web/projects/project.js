@@ -21,7 +21,7 @@ var express = require('express')
  * @access private
  */
 router.get('/', function(req, res, next) {
-    res.render(renderConstants.PRODUCT_CREATE_PAGE, { layout: 'panel-layout', data : 'value' });
+    res.render(renderConstants.PRODUCT_CREATE_PAGE, { layout: 'panel-layout', req : req });
 });
 
 
@@ -32,8 +32,43 @@ router.get('/', function(req, res, next) {
  * @access private
  */
 router.post('/', function(req, res, next) {
-    res.render(renderConstants.PRODUCT_CREATE_PAGE, { layout: 'panel-layout' });
+    console.info('data = ', req.body);
+    projectServiceImpl.saveProject(req.body, function(err, project) {
+        console.info('save err = ', err);
+        res.render(renderConstants.PRODUCT_CREATE_PAGE, { layout: 'panel-layout', err: err,
+            project: project, req : req, status: Utils.buildStatus(constants.HTTP_OK, constants.PROJECT_CREATED_MSG, true)});
+    })
+});
 
+/**
+ * Render project edit page with project.
+ *
+ * @return {Function}
+ * @access private
+ */
+router.get('/edit/:id', function(req, res, next) {
+    projectServiceImpl.getProject(req.params.id, function(err, project) {
+        console.info('err = ', err);
+        console.info('project = ', project);
+
+        res.render(renderConstants.PRODUCT_EDIT_PAGE, { layout: 'panel-layout', err: err, project: project, req : req });
+    });
+});
+
+/**
+ * Create project.
+ *
+ * @return {Function}
+ * @access private
+ */
+router.put('/', function(req, res, next) {
+    console.info('data = ', req.body);
+
+    projectServiceImpl.updateProject(req, function(err, project) {
+        console.info('save err = ', err);
+        res.render(renderConstants.PRODUCT_EDIT_PAGE, { layout: 'panel-layout', err: err,
+            project: project, req : req, status: Utils.buildStatus(constants.HTTP_OK, constants.PROJECT_UPDATED_MSG, true)});
+    })
 });
 
 module.exports = router;

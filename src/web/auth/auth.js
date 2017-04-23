@@ -41,7 +41,7 @@ router.get('/', function(req, res, next) {
 router.get('/index', function(req, res, next) {
     var user = req.session.user;
     var locals = {};
-    console.info('index user = ', user);
+
     if (!_.isEmpty(user)) {
         projectServiceImpl.getProjects({createdBy : user._id}, function(err, projects) {
             if (err) {
@@ -50,7 +50,6 @@ router.get('/index', function(req, res, next) {
                 //var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
             }
 
-            console.info('projects = ', projects);
             locals.projects = projects;
             res.render('index', locals);
         });

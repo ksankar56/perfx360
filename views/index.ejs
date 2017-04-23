@@ -5,7 +5,7 @@
             <div class="form-group">
                 <div class="btn-group pull-right" role="group" aria-label="Basic example">
                     <!-- Button group with icons -->
-                    <button class="btn btn-danger btn-sm side-panel-trigger fetch-data" data-url="/project" data-method="GET"><i class="icon-plus4 white"></i> Add
+                    <button class="btn btn-danger btn-sm side-panel-trigger process-page" data-url="/project" data-method="GET" data-title="Create Project"><i class="icon-plus4 white"></i> Add
                         Project
                     </button>
                 </div>
@@ -20,9 +20,14 @@
                 <!-- stats with subtitle section start -->
                 <section id="stats-subtitle">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <h4>Projects</h4>
-                            <hr>
+                        <div class="col-md-12">
+                            <div class="card overflow-hidden">
+                                <div class="card-body">
+                                    <div class="card-block cleartfix">
+                                        <h4>Projects</h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -46,7 +51,7 @@
                                                 <div class="btn-group-vertical">
                                                     <div class="" role="group" aria-label="First Group">
                                                         <button type="button" class="btn btn-icon btn-success" onclick="location.href='/project/details/?id=<%= project._id %>';"><i class="icon-eye"></i></button>
-                                                        <button type="button" class="btn btn-icon btn-info side-panel-trigger"><i class="icon-pen3"></i></button>
+                                                        <button type="button" class="btn btn-icon btn-info side-panel-trigger process-page" data-url="/project/edit/<%= project._id %>" data-method="GET" data-title="Edit Project"><i class="icon-pen3"></i></button>
                                                         <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
                                                     </div>
                                                 </div>

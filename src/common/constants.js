@@ -112,6 +112,8 @@ module.exports = Object.freeze({
     PROJECT_NOT_AVAILABLE : "PROJECT_NOT_AVAILABLE",
     PROJECT_NOT_AVAILABLE_MSG : "Project not available",
 
+    PROJECT_CREATED_MSG : "Project created successfully",
+    PROJECT_UPDATED_MSG : "Project updated successfully",
 
     //Dashboard Type Code and Messages
     DASHBOARD_TYPE_OBJ_EMPTY: "DASHBOARD_TYPE_OBJ_EMPTY",

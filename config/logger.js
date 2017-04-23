@@ -28,7 +28,7 @@ var logger = new winston.Logger({
             showLevel:false
         }),
         new winston.transports.Console({
-            level: 'info',
+            level: 'debug',
             handleExceptions: true,
             json: false,
             colorize: true
@@ -40,6 +40,6 @@ var logger = new winston.Logger({
 module.exports = logger;
 module.exports.stream = {
     write: function(message, encoding){
-        logger.info(message);
+        //logger.info(message);
     }
 };

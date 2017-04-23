@@ -19,6 +19,16 @@ Utils.buildErrorResponse = function(name, type, message, detail, errorCode) {
     return response;
 };
 
+Utils.buildStatus = function(code, message, status) {
+    var status = {};
+    status.code = code;
+    status.message = message;
+    status.status = status;
+
+    return status;
+};
+
+
 Utils.getUniqueArrayElements = function (items) {
     var temp = [];
     for (var i = 0; i < items.length; i++) {
