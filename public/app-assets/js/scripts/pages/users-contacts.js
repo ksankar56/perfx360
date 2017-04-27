@@ -8,8 +8,8 @@
     Author URL: http://www.themeforest.net/user/geekslabs
 ==========================================================================================*/
 
-$(document).ready(function() {
-
+$(document).ready(function(e) {
+    e.preventDefault();
     var userDataTable = $('#users-contacts').DataTable();
     // Set the search textbox functionality in sidebar
     $('#search-contacts').on( 'keyup', function () {

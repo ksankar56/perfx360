@@ -1,52 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
-<%- include('partials/head') %>
-<body data-open="click" data-menu="vertical-content-menu" data-col="1-column" class="vertical-layout vertical-content-menu 1-column fixed-navbar">
+    <%- include('partials/head') %>
 
-<%- include('partials/slidepanel') %>
+    <body data-open="click" data-menu="vertical-content-menu" data-col="1-column"
+          class="vertical-layout vertical-content-menu 1-column fixed-navbar">
 
-<%- include('partials/navbar') %>
+        <%- include('partials/slidepanel') %>
 
-<div id="fullscreen-search" class="fullscreen-search">
-    <form class="fullscreen-search-form">
-        <input type="search" placeholder="Search..." class="fullscreen-search-input">
-        <button type="submit" class="fullscreen-search-submit">Search</button>
-    </form>
-    <div class="fullscreen-search-content">
-        <div class="fullscreen-search-options">
-            <div class="row">
-                <div class="col-sm-12">
-                    <fieldset>
-                        <label class="custom-control custom-checkbox display-inline">
-                            <input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description m-0">All</span>
-                        </label>
-                        <label class="custom-control custom-checkbox display-inline">
-                            <input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description m-0">People</span>
-                        </label>
-                        <label class="custom-control custom-checkbox display-inline">
-                            <input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description m-0">Project</span>
-                        </label>
-                        <label class="custom-control custom-checkbox display-inline">
-                            <input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description m-0">Task</span>
-                        </label>
-                    </fieldset>
-                </div>
-            </div>
+        <%- include('partials/navbar') %>
+
+        <%- include('partials/search') %>
+
+        <!-- ////////////////////////////////////////////////////////////////////////////-->
+        <div class="app-content content container-fluid">
+            <%- body %>
         </div>
-        <div class="fullscreen-search-result mt-2">
+        <!-- ////////////////////////////////////////////////////////////////////////////-->
 
-        </div>
-    </div><span class="fullscreen-search-close"></span>
-</div>
-<div class="fullscreen-search-overlay"></div>
+        <%- include('partials/footer') %>
 
-<!-- ////////////////////////////////////////////////////////////////////////////-->
-<div class="app-content content container-fluid">
-    <%- body %>
-</div>
-<!-- ////////////////////////////////////////////////////////////////////////////-->
-
-<%- include('partials/footer') %>
-
-</body>
+    </body>
 </html>

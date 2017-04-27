@@ -68,11 +68,27 @@ ModelUtil.getCompomentModel = function(componentJson) {
             perfLog: componentJson.perfLog,
             metricLog: componentJson.metricLog,
             networkLog: componentJson.networkLog,
-            group: componentJson.group
+            group: componentJson.group,
+            project: componentJson.project
         });
     } catch(err) {
         console.info('err = ', err);
     }
+
+    return component;
+};
+
+ModelUtil.updateComponentModel = function(req, component) {
+
+    component.name = req.body.name || component.name;
+    component.description = req.body.description || component.description;
+    component.order = req.body.order || component.order;
+    component.status = req.body.status || component.status;
+    component.componentType = req.body.componentType || component.componentType;
+    component.perfLog = req.body.perfLog || component.perfLog;
+    component.metricLog = req.body.metricLog || component.metricLog;
+    component.networkLog = req.body.networkLog || component.networkLog;
+    component.group = req.body.group || component.group;
 
     return component;
 };

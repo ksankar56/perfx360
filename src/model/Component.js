@@ -32,6 +32,7 @@ var compomentSchema = new Schema({
     },
     componentType: {type: Schema.ObjectId, ref: 'ComponentType'},
     group: {type: Schema.ObjectId, ref: 'Group'},
+    project: {type: Schema.ObjectId, ref: 'Project'},
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }
 }, { collection: 'components' });

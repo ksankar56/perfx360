@@ -26,6 +26,19 @@ function getProject(id, callback) {
 };
 exports.getProject = getProject;
 
+function getProjectDependencies(id, callback) {
+    console.info('id = ', id);
+
+    Project.find({_id : id})
+        .populate({path : 'group', populate: { path: 'component' }})
+        .populate({path : 'component', populate: { path: 'componentType' }})
+        .populate({path : 'createdBy'})
+        .exec( function (err, projects) {
+            callback(err, projects);
+        });
+};
+exports.getProjectDependencies = getProjectDependencies;
+
 function getAllProjects(req, res, callback) {
     Project.find({})
         .populate({path : 'group', populate: { path: 'component' }})

@@ -108,6 +108,9 @@ $(document).ready(function() {
         var type = currentObj.data("method");
         var destination = currentObj.data("destination");
         var formSubmit = currentObj.data("form");
+        var formType = currentObj.data("formtype");
+        var datatableObj = currentObj.data("datatable");
+        var formRepeaterObj = currentObj.data("formrepeater");
 
         console.info('url = ', url);
 
@@ -119,7 +122,13 @@ $(document).ready(function() {
 
         if (formSubmit) {
             var formElement = currentObj.closest('form');
-            data = $(formElement).serialize();
+            console.info('formType = ', formType);
+
+            if(formType == 'multipart') {
+                data = getMultiPartData(formElement);
+            } else {
+                data = $(formElement).serialize();
+            }
             console.info('data = ', data);
         }
 
@@ -136,12 +145,194 @@ $(document).ready(function() {
                 console.info('success');
                 //$.unblockUI();
                 $(destination).html(data);
+
+                if (datatableObj) {
+                    enableDataTable(datatableObj);
+                }
+
+                if (formRepeaterObj) {
+                    enableFormRepeater();
+                }
                 $(loadingBlock).unblock();
             },
+            processData: false,
             type: type
         });
     }
 
+    function enableDataTable(id) {
+        var userDataTable = $('#' + id).DataTable();
+        // Set the search textbox functionality in sidebar
+        $('#search-contacts').on( 'keyup', function () {
+            userDataTable.search( this.value ).draw();
+        });
+
+        // Checkbox & Radio 1
+        $('.input-chk').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+        });
+
+        userDataTable.on( 'draw.dt', function () {
+            // Checkbox & Radio 1
+            $('.input-chk').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+            });
+        });
+    }
+
+    function enableFormRepeater() {
+        $('.repeater-default').repeater();
+
+        // Custom Show / Hide Configurations
+        $('.file-repeater, .contact-repeater').repeater({
+            show: function () {
+                $(this).slideDown();
+            },
+            hide: function(remove) {
+                if (confirm('Are you sure you want to remove this item?')) {
+                    $(this).slideUp(remove);
+                }
+            }
+        });
+    }
+
+    function getMultiPartData(obj) {
+        /* ADD FILE TO PARAM AJAX */
+        var formData = new FormData();
+        $.each($(obj).find("input[type='file']"), function(i, tag) {
+            $.each($(tag)[0].files, function(i, file) {
+                formData.append(tag.name, file);
+            });
+        });
+        /*var params = $(obj).serializeArray();
+        $.each(params, function (i, val) {
+            formData.append(val.name, val.value);
+        });*/
+
+        var o = {};
+        var a = $(obj).serializeArray();
+        $.each(a, function () {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+
+        formData.append('values', o);
+
+        return formData;
+    };
+
+    // Variable to store your files
+    var files;
+
+    // Add events
+    $(document.body).on('change', 'input[type=file]', function(event) {
+        files = event.target.files;
+        console.info('files = ', files);
+    });
+
+    $(document.body).on('submit', '#ajax-upload-form', function(event) {
+        event.stopPropagation(); // Stop stuff happening
+        event.preventDefault(); // Totally stop stuff happening
+
+        // Create a formdata object and add the files
+        var data = new FormData();
+        $.each(files, function(key, value)  {
+            data.append(key, value);
+        });
+
+        console.info('data = ', data);
+
+        $.ajax({
+            url: '/application',
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false, // Don't process the files
+            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+            success: function(data, textStatus, jqXHR) {
+                if(typeof data.error === 'undefined')  {
+                    // Success so call function to process the form
+                    //submitForm(event, data);
+                    console.info('success');
+                }  else  {
+                    // Handle errors here
+                    console.log('ERRORS: ' + data.error);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)  {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus);
+                // STOP LOADING SPINNER
+            }
+        });
+    });
+
+    $(document.body).on('click', '.ajax-form-submit', function() {
+        var loadingBlock = $('.side-panel-wrap');
+        $(loadingBlock).block({ message: '<h3>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h3>',
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.6,
+                cursor: 'wait'
+            },
+            css: {
+                border: 0,
+                padding: 5,
+                paddingTop: 10,
+                opacity: 0.6,
+                backgroundColor: '#000',
+                color: '#b2b2b2'
+            }});
+
+        var url = currentObj.data("url");
+        var data = {};
+        var type = currentObj.data("method");
+        var destination = currentObj.data("destination");
+        var datatableObj = currentObj.data("datatable");
+        var formRepeaterObj = currentObj.data("formrepeater");
+
+        console.info('url = ', url);
+
+        if (destination == undefined) {
+            destination = '#slide-result-view';
+        }
+
+        $.ajax({
+            url: url,
+            data: data,
+            error: function(err) {
+                //$('#info').html('<p>An error has occurred</p>');
+                //$.unblockUI();
+                console.info('failed = ', err);
+                $(loadingBlock).unblock();
+            },
+            success: function(data) {
+                console.info('success');
+                //$.unblockUI();
+                $(destination).html(data);
+
+                if (datatableObj) {
+                    enableDataTable(datatableObj);
+                }
+
+                if (formRepeaterObj) {
+                    enableFormRepeater();
+                }
+                $(loadingBlock).unblock();
+            },
+            processData: false,
+            type: type
+        });
+    });
 });
 
 

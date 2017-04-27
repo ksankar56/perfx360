@@ -7,11 +7,17 @@
                 <div class="btn-group pull-right" role="group" aria-label="Basic example">
                     <!-- Button group with icons -->
                     <div class="btn-group mr-1">
+                        <% if (locals.project) {  %>
                         <select class="form-control" tabindex="-1" aria-hidden="true">
-                            <option value="1">Application 1</option>
-                            <option value="2" selected>Application 2</option>
-                            <option value="3">Application 3</option>
+                            <option value="1">Select</option>
+                            <% for(var i=0; i < locals.project.components.length; i++) {
+                                var component = locals.projects.components[i];
+                                console.info('component = ', component);
+                            %>
+                            <option value="<%= component._id%>"><%= component.name %></option>
+                            <% } %>
                         </select>
+                        <% } %>
                     </div>
                     <!--
                     <div class="btn-group mr-1 mb-1">
@@ -42,7 +48,7 @@
               <span class="dropdown">
                   <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 white"></i> Configure</button>
                   <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                      <a href="#" class="dropdown-item"><i class="icon-calendar5"></i> Applications</a>
+                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/application/list/<%= locals.project._id %>" data-method="GET" data-title="View Applications" data-datatable="application-list"><i class="icon-calendar5"></i> Applications</a>
                       <a href="#" class="dropdown-item"><i class="icon-shuffle3"></i> Environments</a>
                       <a href="#" class="dropdown-item"><i class="icon-bar-graph"></i> Progress</a>
                       <a href="#" class="dropdown-item"><i class="icon-head"></i> Assign to</a>

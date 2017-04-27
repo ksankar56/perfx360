@@ -71,4 +71,28 @@ router.put('/', function(req, res, next) {
     })
 });
 
+/**
+ * Render project edit page with project.
+ *
+ * @return {Function}
+ * @access private
+ */
+router.get('/details/:id', function(req, res, next) {
+    if (!_.isEmpty(req.session.user)) {
+        projectServiceImpl.getProjectDependencies(req.params.id, function (err, projects) {
+            console.info('err = ', err);
+            console.info('project = ', projects);
+            var project = {};
+            if (projects.length > 0) {
+                project = projects[0];
+            }
+            req.session.project = project;
+
+            res.render(renderConstants.PRODUCT_DETAILS_PAGE, {err: err, project: project, req: req});
+        });
+    } else {
+        res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout' });
+    }
+});
+
 module.exports = router;
