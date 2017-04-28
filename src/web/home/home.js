@@ -3,7 +3,8 @@
  */
 
 var express = require('express')
-    , router = express.Router();
+    , router = express.Router()
+    , renderConstants = require('../../../src/common/render.constants');
 
 router.get('/', function(req, res, next) {
     var locals = {

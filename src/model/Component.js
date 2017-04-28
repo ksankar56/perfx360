@@ -13,10 +13,12 @@ var compomentSchema = new Schema({
         type: String
     },
     order: {
-        type: Number
+        type: Number,
+        default: 1
     },
     status: {
-        type: Boolean
+        type: Boolean,
+        default: true
     },
     perfLog :{
         type: Boolean,

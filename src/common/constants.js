@@ -47,6 +47,9 @@ module.exports = Object.freeze({
     COMPONENT_NOT_AVAILABLE : "COMPONENT_NOT_AVAILABLE",
     COMPONENT_NOT_AVAILABLE_MSG : "Component not available",
 
+    COMPONENT_CREATION_FAILED : "COMPONENT_CREATION_FAILED",
+    COMPONENT_CREATION_FAILED_MSG : "Component creation failed",
+
 
     //Graph Type Messages
     GRAPH_TYPE_OBJ_EMPTY: "GRAPH_TYPE_OBJ_EMPTY",
@@ -180,6 +183,8 @@ module.exports = Object.freeze({
     HTTP_PAYMENT_REQUIRED: 402,
     HTTP_FORBIDDEN: 403,
     HTTP_NOT_FOUND: 404,
+
+    HTTP_FAILED: 500,
 
     /* SMS */
     SMS_URL: '' ,

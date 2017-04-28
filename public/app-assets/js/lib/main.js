@@ -76,7 +76,7 @@ $(document).ready(function() {
         }
     }
 
-    $(document.body).on('click', '.process-page', function() {
+    function _enableLoadingBlock() {
         var loadingBlock = $('.side-panel-wrap');
         $(loadingBlock).block({ message: '<h3>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h3>',
             overlayCSS: {
@@ -92,6 +92,12 @@ $(document).ready(function() {
                 backgroundColor: '#000',
                 color: '#b2b2b2'
             }});
+
+        return loadingBlock;
+    }
+
+    $(document.body).on('click', '.process-page', function() {
+        var loadingBlock = _enableLoadingBlock();
         var title = $(this).data("title");
 
         if(title) {
@@ -241,17 +247,18 @@ $(document).ready(function() {
     $(document.body).on('submit', '#ajax-upload-form', function(event) {
         event.stopPropagation(); // Stop stuff happening
         event.preventDefault(); // Totally stop stuff happening
+        var loadingBlock = _enableLoadingBlock();
 
         // Create a formdata object and add the files
-        var data = new FormData();
-        $.each(files, function(key, value)  {
+        var data = new FormData($("#ajax-upload-form")[0]);
+        /*$.each(files, function(key, value)  {
             data.append(key, value);
-        });
+        });*/
 
         console.info('data = ', data);
 
         $.ajax({
-            url: '/application',
+            url: '/application/upload',
             type: 'POST',
             data: data,
             cache: false,
@@ -262,15 +269,25 @@ $(document).ready(function() {
                 if(typeof data.error === 'undefined')  {
                     // Success so call function to process the form
                     //submitForm(event, data);
-                    console.info('success');
+                    console.info('success = ', data);
+                    $('#success-message-alert-wrapper').show();
+                    $("#ajax-upload-form")[0].reset();
+                    $('#success-message-alert').html(data.status.message);
+                    $(loadingBlock).unblock();
                 }  else  {
                     // Handle errors here
-                    console.log('ERRORS: ' + data.error);
+                    console.log('ERRORS: ', data.error);
+                    $('#error-message-alert-wrapper').show();
+                    $('#error-message-alert').html(data.status.message);
+                    $(loadingBlock).unblock();
                 }
             },
             error: function(jqXHR, textStatus, errorThrown)  {
                 // Handle errors here
                 console.log('ERRORS: ' + textStatus);
+                $('#error-message-alert-wrapper').show();
+                $('#error-message-alert').html(textStatus);
+                $(loadingBlock).unblock();
                 // STOP LOADING SPINNER
             }
         });

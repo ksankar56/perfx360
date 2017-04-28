@@ -9,12 +9,15 @@
                     <div class="btn-group mr-1">
                         <% if (locals.project) {  %>
                         <select class="form-control" tabindex="-1" aria-hidden="true">
-                            <option value="1">Select</option>
-                            <% for(var i=0; i < locals.project.components.length; i++) {
-                                var component = locals.projects.components[i];
-                                console.info('component = ', component);
+                            <option value="1">Select Application</option>
+                            <%
+                                console.info('locals.project.components.length = ', locals.project.components.length);
+                                for(var i=0; i < locals.project.components.length; i++) {
+                                var component = locals.project.components[i];
+                                console.info('component = ', locals.project.components[i]);
                             %>
-                            <option value="<%= component._id%>"><%= component.name %></option>
+                                <option value="<%= component._id %>"><%= component.name %></option>
+
                             <% } %>
                         </select>
                         <% } %>

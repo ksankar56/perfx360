@@ -30,8 +30,9 @@ function getProjectDependencies(id, callback) {
     console.info('id = ', id);
 
     Project.find({_id : id})
-        .populate({path : 'group', populate: { path: 'component' }})
-        .populate({path : 'component', populate: { path: 'componentType' }})
+        .populate({path : 'groups', populate: { path: 'groups' }})
+        .populate({path : 'components', populate: { path: 'components' }})
+        .populate({path : 'componentType', populate: { path: 'componentType' }})
         .populate({path : 'createdBy'})
         .exec( function (err, projects) {
             callback(err, projects);
@@ -41,8 +42,9 @@ exports.getProjectDependencies = getProjectDependencies;
 
 function getAllProjects(req, res, callback) {
     Project.find({})
-        .populate({path : 'group', populate: { path: 'component' }})
-        .populate({path : 'component', populate: { path: 'componentType' }})
+        .populate({path : 'groups', populate: { path: 'groups' }})
+        .populate({path : 'components', populate: { path: 'components' }})
+        .populate({path : 'componentType', populate: { path: 'componentType' }})
         .populate({path : 'createdBy'})
         .exec( function (err, projects) {
             callback(err, projects);
@@ -52,8 +54,9 @@ exports.getAllProjects = getAllProjects;
 
 function getProjects(projectJson, callback) {
     Project.find({createdBy : projectJson.createdBy})
-        .populate({path : 'group', populate: { path: 'component' }})
-        .populate({path : 'component', populate: { path: 'componentType' }})
+        .populate({path : 'groups', populate: { path: 'groups' }})
+        .populate({path : 'components', populate: { path: 'components' }})
+        .populate({path : 'componentType', populate: { path: 'componentType' }})
         .populate({path : 'createdBy'})
         .exec( function (err, projects) {
             callback(err, projects);
@@ -88,6 +91,16 @@ function saveProject(projectJson, callback) {
     });
 };
 exports.saveProject = saveProject;
+
+function updateProjectByProject(project, callback) {
+    console.info('project = ', project);
+
+    // Save the updated document back to the database
+    project.save(function (err, result) {
+        callback(err, result);
+    });
+};
+exports.updateProjectByProject = updateProjectByProject;
 
 function updateProject(req, callback) {
     console.info('req.body.id = ', req.body.id);

@@ -73,10 +73,20 @@ function saveComponent(componentJson, callback) {
 };
 exports.saveComponent = saveComponent;
 
-function updateComponent(req, callback) {
-    console.info('req.body.id = ', req.body.id);
+function updateComponentByComponent(component, callback) {
+    console.info('component = ', component);
 
-    Component.findById(req.body.id, function (err, component) {
+    // Save the updated document back to the database
+    component.save(function (err, result) {
+        callback(err, result);
+    });
+};
+exports.updateComponentByComponent = updateComponentByComponent;
+
+function updateComponent(id, callback) {
+    console.info('id = ', id);
+
+    Component.findById(id, function (err, component) {
         // Handle any possible database errors
         if (err) {
             logger.debug(err);

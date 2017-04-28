@@ -78,6 +78,52 @@ ModelUtil.getCompomentModel = function(componentJson) {
     return component;
 };
 
+ModelUtil.updateComponentModelFromFields = function(fields, component) {
+
+    if (fields.name) {
+        component.name = fields.name;
+    }
+
+    if (fields.description) {
+        component.description = fields.description;
+    }
+
+    if (fields.order) {
+        component.order = fields.order;
+    }
+
+    if (fields.status) {
+        component.status = fields.status;
+    }
+
+    if (fields.componentType) {
+        component.componentType = fields.componentType;
+    }
+
+    if (fields.perfLog) {
+        component.perfLog = fields.perfLog;
+    }
+
+    if (fields.description) {
+        component.metricLog = fields.metricLog;
+    }
+
+    if (fields.description) {
+        component.networkLog = fields.networkLog;
+    }
+
+    if (fields.description) {
+        component.group = fields.group;
+    }
+
+    if (fields.project) {
+        component.project = fields.project;
+    }
+
+
+    return component;
+};
+
 ModelUtil.updateComponentModel = function(req, component) {
 
     component.name = req.body.name || component.name;

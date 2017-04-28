@@ -81,7 +81,7 @@ router.get('/details/:id', function(req, res, next) {
     if (!_.isEmpty(req.session.user)) {
         projectServiceImpl.getProjectDependencies(req.params.id, function (err, projects) {
             console.info('err = ', err);
-            console.info('project = ', projects);
+            console.info('project = ', JSON.stringify(projects));
             var project = {};
             if (projects.length > 0) {
                 project = projects[0];
