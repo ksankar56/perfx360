@@ -13,6 +13,13 @@ exports.getStatus = function(req, res, statusCode, statusMessage) {
     return Status;
 }
 
+exports.getParam = function(key, valueObj) {
+    var params = {};
+    params[key] = valueObj;
+
+    return params;
+}
+
 exports.getJmeterResultObjects =  function(result) {
 
     var jmeterResults = [];

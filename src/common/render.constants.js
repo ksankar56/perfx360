@@ -13,8 +13,14 @@ module.exports = Object.freeze({
     APPLICATION_CREATE_PAGE : "features/projects/applications/create",
     APPLICATION_EDIT_PAGE : "features/projects/applications/edit",
 
+    TEST_PAGE : "features/test/view",
     TEST_CREATE_PAGE : "features/test/create",
     TEST_EDIT_PAGE : "features/test/edit",
-    TEST_DETAILS_PAGE : "features/test/view",
+    TEST_DETAILS_PAGE : "features/test/details",
+
+    ENVIRONMENT_PAGE : "features/projects/environments/view",
+    ENVIRONMENT_CREATE_PAGE : "features/projects/environments/create",
+    ENVIRONMENT_EDIT_PAGE : "features/projects/environments/edit",
+    ENVIRONMENT_DETAILS_PAGE : "features/projects/environments/details"
 });
 

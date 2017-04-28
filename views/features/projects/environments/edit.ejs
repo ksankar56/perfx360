@@ -1,0 +1,66 @@
+<div class="card-block">
+    <div class="card-text">
+        <p>Basic information of an environment with any test can be associated with it.</p>
+        <%- include('../../common/message') %>
+    </div>
+    <% if (locals.params.environment) {
+        var environment = locals.params.environment;
+        console.info('environment ejs = ', environment);
+    %>
+    <form class="form form-horizontal" action="/environment" method="POST">
+        <div class="form-body">
+            <h4 class="form-section"><i class="icon-panorama_horizontal"></i> Environment</h4>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="name">Name</label>
+                <div class="col-md-9">
+                    <input type="hidden" id="id" name="id" value="<%= environment._id %>">
+                    <input type="text" id="name" class="form-control required" placeholder="Environment Name" name="name" value="<%= environment.name %>" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="environmentDesc">Description</label>
+                <div class="col-md-9">
+                    <textarea id="description" rows="5" class="form-control" name="description" placeholder="Environment Description" required><%= environment.description %></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="protocol">Protocol</label>
+                <div class="col-md-9">
+                    <input type="text" id="protocol" class="form-control required" placeholder="Protocol" name="protocol" value="<%= environment.protocol %>">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="protocol">Host</label>
+                <div class="col-md-9">
+                    <input type="text" id="host" class="form-control required" placeholder="Host" name="host" value="<%= environment.host %>">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="protocol">Port</label>
+                <div class="col-md-9">
+                    <input type="text" id="port" class="form-control required" placeholder="Port" name="port" value="<%= environment.port %>">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 label-control" for="protocol">Context</label>
+                <div class="col-md-9">
+                    <input type="text" id="context" class="form-control required" placeholder="Context" name="context" value="<%= environment.context %>">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions right">
+            <button type="button" class="btn btn-primary mr-1 process-page" data-url="/environment/list/<%= req.session.project._id %>"
+                    data-method="GET" data-title="View Environments" data-datatable="environment-list">
+                <i class="icon-arrow-left4"></i> Back
+            </button>
+            <button type="button" class="btn btn-warning mr-1 side-panel-trigger">
+                <i class="icon-cross2"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-primary process-page" data-url="/environment" data-method="PUT" data-title="Edit Environment" data-form="true">
+                <i class="icon-edit"></i> Update
+            </button>
+        </div>
+    </form>
+    <% } %>
+</div>

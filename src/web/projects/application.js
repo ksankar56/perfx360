@@ -23,6 +23,7 @@ var express = require('express')
     , constants = require('../../../src/common/constants')
     , renderConstants = require('../../../src/common/render.constants')
     , applicationServiceImpl = require('../../../routes/service/component/component.service.impl')
+    , applicationTypeServiceImpl = require('../../../routes/service/component/component.types.service.impl')
     , projectServiceImpl = require('../../../routes/service/project/project.service.impl')
     , baseService = require('../../../src/common/base.service')
     , modelUtil = require('../../../src/util/model.util');
@@ -37,6 +38,7 @@ router.get('/list/:projectId', function(req, res, next) {
 
     applicationServiceImpl.getComponentsByProjectId(req.params.projectId, function(err, components) {
         console.info('components = ', components);
+
         res.render(renderConstants.APPLICATIONS_PAGE, {layout: 'panel-layout', req: req, components: components});
     });
 });
@@ -48,7 +50,10 @@ router.get('/list/:projectId', function(req, res, next) {
  * @access private
  */
 router.get('/create', function(req, res, next) {
-    res.render(renderConstants.APPLICATION_CREATE_PAGE, {layout: 'panel-layout', req: req});
+    applicationTypeServiceImpl.getComponentTypes(function(err, applicationTypes){
+        var params = baseService.getParam('applicationTypes', applicationTypes);
+        res.render(renderConstants.APPLICATION_CREATE_PAGE, {layout: 'panel-layout', req: req, params: params});
+    });
 });
 
 /**
@@ -165,7 +170,13 @@ function _setProject(params, callback) {
         console.info("project = ", project);
 
         params.fields.project = project;
-        callback(null, params);
+        applicationTypeServiceImpl.getComponentType(params.fields.componentType, function(err, applicationType){
+            console.info('application type = ', applicationType);
+
+            params.applicationType = applicationType;
+
+            callback(null, params);
+        });
     })
 }
 

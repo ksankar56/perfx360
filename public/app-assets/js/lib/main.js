@@ -145,6 +145,7 @@ $(document).ready(function() {
                 //$('#info').html('<p>An error has occurred</p>');
                 //$.unblockUI();
                 console.info('failed = ', err);
+                $(destination).html('');
                 $(loadingBlock).unblock();
             },
             success: function(data) {

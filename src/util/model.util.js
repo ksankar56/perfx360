@@ -100,19 +100,22 @@ ModelUtil.updateComponentModelFromFields = function(fields, component) {
         component.componentType = fields.componentType;
     }
 
+    console.info('fields.perfLog = ', fields.perfLog);
     if (fields.perfLog) {
         component.perfLog = fields.perfLog;
     }
 
-    if (fields.description) {
+    console.info('fields.metricLog = ', fields.metricLog);
+    if (fields.metricLog) {
         component.metricLog = fields.metricLog;
     }
 
-    if (fields.description) {
+    console.info('fields.networkLog = ', fields.networkLog);
+    if (fields.networkLog) {
         component.networkLog = fields.networkLog;
     }
 
-    if (fields.description) {
+    if (fields.group) {
         component.group = fields.group;
     }
 

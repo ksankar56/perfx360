@@ -34,16 +34,40 @@
                 <label class="col-md-3 label-control" for="componentType">Application Type</label>
                 <div class="col-md-9">
                     <div class="form-group">
+                        <% console.info('params = ', locals.params.applicationTypes); %>
                         <select name="componentType" class="form-control">
-                            <option value="REST_JSON" selected="" disabled="">REST JSON</option>
-                            <option value="REST_XML">REST XML</option>
-                            <option value="SOAP">SOAP</option>
-                            <option value="WEBUI">WEBUI</option>
-                            <option value="WEBPAGE">WEBPAGE</option>
-                            <option value="WEB_AUTOMATION">WEB AUTOMATION</option>
-                            <option value="MOBILE_AUTOMATION">MOBILE AUTOMATION</option>
-                            <option value="ACCESSIBILITY">ACCESSIBILITY</option>
+                           <% if (locals.params.applicationTypes) {
+                               var applicationTypes = locals.params.applicationTypes;
+                               for(var i=0; i < applicationTypes.length; i++) {
+                                   var applicationType = applicationTypes[i];  %>
+
+                                <option value="<%= applicationType._id %>"><%= applicationType.name %>%></option>
+                            <% }
+                            } %>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 label-control">Log Capture</label>
+                <div class="col-md-9">
+                    <div class="card-block right">
+                        <label class="display-inline-block custom-control custom-checkbox">
+                            <input type="checkbox" id="perfLog" name="perfLog" checked="checked" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Performance Log</span>
+                        </label>
+                        <label class="display-inline-block custom-control custom-checkbox">
+                            <input type="checkbox" id="metricLog" name="metricLog" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">System Log</span>
+                        </label>
+                        <label class="display-inline-block custom-control custom-checkbox">
+                            <input type="checkbox" id="networkLog" name="networkLog" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Network Log</span>
+                        </label>
                     </div>
                 </div>
             </div>

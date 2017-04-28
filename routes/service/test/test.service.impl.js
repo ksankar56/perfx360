@@ -40,3 +40,16 @@ function getTestObjects(callback) {
         });
 }
 exports.getTestObjects = getTestObjects;
+
+function getTestObjectsByProjectId(projectId, callback) {
+    Test.find({project: projectId})
+        .populate({path : 'project', populate: { path: 'groups' }})
+        .populate({path : 'component', populate: { path: 'componentType' }})
+        .populate({path : 'graphInstances', populate: { path: 'graph' }})
+        .populate({path : 'test', pupulate: {path: 'environment'}})
+        .populate({path : 'updatedBy'})
+        .exec( function (err, tests) {
+            callback(err, tests);
+        });
+}
+exports.getTestObjectsByProjectId = getTestObjectsByProjectId;

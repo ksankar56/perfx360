@@ -93,6 +93,8 @@ module.exports = Object.freeze({
     ENVIRONMENT_NOT_AVAILABLE : "ENVIRONMENT_NOT_AVAILABLE",
     ENVIRONMENT_NOT_AVAILABLE_MSG : "Environment not available",
 
+    ENVIRONMENT_CREATED_MSG : "Environment created successfully",
+    ENVIRONMENT_UPDATED_MSG : "Environment updated successfully",
 
     //Group Messages
     GROUP_OBJ_EMPTY: "GROUP_OBJ_EMPTY",
@@ -160,6 +162,10 @@ module.exports = Object.freeze({
 
     TEST_NOT_AVAILABLE : "TEST_NOT_AVAILABLE",
     TEST_NOT_AVAILABLE_MSG : "Test not available",
+
+    TEST_CREATED_MSG : "Test created successfully",
+    TEST_UPDATED_MSG : "Test updated successfully",
+    TEST_DELETED_MSG : "Test deleted successfully",
 
     //Test Result Code and Messages
     TEST_RESULT_OBJ_EMPTY: "TEST_RESULT_OBJ_EMPTY",

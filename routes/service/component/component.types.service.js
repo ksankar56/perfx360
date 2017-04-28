@@ -10,12 +10,13 @@ var _ = require('lodash')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
     , baseService = require('../../../src/common/base.service')
+    , componentTypeServiceImpl = require('./component.types.service.impl')
     , logger = require('../../../config/logger');
 
 var ComponentType = require('../../../src/model/ComponentType');
 
 exports.getComponentTypes = function(req, res, callback) {
-    ComponentType.find(function (err, componentTypes) {
+    componentTypeServiceImpl.getComponentTypes(function(err, componentTypes) {
         if (err) {
             logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_NOT_AVAILABLE, '', constants.COMPONENT_TYPE_NOT_AVAILABLE_MSG, err.message, 500));

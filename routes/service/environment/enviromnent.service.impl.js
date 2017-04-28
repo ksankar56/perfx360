@@ -21,6 +21,19 @@ function getAllEnvironments(callback) {
 }
 exports.getAllEnvironments = getAllEnvironments;
 
+function getEnvironment(id, callback) {
+    Environment.find({_id : id}, function (err, environments) {
+        if (err) {
+            callback(err, null);
+        }
+
+        if (environments && environments.length > 0) {
+            callback(err, environments[0]);
+        }
+    });
+}
+exports.getEnvironment = getEnvironment;
+
 function getEnvironmentsByProjectId(projectId, callback) {
     Environment.find({project : projectId}, function (err, environments) {
         callback(err, environments);
@@ -28,10 +41,9 @@ function getEnvironmentsByProjectId(projectId, callback) {
 }
 exports.getEnvironmentsByProjectId = getEnvironmentsByProjectId;
 
-function saveEnvironment(environmentJson, next) {
+function saveEnvironment(environmentJson, callback) {
 
     // create a user a new user
-    var environmentJson = req.body;
     console.info('environmentJson = ', environmentJson);
 
     if (_.isEmpty(environmentJson)) {
@@ -48,23 +60,25 @@ function saveEnvironment(environmentJson, next) {
         port: environmentJson.port,
         context: environmentJson.context,
         order : environmentJson.order,
-        status : environmentJson.status
+        status : environmentJson.status,
+        project : environmentJson.project
     });
 
     // save environment to database
     environment.save(function(err) {
-       callback(err, environment);
+        console.info('err environment = ', err);
+        callback(err, environment);
     });
 }
 exports.saveEnvironment = saveEnvironment;
 
-exports.updateEnvironment = function(req, res, next) {
+function updateEnvironment(req, callback) {
     Environment.findById(req.body.id, function (err, environment) {
         // Handle any possible database errors
         if (err) {
             logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.ENVIRONMENT_NOT_AVAILABLE, '', constants.ENVIRONMENT_NOT_AVAILABLE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            callback(err, null);
         } else {
             // Update each attribute with any possible attribute that may have been submitted in the body of the request
             // If that attribute isn't in the request body, default back to whatever it was before.
@@ -76,26 +90,20 @@ exports.updateEnvironment = function(req, res, next) {
             environment.context = req.body.context || environment.context;
             environment.order = req.body.order || environment.order;
             environment.status = req.body.status || environment.status;
+            environment.project = req.body.status || environment.project;
 
             // Save the updated document back to the database
             environment.save(function (err, result) {
-                if (err) {
-                    logger.debug(err);
-                    var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
-                    resEvents.emit('ErrorJsonResponse', req, res, baseError);
-                }
-
-                res.status(constants.HTTP_OK).send({
-                    status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Updated"),
-                    data: result});
+                callback(err, result);
             });
         }
     });
 };
+exports.updateEnvironment = updateEnvironment;
 
-
-exports.deleteEnvironment = function(id, callback) {
+function deleteEnvironment(id, callback) {
     Environment.remove({ _id: id }, function(err) {
        callback(err, true);
     });
 };
+exports.deleteEnvironment = deleteEnvironment;

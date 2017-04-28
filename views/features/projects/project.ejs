@@ -51,9 +51,9 @@
               <span class="dropdown">
                   <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 white"></i> Configure</button>
                   <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/application/list/<%= locals.project._id %>" data-method="GET" data-title="View Applications" data-datatable="application-list"><i class="icon-calendar5"></i> Applications</a>
-                      <a href="#" class="dropdown-item"><i class="icon-shuffle3"></i> Environments</a>
-                      <a href="#" class="dropdown-item"><i class="icon-bar-graph"></i> Test</a>
+                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/application/list/<%= locals.project._id %>" data-method="GET" data-title="<%= locals.project.name %> : Applications" data-datatable="application-list"><i class="icon-calendar5"></i> Applications</a>
+                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/environment/list/<%= locals.project._id %>" data-method="GET" data-title="<%= locals.project.name %> : Environments" data-datatable="environment-list"><i class="icon-shuffle3"></i> Environments</a>
+                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/test/list/<%= locals.project._id %>" data-method="GET" data-title="<%= locals.project.name %> : Tests" data-datatable="test-list"><i class="icon-bar-graph"></i> Test</a>
                   </span>
               </span>
                     </div>
@@ -81,7 +81,7 @@
         <div class="col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title" id="heading-dropdown">PROJECT1 : APPLICATION 1</h4>
+                    <h4 class="card-title" id="heading-dropdown"><%= locals.project.name %> : APPLICATION 1</h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
 
