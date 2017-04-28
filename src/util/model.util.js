@@ -175,6 +175,22 @@ ModelUtil.getDashboardUpdateModel = function (req, res, dashboard) {
     return dashboard;
 };
 
+ModelUtil.getEnvironmentModel = function (req, res, envJson) {
+    var test = new Test({
+        name: envJson.name,
+        description: envJson.description,
+        protocol: envJson.protocol,
+        host: envJson.host,
+        port: envJson.port,
+        context: envJson.context,
+        order: envJson.order,
+        status: testJson.status,
+        project: testJson.project
+    });
+
+    return test;
+};
+
 ModelUtil.getTestModel = function (req, res, testJson) {
     var test = new Test({
         testId: testJson.testId,

@@ -30,6 +30,7 @@ var environmentSchema = new Schema({
     status: {
         type: Boolean
     },
+    project: {type: Schema.ObjectId, ref: 'Project'},
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }
 }, { collection: 'environments' }, {timestamps: true});

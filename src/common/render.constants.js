@@ -12,5 +12,9 @@ module.exports = Object.freeze({
     APPLICATIONS_PAGE : "features/projects/applications/view",
     APPLICATION_CREATE_PAGE : "features/projects/applications/create",
     APPLICATION_EDIT_PAGE : "features/projects/applications/edit",
+
+    TEST_CREATE_PAGE : "features/test/create",
+    TEST_EDIT_PAGE : "features/test/edit",
+    TEST_DETAILS_PAGE : "features/test/view",
 });
 

@@ -10,39 +10,53 @@ var _ = require('lodash')
     , constants = require('../../../src/common/constants')
     , Status = require('../../../src/common/domains/Status')
     , baseService = require('../../../src/common/base.service')
-    , environmentServiceImpl = require('./enviromnent.service.impl')
     , logger = require('../../../config/logger');
 
 var Environment = require('../../../src/model/Environment');
 
-exports.getEnvironments = function(req, res, callback) {
-    environmentServiceImpl.getAllEnvironments(function(err, environments) {
-        if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.ENVIRONMENT_NOT_AVAILABLE, '', constants.ENVIRONMENT_NOT_AVAILABLE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
-        };
-
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Fetched"),
-            data: environments});
+function getAllEnvironments(callback) {
+    Environment.find(function (err, environments) {
+       callback(err, environments);
     });
-};
+}
+exports.getAllEnvironments = getAllEnvironments;
 
-exports.saveEnvironment = function(req, res, next) {
-
-    environmentServiceImpl.saveEnvironment(req.body, function(err, environments) {
-        if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.COMPONENT_TYPE_DUPLICATE, '', constants.COMPONENT_TYPE_DUPLICATE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
-        }
-
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Saved"),
-            data: environment});
+function getEnvironmentsByProjectId(projectId, callback) {
+    Environment.find({project : projectId}, function (err, environments) {
+        callback(err, environments);
     });
-};
+}
+exports.getEnvironmentsByProjectId = getEnvironmentsByProjectId;
+
+function saveEnvironment(environmentJson, next) {
+
+    // create a user a new user
+    var environmentJson = req.body;
+    console.info('environmentJson = ', environmentJson);
+
+    if (_.isEmpty(environmentJson)) {
+        logger.debug(constants.COMPONENT_TYPE_DUPLICATE_MSG);
+        var baseError = new BaseError(Utils.buildErrorResponse(constants.ENVIRONMENT_OBJ_EMPTY, '', constants.ENVIRONMENT_OBJ_EMPTY_MSG, constants.ENVIRONMENT_OBJ_EMPTY_MSG, 500));
+        callback(baseError, null);
+    }
+
+    var environment = new Environment({
+        name: environmentJson.name,
+        description: environmentJson.description,
+        protocol: environmentJson.protocol,
+        host: environmentJson.host,
+        port: environmentJson.port,
+        context: environmentJson.context,
+        order : environmentJson.order,
+        status : environmentJson.status
+    });
+
+    // save environment to database
+    environment.save(function(err) {
+       callback(err, environment);
+    });
+}
+exports.saveEnvironment = saveEnvironment;
 
 exports.updateEnvironment = function(req, res, next) {
     Environment.findById(req.body.id, function (err, environment) {
@@ -80,16 +94,8 @@ exports.updateEnvironment = function(req, res, next) {
 };
 
 
-exports.deleteEnvironment = function(req, res, next) {
-    Environment.remove({ _id: req.params.id }, function(err) {
-        if (err) {
-            logger.debug(err);
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.ENVIRONMENT_NOT_AVAILABLE, '', constants.ENVIRONMENT_NOT_AVAILABLE_MSG, err.message, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
-        }
-
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Deleted"),
-        });
+exports.deleteEnvironment = function(id, callback) {
+    Environment.remove({ _id: id }, function(err) {
+       callback(err, true);
     });
 };

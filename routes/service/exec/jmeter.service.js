@@ -29,63 +29,7 @@ var esServiceImpl = require('../elasticsearch/es.service.impl');
 
 exports.execute = function(req, res, next) {
 
-    //var projectDir = 'dist/projects/' + req.params.projectId;
 
-    try {
-        //console.info('microtime.now() = ',  microtime.now());
-
-        var testId = req.params.testId;
-        var startTime = microtime.now();
-
-        testServiceImpl.getTestObject(testId, function (err, tests) {
-            if (!_.isEmpty(tests)) {
-                //console.info('ProjectId = ', tests[0].project._id);
-
-                //testService.getTest
-                var project = tests[0].project;
-
-                var testExecutionJson = {};
-                testExecutionJson.name = project.name;
-                testExecutionJson.description = project.description;
-                testExecutionJson.test = testId;
-                testExecutionJson.project = project;
-                testExecutionJson.executedComponents = project.components;
-
-                testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson, req, function(err, testExecution) {
-                    //console.info('testExecution callback = ', testExecution[0]._id);
-                    var textExecutionId = testExecution[0]._id;
-
-                    //callback(null, projectId, projectDir, maven, req, testExecution, startTime);
-                    var source = path.join(process.env.PWD, "/dist/plugins/maven-jmeter");
-                    var projectPath = path.join(process.env.PWD, "/dist/projects/" + textExecutionId);
-                    //var projectPath = path.join(process.env.PWD, "/dist/projects/58ee4fc25e64e2119641056b");
-
-                    //FileUtil.copySync(pluginsPath, projectPath);
-                    ncp.limit = 16;
-
-                    ncp(source, projectPath, function (err) {
-                        var projectId = textExecutionId;
-                        var projectDir = 'dist/projects/' + textExecutionId;
-                        //console.info("projectDir = ", projectDir);
-                        const maven = mvn.create({
-                            cwd: projectDir
-                        });
-
-                        testSetup(projectId, projectDir, maven, req, testExecution, startTime, function (err, result) {
-                            console.info('done done');
-                        });
-                    });
-                    res.json(testExecution);
-                });
-            }
-        });
-
-        //mvn.install();
-    }  catch (err) {
-        logger.debug(err);
-    }
-
-    //var promise = mvn.effectivePom();
 
 };
 
