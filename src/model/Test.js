@@ -5,7 +5,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var testSchema = new Schema({
-    testId: {type: Number},
     name: {type: String, required: true},
     description: {type: String},
     status: {type: Boolean, default: true},
@@ -15,6 +14,11 @@ var testSchema = new Schema({
     groups: [{type: Schema.ObjectId, ref: 'Group'}],
     environment: {type: Schema.ObjectId, ref: 'Environment'},
     updatedBy: {type: Schema.ObjectId, ref: 'User'},
+    virtualUsers: {type: Number, required: true},
+    rampUpPeriod: {type: Number, required: true},
+    iterations: {type: Number, required: true},
+    duration: {type: Number, required: true},
+    forever: {type: Boolean, default: false},
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now }
 }, { collection: 'tests' });

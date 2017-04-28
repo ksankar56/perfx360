@@ -14,7 +14,8 @@ var express = require('express')
     , applicationServiceImpl = require('../../../routes/service/component/component.service.impl')
     , environmentServiceImpl = require('../../../routes/service/environment/enviromnent.service.impl')
     , testServiceImpl = require('../../../routes/service/test/test.service.impl')
-    , baseService = require('../../../src/common/base.service');
+    , baseService = require('../../../src/common/base.service')
+    , moment = require('moment');
 
 router.get('/list/:projectId', function(req, res, next) {
     console.info('test projectId = ', req.params.projectId);
@@ -22,6 +23,7 @@ router.get('/list/:projectId', function(req, res, next) {
     testServiceImpl.getTestObjectsByProjectId(req.params.projectId, function(err, tests){
         console.info('save err = ', err);
         var params = baseService.getParam('tests', tests);
+        params.moment = moment;
         res.render(renderConstants.TEST_PAGE, { layout: 'panel-layout', err: err, req : req, params: params});
     });
 });
@@ -47,6 +49,21 @@ router.get('/create/:projectId', function(req, res, next) {
 });
 
 /**
+ * Get Execute test page.
+ *
+ * @return {Function}
+ * @access private
+ */
+router.get('/execute/:testId', function(req, res, next) {
+
+    testServiceImpl.getTestObject(req.params.testId, function(err, test){
+        var params = baseService.getParam('test', test);
+
+        res.render(renderConstants.TEST_EXECUTE_PAGE, {layout: 'panel-layout', req: req, params: params});
+    });
+});
+
+/**
  * Render test create page.
  *
  * @return {Function}
@@ -63,6 +80,7 @@ router.get('/:projectId', function(req, res, next) {
     });
 
 });
+
 
 function _getApplications(req, callback) {
     var params = {}
@@ -83,5 +101,74 @@ function _getEnvironments(params, callback) {
         callback(null, params);
     });
 }
+
+/**
+ * Create Test.
+ *
+ * @return {Function}
+ * @access private
+ */
+router.post('/', function(req, res, next) {
+    console.info('data = ', req.body);
+    async.waterfall([
+        async.apply(_getApplication, req),
+        _getEnvironment,
+        _saveTest,
+    ], function (err, params) {
+        // result now equals 'done'
+        console.info('params');
+        res.render(renderConstants.TEST_CREATE_PAGE, { layout: 'panel-layout', err: err,
+            params: params, req : req, status: Utils.buildStatus(constants.HTTP_OK, constants.TEST_CREATED_MSG, true)});
+    });
+});
+
+function _getApplication(req, callback) {
+    var params = {}
+    params.projectId = req.session.project._id;
+    params.testJson = req.body;
+    params.testJson.project = req.session.project;
+    console.info('_getApplication');
+
+    applicationServiceImpl.getComponent(params.testJson.application, function(err, applications) {
+        if(err) {
+            callback(null, params);
+        }
+
+        if (applications && applications.length > 0) {
+            params.testJson.components = applications[0];
+        }
+
+        callback(null, params);
+    });
+}
+
+function _getEnvironment(params, callback) {
+    console.info('_getEnvironment');
+    environmentServiceImpl.getEnvironment(params.testJson.environment, function(err, environments) {
+        console.info('err = ', err);
+        if(err) {
+            callback(err, null);
+        }
+
+        console.info('environments = ', environments);
+
+        if (environments && environments.length > 0) {
+            params.testJson.environment = environments[0];
+        }
+
+        callback(null, params);
+    });
+}
+
+function _saveTest(params, callback) {
+    console.info('_saveTest');
+    testServiceImpl.saveTest(params.testJson, function(err, test) {
+        console.info('save test err = ', err);
+        params.test = test;
+
+        callback(err, params);
+    })
+}
+
 
 module.exports = router;

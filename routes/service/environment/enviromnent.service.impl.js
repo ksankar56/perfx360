@@ -27,6 +27,7 @@ function getEnvironment(id, callback) {
             callback(err, null);
         }
 
+        console.info('environments impl = ', environments);
         if (environments && environments.length > 0) {
             callback(err, environments[0]);
         }

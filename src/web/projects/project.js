@@ -11,6 +11,7 @@ var express = require('express')
     , constants = require('../../../src/common/constants')
     , renderConstants = require('../../../src/common/render.constants')
     , projectServiceImpl = require('../../../routes/service/project/project.service.impl')
+    , testServiceImpl = require('../../../routes/service/test/test.service.impl')
     , baseService = require('../../../src/common/base.service');
 
 
@@ -81,14 +82,23 @@ router.get('/details/:id', function(req, res, next) {
     if (!_.isEmpty(req.session.user)) {
         projectServiceImpl.getProjectDependencies(req.params.id, function (err, projects) {
             console.info('err = ', err);
-            console.info('project = ', JSON.stringify(projects));
             var project = {};
             if (projects.length > 0) {
                 project = projects[0];
             }
             req.session.project = project;
+            var params = {};
+            params.project = project;
 
-            res.render(renderConstants.PRODUCT_DETAILS_PAGE, {err: err, project: project, req: req});
+            testServiceImpl.getTestObjectsByProjectId(project._id, function (err, tests) {
+                if (err) {
+                    console.info('err = ', err);
+                }
+                params.tests = tests;
+                console.info('tests = ', tests);
+
+                res.render(renderConstants.PRODUCT_DETAILS_PAGE, {err: err, params: params, req: req});
+            })
         });
     } else {
         res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout' });

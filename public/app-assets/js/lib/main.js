@@ -2,58 +2,29 @@
  * Created by senthil on 26/03/17.
  */
 
-function getResults(url, parameters, callback) {
-
-    $.get( url, parameters, function(data) {
-        callback(data);
-    });
-}
-
-function getData() {
-    getResults('/info', 100, function(data) {
-       console.info('data =', data);
-    });
-}
-
-function showPartials(url, parameters, callback) {
-}
-
 function showToastr() {
     toastr.success('Have fun storming the castle!', 'With Close Button', {"closeButton": true});
 }
 
-$('#click').on( "click", function() {
-    var url = $(this).data("url");
-    var parameters = 'param';
-    var resultContainerClass = '.content-body';
-    var callback = new EJS({url: 'features/dashboard/crm.ejs'}).update('.content-body');
-
-    getResults('/info', parameters, callback);
-
-});
-
-/*$( document ).ready(function() {
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        timeout: 2000, //unblock after 2 seconds
-        overlayCSS: {
-            backgroundColor: '#FFF',
-            opacity: 0.8,
-            cursor: 'wait'
-        },
-        css: {
-            border: 0,
-            padding: 0,
-            backgroundColor: 'transparent'
-        }
-    });
-});*/
-
-// unblock when ajax activity stops
-//$(document).ajaxStop($.unblockUI);
-
 $(document).ready(function() {
     //var cardBlock = $('.card-block');
+
+    var $popoverPanel = $('#shown-popover').popover({
+        html: true,
+        //title: 'Popover Shown Event <a href="#" class="close" data-dismiss="alert">×</a>',
+        content: '<div class="popover-all"><div class="popover-arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"></div></div></div>',
+        trigger: 'click',
+        placement: 'bottom'
+    }).on('shown.bs.popover', function() {
+        //alert('Shown event fired.');
+        console.info('popover');
+    }).on("hidden.bs.popover", function(e) {
+        console.info('hidden');
+    });
+
+    /*$(document).on("click", ".popover .close" , function(){
+        $(this).parents(".popover").popover('hide');
+    });*/
 
     $('.nav-link-expand').on('click', function(e) {
         if (typeof screenfull != 'undefined'){
@@ -107,6 +78,15 @@ $(document).ready(function() {
         fetchData($(this), loadingBlock);
     });
 
+    $(document.body).on('change', '#selected-test', function() {
+        console.info('$(this).val() = ', $(this).val());
+        if ($(this).val() != -1) {
+            $('#shown-popover').removeAttr("disabled");
+        } else {
+            $('#shown-popover').attr('disabled', 'disabled');
+        }
+        console.info('selected');
+    });
 
     function fetchData(currentObj, loadingBlock) {
         var url = currentObj.data("url");
@@ -117,7 +97,23 @@ $(document).ready(function() {
         var formType = currentObj.data("formtype");
         var datatableObj = currentObj.data("datatable");
         var formRepeaterObj = currentObj.data("formrepeater");
+        var popover = currentObj.data("popover");
 
+        if(popover) {
+            $("div.overlay").toggleClass("on");
+            currentObj.css("z-index","1");
+
+            if (!$('.popover').hasClass('in')) {
+                return;
+            }
+
+            var testId = $('#selected-test').val();
+            console.info('test Id = ', testId);
+            if (testId != -1) {
+                url = url + '/' + testId;
+            }
+            //console.info('hasopen = ', $('.popover').hasClass('in'));
+        }
         console.info('url = ', url);
 
         if (destination == undefined) {
@@ -151,20 +147,43 @@ $(document).ready(function() {
             success: function(data) {
                 console.info('success');
                 //$.unblockUI();
-                $(destination).html(data);
+                if(popover) {
+                    console.info('popover inside');
+                    //var dataPopover = $popoverPanel.data('popover');
+                    //$popoverPanel.find('.popover-content').html(data);
+                    //addNewElement(data);
+                    $('.popover-content').html(data);
+                } else {
+                    $(destination).html(data);
 
-                if (datatableObj) {
-                    enableDataTable(datatableObj);
-                }
+                    if (datatableObj) {
+                        enableDataTable(datatableObj);
+                    }
 
-                if (formRepeaterObj) {
-                    enableFormRepeater();
+                    if (formRepeaterObj) {
+                        enableFormRepeater();
+                    }
                 }
                 $(loadingBlock).unblock();
             },
             processData: false,
             type: type
         });
+    }
+
+    function addNewElement(data) {
+
+        $('#shown-popover').popover({
+            html: true,
+            title: 'Popover Shown Event',
+            content: '<div class="popover-all"><div class="popover-arrow"></div><div class="popover-inner"><h3 class="popover-title">Example</h3><div class="popover-content"><p> Clicks:0 </p></div></div></div>',
+            trigger: 'click',
+            placement: 'bottom'
+        }).on('shown.bs.popover', function() {
+            //alert('Shown event fired.');
+            console.info('popover');
+        });
+
     }
 
     function enableDataTable(id) {

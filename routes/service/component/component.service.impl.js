@@ -37,6 +37,8 @@ exports.getComponentsByProjectId = getComponentsByProjectId;
 
 function getComponent(id, callback) {
     Component.find({_id: id})
+        .populate({path : 'components', populate: { path: 'componentTypes' }})
+        .populate({path : 'environment'})
         .populate({path : 'componentType'})
         .populate({path : 'group'})
         .exec( function (err, component) {

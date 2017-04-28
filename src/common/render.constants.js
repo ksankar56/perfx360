@@ -17,6 +17,7 @@ module.exports = Object.freeze({
     TEST_CREATE_PAGE : "features/test/create",
     TEST_EDIT_PAGE : "features/test/edit",
     TEST_DETAILS_PAGE : "features/test/details",
+    TEST_EXECUTE_PAGE : "features/test/execute",
 
     ENVIRONMENT_PAGE : "features/projects/environments/view",
     ENVIRONMENT_CREATE_PAGE : "features/projects/environments/create",

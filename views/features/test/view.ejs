@@ -1,3 +1,4 @@
+<div class="card-block">
 <div class="row">
     <div class="col-xs-12">
         <div class="card">
@@ -17,7 +18,7 @@
                     if(locals.params.tests && locals.params.tests.length > 0) {
                         var tests = locals.params.tests;
                     %>
-                    <table id="test-list" class="table table-white-space table-bordered row-grouping display table-responsive no-wrap icheck table-middle">
+                    <table id="test-list" class="table table-white-space table-bordered row-grouping display table-responsive no-wrap table-middle">
                         <thead>
                         <tr>
                             <th></th>
@@ -44,7 +45,7 @@
                                     </div>
                                 </td>
                                 <td class="text-xs-center">
-                                    <%= test.created %>
+                                    <%= locals.params.moment(test.created).format( 'MMM-DD-YYYY') %>
                                 </td>
                                 <td><%= test.environment.name %></td>
                                 <td>REST JSON</td>
@@ -83,4 +84,10 @@
             </div>
         </div>
     </div>
+    <div class="col-xs-12 text-xs-right">
+        <button type="button" class="btn btn-warning mr-1 side-panel-trigger">
+            <i class="icon-cross2"></i> Cancel
+        </button>
+    </div>
+</div>
 </div>

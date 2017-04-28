@@ -194,9 +194,8 @@ ModelUtil.getEnvironmentModel = function (req, res, envJson) {
     return test;
 };
 
-ModelUtil.getTestModel = function (req, res, testJson) {
+ModelUtil.getTestModel = function (testJson) {
     var test = new Test({
-        testId: testJson.testId,
         name: testJson.name,
         description: testJson.description,
         status: testJson.status,
@@ -204,14 +203,18 @@ ModelUtil.getTestModel = function (req, res, testJson) {
         components: testJson.components,
         environment: testJson.environment,
         groups: testJson.groups,
-        updatedBy: testJson.updatedBy
+        updatedBy: testJson.updatedBy,
+        virtualUsers: testJson.virtualUsers,
+        rampUpPeriod: testJson.rampUpPeriod,
+        iterations: testJson.iterations,
+        duration: testJson.duration,
+        forever: testJson.forever,
     });
 
     return test;
 };
 
 ModelUtil.getTestUpdateModel = function (req, res, test) {
-    test.testId  = req.body.testId || test.testId;
     test.name  = req.body.name || test.name;
     test.description  = req.body.description || test.description;
     test.status  = req.body.status || test.status;
@@ -220,6 +223,11 @@ ModelUtil.getTestUpdateModel = function (req, res, test) {
     test.environment  = req.body.environment || test.environment;
     test.groups  = req.body.groups || test.groups;
     test.updatedBy  = req.body.updatedBy || test.updatedBy;
+    test.virtualUsers = req.body.virtualUsers || test.virtualUsers;
+    test.rampUpPeriod = req.body.rampUpPeriod || test.rampUpPeriodl;
+    test.iterations = req.body.iterations || test.iterations;
+    test.duration = req.body.duration || test.duration;
+    test.forever = req.body.forever || test.forever;
 
     return test;
 };

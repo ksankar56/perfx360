@@ -234,3 +234,20 @@ body.side-panel-open:not(.device-xxs):not(.device-xs):not(.device-sm) .body-over
     max-height: 200px;
     overflow-x: hidden;
 }
+
+.popover{
+    max-width: 100%;
+    width: 600px;
+}
+.overlay.on {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.popover-content {
+    padding: 0px;
+}

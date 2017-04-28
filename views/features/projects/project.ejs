@@ -1,26 +1,30 @@
 <div class="content-wrapper">
 
+    <%  var project = locals.params.project;
+        var tests = locals.params.tests;
+    %>
+
     <div class="row">
         <div class="col-sm-12 right">
 
             <div class="form-group">
                 <div class="btn-group pull-right" role="group" aria-label="Basic example">
                     <!-- Button group with icons -->
+
                     <div class="btn-group mr-1">
-                        <% if (locals.project) {  %>
-                        <select class="form-control" tabindex="-1" aria-hidden="true">
-                            <option value="1">Select Application</option>
+
+                        <select class="form-control" id="selected-test" tabindex="-1" aria-hidden="true">
+                            <option value="-1">Select Test</option>
                             <%
-                                console.info('locals.project.components.length = ', locals.project.components.length);
-                                for(var i=0; i < locals.project.components.length; i++) {
-                                var component = locals.project.components[i];
-                                console.info('component = ', locals.project.components[i]);
+
+                                console.info('project.components.length = ', tests.length);
+                                for(var i=0; i < tests.length; i++) {
+                                var test = tests[i];
                             %>
-                                <option value="<%= component._id %>"><%= component.name %></option>
+                                <option value="<%= test._id %>"><%= test.name %> - <%= test.environment.name %></option>
 
                             <% } %>
                         </select>
-                        <% } %>
                     </div>
                     <!--
                     <div class="btn-group mr-1 mb-1">
@@ -46,16 +50,17 @@
                             </span>
                         </div>
                     </div>-->
-                    <button type="button" class="btn btn-danger mr-1 side-panel-trigger fetch-data"><i class="icon-rocket2"></i> Execute</button>
+
+                    <button type="button" class="btn btn-danger mr-1 process-page" data-container="body" data-url="/test/execute" data-method="GET" data-title="Execute Test" data-popover="true" id="shown-popover" disabled="disabled"><i class="icon-rocket2"></i> Execute</button>
                     <div class="btn-group mr-1">
-              <span class="dropdown">
-                  <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 white"></i> Configure</button>
-                  <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
-                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/application/list/<%= locals.project._id %>" data-method="GET" data-title="<%= locals.project.name %> : Applications" data-datatable="application-list"><i class="icon-calendar5"></i> Applications</a>
-                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/environment/list/<%= locals.project._id %>" data-method="GET" data-title="<%= locals.project.name %> : Environments" data-datatable="environment-list"><i class="icon-shuffle3"></i> Environments</a>
-                      <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/test/list/<%= locals.project._id %>" data-method="GET" data-title="<%= locals.project.name %> : Tests" data-datatable="test-list"><i class="icon-bar-graph"></i> Test</a>
-                  </span>
-              </span>
+                      <span class="dropdown">
+                          <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 white"></i> Configure</button>
+                          <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
+                              <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/application/list/<%= project._id %>" data-method="GET" data-title="<%= project.name %> : Applications" data-datatable="application-list"><i class="icon-calendar5"></i> Applications</a>
+                              <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/environment/list/<%= project._id %>" data-method="GET" data-title="<%= project.name %> : Environments" data-datatable="environment-list"><i class="icon-shuffle3"></i> Environments</a>
+                              <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/test/list/<%= project._id %>" data-method="GET" data-title="<%= project.name %> : Tests" data-datatable="test-list"><i class="icon-bar-graph"></i> Test</a>
+                          </span>
+                      </span>
                     </div>
                     <div class="btn-group mr-1">
                         <button type="button" class="btn btn-success"><i class="icon-eye6"></i> Results</button>
@@ -81,7 +86,7 @@
         <div class="col-xs-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title" id="heading-dropdown"><%= locals.project.name %> : APPLICATION 1</h4>
+                    <h4 class="card-title" id="heading-dropdown"><%= project.name %> : APPLICATION 1</h4>
                     <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                     <div class="heading-elements">
 
@@ -312,4 +317,5 @@
             </div>
         </div>
     </section>
+
 </div>
