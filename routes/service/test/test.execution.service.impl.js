@@ -14,7 +14,7 @@ var _ = require('lodash')
 
 var TestExecution = require('../../../src/model/TestExecution');
 
-function saveTestExecutionObject (testExecutionJson, req, callback) {
+function saveTestExecutionObject (testExecutionJson, callback) {
 
     // create a testExecution
 
@@ -27,13 +27,21 @@ function saveTestExecutionObject (testExecutionJson, req, callback) {
 
     console.info('testExecutionJson.name = ', testExecutionJson.name);
 
-    var testExecution = ModelUtil.getTestExecutionModel(req, testExecutionJson)
+    var testExecution = ModelUtil.getTestExecutionModel(testExecutionJson)
 
     // save testExecution to database
     testExecution.save(function (err, dbTestExecution) {
+        console.info('**************** dbTestExecution = ', dbTestExecution);
         getTestExecutionObject(dbTestExecution._id, function (err, result) {
-            console.info('sending result = ', result);
-            callback(err, result);
+            if (err) {
+                callback(err, null);
+            }
+            console.info('sending result = ', result.length);
+            if (result && result.length > 0) {
+                callback(err, result[0]);
+            } else {
+                callback(err, result);
+            }
         });
     });
 }
@@ -48,6 +56,7 @@ function getTestExecutionObject (testExecutionId, callback) {
         .populate({path : 'executedComponents', populate: { path: 'componentType' }})
         .populate({path : 'executedBy'})
         .exec( function (err, testExecutions) {
+            console.info('err = ', err);
             callback(err, testExecutions);
         });
 };
@@ -77,3 +86,28 @@ function updateTestExecutionObject (testExecutionJson, callback) {
     });
 }
 exports.updateTestExecutionObject = updateTestExecutionObject;
+
+function updateObject(testExecutionId, testExecutionJson, callback) {
+    console.info('testExecutionId = ', testExecutionId);
+    TestExecution.findById(testExecutionId, function (err, testExecution) {
+
+        console.info('testExecution = ', testExecution);
+        testExecution.timeTaken = testExecutionJson.timeTaken;
+        testExecution.resultStatus = testExecutionJson.resultStatus;
+        testExecution.executed = testExecutionJson.executed;
+        testExecution.updated = testExecutionJson.updated;
+        // Update the document back to the database
+        testExecution.save(function (err, result) {
+            callback(err, result);
+        });
+    });
+
+    /*TestExecution.update({_id: mongoose.Types.ObjectId(testExecution._id)}, testExecutionJson,
+            {upsert:true}, function(err, result){
+        callback(err, result);
+    });*/
+    /*testExecution.save(function (err, result) {
+        callback(err, result);
+    });*/
+}
+exports.updateObject = updateObject;

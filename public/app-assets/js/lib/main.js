@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     var $popoverPanel = $('#shown-popover').popover({
         html: true,
-        //title: 'Popover Shown Event <a href="#" class="close" data-dismiss="alert">×</a>',
+        title: 'Execute Test &nbsp; <a href="#" class="close popover-close-btn" data-dismiss="alert">×</a>',
         content: '<div class="popover-all"><div class="popover-arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"></div></div></div>',
         trigger: 'click',
         placement: 'bottom'
@@ -66,6 +66,10 @@ $(document).ready(function() {
 
         return loadingBlock;
     }
+
+    $(document.body).on('click', '.popover-close-btn', function() {
+        $('#shown-popover').trigger( "click" );
+    });
 
     $(document.body).on('click', '.process-page', function() {
         var loadingBlock = _enableLoadingBlock();

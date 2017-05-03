@@ -232,7 +232,7 @@ ModelUtil.getTestUpdateModel = function (req, res, test) {
     return test;
 };
 
-ModelUtil.getTestExecutionModel = function (req, testExecutionJson) {
+ModelUtil.getTestExecutionModel = function (testExecutionJson) {
     var testExecution = new TestExecution({
         name: testExecutionJson.name,
         description: testExecutionJson.description,

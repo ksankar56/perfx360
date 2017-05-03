@@ -102,7 +102,7 @@ function _getResultObject (httpSample, parent) {
     return jmr;
 }
 
-exports.assignTestResultValues =  function(documents, testExecutions, callback) {
+exports.assignTestResultValues =  function(documents, testExecution, callback) {
 
     var assignedDocuments = [];
 
@@ -111,7 +111,7 @@ exports.assignTestResultValues =  function(documents, testExecutions, callback) 
         console.info(key + ' json = ', key instanceof Array);
         var results = documents[key];
         //console.info('result = ', results.length);
-        var testExecution = testExecutions[0];
+        //var testExecution = testExecutions[0];
         console.info('jmrValues = ', results.length);
 
         for (var i = 0; i < results.length; i++) {
@@ -285,8 +285,8 @@ function _getDocument(key, testExecution, result) {
 
 function _getBaseDocument(componentId, testExecution, assignedDocument) {
     assignedDocument.project_id = testExecution.project._id.toString();
-    assignedDocument.component_id = componentId;
-    assignedDocument.group_id = componentId;
+    assignedDocument.component_id = testExecution.executedComponents[0]._id;
+    //assignedDocument.group_id = componentId;
     assignedDocument.project_name = testExecution.name;
     assignedDocument.project_description = testExecution.description;
     assignedDocument.environment_id = testExecution.test.environment._id.toString();
