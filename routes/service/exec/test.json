@@ -1,0 +1,27 @@
+{
+  "config": {
+    "target": "https://www.luxepick.com",
+    "phases": [
+      { "duration": 10,  "arrivalRate": 1 },
+      { "duration": 20,  "arrivalRate": 1, "rampTo": 2 }
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "Product Details Page",
+      "flow": [
+        {
+          "get": {
+            "url": "/spl-high-end-luxury-jewelry"
+          },
+          "get": {
+            "url": "/new-dresses"
+          },
+          "get": {
+            "url": "/mix-parent-haaram"
+          }
+        }
+      ]
+    }
+  ]
+}

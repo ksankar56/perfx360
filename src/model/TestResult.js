@@ -28,7 +28,7 @@ var jmeterTestResultSchema = new Schema({
     ts : {type:   String},
     s: { type: Boolean},
     lb: { type: String },
-    rc: { type: Number },
+    rc: { type: String },
     rm: { type: String },
     tn: { type: String },
     dt: { type: String },

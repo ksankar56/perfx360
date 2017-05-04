@@ -72,8 +72,9 @@ router.get('/:id', function(req, res, next) {
 
 router.get('/test/execute', function(req, res, next) {
     var options = {
-        url: 'https://www.google.com',
-        maxRequests: 2,
+        url: 'https://www.luxepick.com',
+        maxRequests: 20,
+        concurrency: 2
     };
     console.info('options = ', options);
 

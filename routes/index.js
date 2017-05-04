@@ -2,6 +2,7 @@ var express = require('express')
     , router = express.Router()
     , ping = require('./api/ping')
     , jmeter = require('./api/exec/jmeter.api')
+    , artillery = require('./api/exec/artillery.api')
     , selenium = require('./api/exec/selenium.api')
     , users = require('./api/user/users.api')
     , componentApi = require('./api/component/component.api')
@@ -30,6 +31,7 @@ var restVersionV1 = '/rest/api/v1/perf';
 router.use(restVersionV1 + '/ping', ping);
 router.use(restVersionV1 + '/jmeter', jmeter);
 router.use(restVersionV1 + '/selenium', selenium);
+router.use(restVersionV1 + '/artillery', artillery);
 router.use(restVersionV1 + '/accessibility', accessibilityApi);
 router.use(restVersionV1 + '/user', users);
 router.use(restVersionV1 + '/component', componentApi);
