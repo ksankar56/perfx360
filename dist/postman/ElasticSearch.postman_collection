@@ -1,0 +1,87 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ElasticSearch",
+		"_postman_id": "7f60a1d2-da33-b4f8-9e91-01c1d3746e11",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Query",
+			"description": "",
+			"item": [
+				{
+					"name": "Match Query",
+					"request": {
+						"url": "http://localhost:9200/perfx360/_search",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"query\":{\n      \"match\":{\n    \t\"_type\" : \"ACCESSIBILITY\"\n      }\n   }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Search",
+					"request": {
+						"url": "http://localhost:9200/perfx360/",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"query\":{\n      \"query_string\":{\n    \t\"query\" : \"Affiliate Program\"\n      }\n   }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Term Query",
+					"request": {
+						"url": "http://localhost:9200/perfx360/_search",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"query\":{\n    \t\"term\" : {\"type\" : \"warning\"}\n   }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Range Query",
+					"request": {
+						"url": "http://localhost:9200/perfx360/_search",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"query\":{\n\t\t\"range\" : {\n    \t\"typeCode\" : {\"lt\" : 3, \"gt\" : 1}\n    \t}\n   }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Index Type Query",
+					"request": {
+						"url": "http://localhost:9200/perfx360/_search",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"query\":{\n      \"type\" : {\n         \"value\" : \"REST_JSON\"\n      }\n   }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
