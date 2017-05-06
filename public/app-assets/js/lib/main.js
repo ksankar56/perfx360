@@ -107,6 +107,27 @@ $(document).ready(function() {
         fetchData($(this), loadingBlock);
     });
 
+    $(document.body).on('click', '.box-loading', function() {
+        var loadingBlock = $(this).data('destination');
+
+        console.info('loadingBlock = ', loadingBlock);
+        $(loadingBlock).block({ message: '<h5>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h5>',
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.6,
+                cursor: 'wait'
+            },
+            css: {
+                border: 0,
+                padding: 5,
+                paddingTop: 10,
+                opacity: 0.6,
+                backgroundColor: '#000',
+                color: '#b2b2b2'
+            }});
+
+    });
+
     $(document.body).on('change', '#selected-test', function() {
         console.info('$(this).val() = ', $(this).val());
         if ($(this).val() != -1) {
@@ -193,7 +214,12 @@ $(document).ready(function() {
                         //$(destination).html(data);
                         //window.location.href = refreshurl + '/' + data.testId;
                         var projectId = $('#selected-test').data('project');
-                        $(location).attr('href', refreshurl + '/' + projectId);
+                        if (projectId) {
+                            refreshurl = refreshurl + '/' + projectId;
+                        }
+                        refreshurl = refreshurl + "?m=1"
+                        $(location).attr('href', refreshurl);
+
                     } else {
                         $(destination).html(data);
                     }
@@ -411,6 +437,67 @@ $(document).ready(function() {
             processData: false,
             type: type
         });
+    });
+
+    function _enableLoading() {
+        var loadingBlock = $('body');
+        $(loadingBlock).block({ message: '<h3>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h3>',
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.6,
+                cursor: 'wait'
+            },
+            css: {
+                border: 0,
+                padding: 5,
+                paddingTop: 10,
+                opacity: 0.6,
+                backgroundColor: '#000',
+                color: '#b2b2b2'
+            }});
+
+        return loadingBlock;
+    }
+
+    $(document.body).on('click', '.cancel-button', function() {
+        var _self = $(this);
+        var url = _self.data('url');
+        var method = _self.data('method');
+        var refreshurl = _self.data("refreshurl");
+
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this object!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#F6BB42",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                var loadingBlock = _enableLoading();
+                $.ajax({
+                    url: url,
+                    data: '',
+                    error: function(err) {
+                        console.info('failed = ', err);
+                        $(loadingBlock).unblock();
+                    },
+                    success: function(data) {
+
+                        $(location).attr('href', refreshurl + "?m=3");
+                    },
+                    processData: false,
+                    type: method
+                });
+                swal("Deleted!", "Your object has been deleted.", "success");
+            } else {
+                swal("Cancelled", "Your object is safe :)", "error");
+            }
+        });
+
     });
 });
 

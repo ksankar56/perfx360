@@ -96,37 +96,37 @@ router.get('/details/:id', function(req, res, next) {
         });
 
         /*projectServiceImpl.getProjectDependencies(req.params.id, function (err, projects) {
-            console.info('err = ', err);
-            var project = {};
-            if (projects.length > 0) {
-                project = projects[0];
-            }
-            req.session.project = project;
-            var params = {};
-            params.project = project;
+         console.info('err = ', err);
+         var project = {};
+         if (projects.length > 0) {
+         project = projects[0];
+         }
+         req.session.project = project;
+         var params = {};
+         params.project = project;
 
-            testServiceImpl.getTestObjectsByProjectId(project._id, function (err, tests) {
-                if (err) {
-                    console.info('err = ', err);
-                }
-                params.tests = tests;
+         testServiceImpl.getTestObjectsByProjectId(project._id, function (err, tests) {
+         if (err) {
+         console.info('err = ', err);
+         }
+         params.tests = tests;
 
-                var test = req.session.test;
+         var test = req.session.test;
 
-                //if(test) {
-                    var testExecution = testExecutionServiceImpl.getTestExecutionObjectByProjectId(project._id, function (err, testExecution) {
-                        params.testExecution = testExecution;
+         //if(test) {
+         var testExecution = testExecutionServiceImpl.getTestExecutionObjectByProjectId(project._id, function (err, testExecution) {
+         params.testExecution = testExecution;
 
-                        var searchResult = searchService.getJMeterAggregateReport(params, function(err, response, status) {
-                            params.searchResult = response;
-                            params.summary = baseService.getSummaryInformation(testExecution, params.searchResult);
-                            res.render(renderConstants.PRODUCT_DETAILS_PAGE, {err: err, params: params, req: req});
-                        });
-                    });
-                //}
+         var searchResult = searchService.getJMeterAggregateReport(params, function(err, response, status) {
+         params.searchResult = response;
+         params.summary = baseService.getSummaryInformation(testExecution, params.searchResult);
+         res.render(renderConstants.PRODUCT_DETAILS_PAGE, {err: err, params: params, req: req});
+         });
+         });
+         //}
 
-            })
-        });*/
+         })
+         });*/
     } else {
         res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout' });
     }
@@ -163,6 +163,13 @@ function _getTestExecutionObject(params, callback) {
     var testExecution = testExecutionServiceImpl.getTestExecutionObjectByProjectId(params.project._id, function (err, testExecution) {
         params.testExecution = testExecution;
 
+        if (testExecution && testExecution.test) {
+            params.testName = testExecution.test.name - testExecution.test.environment.name;
+            params.envName = testExecution.test.environment.name;
+            console.info('params.testName = ', params.testName);
+            console.info('params.envName = ', params.envName);
+        }
+
         callback(null, params);
     });
 }
@@ -175,4 +182,25 @@ function _getJMeterAggregateReport(params, callback) {
         callback(null, params);
     });
 }
+
+
+/**
+ * Delete project create page.
+ *
+ * @return {Function}
+ * @access private
+ */
+router.delete('/:projectId', function(req, res, next) {
+    console.info('projectId = ', req.params.projectId);
+    projectServiceImpl.deleteProject(req.params.projectId, function(err, status) {
+        var params = {};
+        params.err = err;
+        params.status = status;
+
+        //res.render(renderConstants.PRODUCTS_PAGE, {layout: 'panel-layout', req: req, params: params});
+        //res.redirect('/auth/index?deleted=true');
+        res.send(params);
+    });
+});
+
 module.exports = router;

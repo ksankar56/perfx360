@@ -127,19 +127,18 @@ function updateProject(req, callback) {
 };
 exports.updateProject = updateProject;
 
-exports.deleteProject = function(req, res, next) {
-    Project.remove({ _id: req.body.id }, function(err) {
+function deleteProject(id, callback) {
+    Project.remove({ _id: id }, function(err) {
         if (err) {
             logger.debug(err);
             var baseError = new BaseError(Utils.buildErrorResponse(constants.PROJECT_DUPLICATE, '', constants.PROJECT_DUPLICATE_MSG, constants.PROJECT_DUPLICATE_MSG, 500));
-            resEvents.emit('ErrorJsonResponse', req, res, baseError);
+            callback(err, null);
+        } else {
+            callback(null, true);
         }
-
-        res.status(constants.HTTP_OK).send({
-            status: baseService.getStatus(req, res, constants.HTTP_OK, "Successfully Deleted"),
-        });
     });
 };
+exports.deleteProject = deleteProject;
 
 exports.addGroups = function (req, res, next) {
     var groupIdsJsonArray = req.body.groups;

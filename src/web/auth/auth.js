@@ -28,7 +28,7 @@ router.get('/', function(req, res, next) {
         header: 'Page Header'
     };
     console.info('auth get');
-    res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout' });
+    res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout', req: req });
 });
 
 
@@ -51,10 +51,14 @@ router.get('/index', function(req, res, next) {
             }
 
             locals.projects = projects;
+            var params = {};
+            if (req.query.m) {
+                params.m = req.query.m;
+            }
             res.render('index', locals);
         });
     } else {
-        res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout' });
+        res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout', req: req, params: params });
     }
 });
 
@@ -65,6 +69,17 @@ router.get('/index', function(req, res, next) {
  * @api public
  */
 router.post('/index', function(req, res, next) {
+
+});
+
+/**
+ * Authentication for an user.
+ *
+ * @return {Function}
+ * @api public
+ */
+router.post('/', function(req, res, next) {
+    //userServiceImpl.authenticate()
     var userJson = req.body;
     var locals = {
         title: 'Page Title',
@@ -75,48 +90,48 @@ router.post('/index', function(req, res, next) {
     };
 
     userServiceImpl.authenticate(userJson, function(err, isMatch, user) {
+        var params = {};
         if (err) {
             logger.debug(err);
+            console.info('err = ', err);
             locals.error = err;
-            res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout', locals: locals });
-            return;
+            params.error = err;
+
+            //res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout', locals: locals });
         }
 
+        console.info('isMatch = ', isMatch);
         if (isMatch) {
             locals.user = user;
             req.session.user = user;
 
             /*projectServiceImpl.getProjects({createdBy : user._id}, function(err, projects) {
-                if (err) {
-                    logger.debug(err);
-                    locals.error = err;
-                    //var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
-                }
+             if (err) {
+             logger.debug(err);
+             locals.error = err;
+             //var baseError = new BaseError(Utils.buildErrorResponse(constants.FATAL_ERROR, '', constants.FATAL_ERROR_MSG, err.message, 500));
+             }
 
-                console.info('projects = ', projects);
-                locals.projects = projects;
-                res.render('index', locals);
-            });*/
+             console.info('projects = ', projects);
+             locals.projects = projects;
+             res.render('index', locals);
+             });*/
+            console.info('auth index');
             res.redirect('/auth/index');
         } else {
-            logger.debug(constants.USER_PASSWORD_NOT_MATCH_MSG);
-            locals.error = baseError;
-            var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, '', 500));
-            res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout', locals: locals});
-            return;
+            if (err) {
+                console.info('auth if');
+                res.render(renderConstants.LOGIN_PAGE, {layout: 'home-layout', locals: locals, params: params});
+            } else {
+                logger.debug(constants.USER_PASSWORD_NOT_MATCH_MSG);
+                locals.error = baseError;
+                params.error = baseError;
+                var baseError = new BaseError(Utils.buildErrorResponse(constants.USER_PASSWORD_NOT_MATCH, '', constants.USER_PASSWORD_NOT_MATCH_MSG, '', 500));
+                console.info('auth else');
+                res.render(renderConstants.LOGIN_PAGE, {layout: 'home-layout', locals: locals, params: params});
+            }
         }
     });
-
-});
-
-/**
- * Authentication for an user.
- *
- * @return {Function}
- * @api public
- */
-router.post('/auth', function(req, res, next) {
-    //userServiceImpl.authenticate()
 
 });
 

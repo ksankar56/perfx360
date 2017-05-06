@@ -8,6 +8,7 @@ module.exports = Object.freeze({
     PRODUCT_CREATE_PAGE : "features/projects/create",
     PRODUCT_EDIT_PAGE : "features/projects/edit",
     PRODUCT_DETAILS_PAGE : "features/projects/project",
+    PRODUCTS_PAGE : "index",
 
     APPLICATIONS_PAGE : "features/projects/applications/view",
     APPLICATION_CREATE_PAGE : "features/projects/applications/create",

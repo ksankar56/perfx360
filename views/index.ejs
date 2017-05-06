@@ -50,9 +50,9 @@
                                                 </div>
                                                 <div class="btn-group-vertical">
                                                     <div class="" role="group" aria-label="First Group">
-                                                        <button type="button" class="btn btn-icon btn-success" onclick="location.href='/project/details/<%= project._id %>';"><i class="icon-eye"></i></button>
-                                                        <button type="button" class="btn btn-icon btn-info side-panel-trigger process-page" data-url="/project/edit/<%= project._id %>" data-method="GET" data-title="Edit Project"><i class="icon-pen3"></i></button>
-                                                        <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
+                                                        <button type="button" class="btn btn-success" onclick="location.href='/project/details/<%= project._id %>';"><i class="icon-eye"></i> View</button>
+                                                        <button type="button" class="btn btn-icon btn-info side-panel-trigger process-page" data-url="/project/edit/<%= project._id %>" data-method="GET" data-title="Edit Project"><i class="icon-pen3"></i> Edit</button>
+                                                        <button type="button" class="btn btn-icon btn-danger cancel-button" data-url="/project/<%= project._id %>" data-project="<%= project._id %>" data-refreshurl="/auth/index" data-method="DELETE"><i class="icon-trash4"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
