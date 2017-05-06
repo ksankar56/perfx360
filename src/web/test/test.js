@@ -14,6 +14,7 @@ var express = require('express')
     , applicationServiceImpl = require('../../../routes/service/component/component.service.impl')
     , environmentServiceImpl = require('../../../routes/service/environment/enviromnent.service.impl')
     , testServiceImpl = require('../../../routes/service/test/test.service.impl')
+    , jmeterServiceImpl = require('../../../routes/service/exec/jmeter.service.impl')
     , baseService = require('../../../src/common/base.service')
     , moment = require('moment');
 
@@ -101,6 +102,21 @@ function _getEnvironments(params, callback) {
         callback(null, params);
     });
 }
+
+/**
+ * Test Execute test page.
+ *
+ * @return {Function}
+ * @access private
+ */
+router.post('/execute', function(req, res, next) {
+
+    jmeterServiceImpl.execute(req, function(err, params) {
+        //var params = baseService.getParam('params', test);
+
+        res.render(renderConstants.PRODUCT_DETAILS_PAGE, {layout: 'panel-layout', req: req, params: params});
+    });
+});
 
 /**
  * Create Test.

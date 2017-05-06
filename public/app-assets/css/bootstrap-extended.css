@@ -1301,7 +1301,8 @@ button:focus {
   padding: 0; }
 
 .nav {
-  border-radius: 0.25rem; }
+  border-radius: 0.25rem;
+  border-bottom: 1px solid #d3145a;}
   .nav.wrap-border {
     border: 1px solid #ddd; }
     .nav.wrap-border li.nav-header {
@@ -1402,9 +1403,14 @@ button:focus {
   .nav.nav-tabs .nav-item .nav-link {
     padding: 0.5rem 0.7rem;
     display: block; }
+    .nav-tabs .nav-link:hover {
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #d3145a;
+    }
     .nav.nav-tabs .nav-item .nav-link.active {
-      background-color: #fff;
-      border-radius: 0.25rem 0.25rem 0 0; }
+      background-color: #d3145a;
+      border-radius: 0.25rem 0.25rem 0 0;
+      color: #fff; }
     .nav.nav-tabs .nav-item .nav-link i.float-xs-right {
       margin-left: 0.5rem; }
     .nav.nav-tabs .nav-item .nav-link.dropdown-toggle::after {
@@ -1959,10 +1965,10 @@ ul.list-inline.list-inline-pipe > li + li:before {
   animation: spin 1s infinite linear; }
 
 .blockOverlay {
-  z-index: 1050 !important; }
+  z-index: 1060 !important; }
 
 .blockElement, .blockPage {
-  z-index: 1051 !important; }
+  z-index: 1061 !important; }
 
 @-moz-keyframes spin {
   from {

@@ -10,8 +10,12 @@ var express = require('express')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
-    console.info("req.query.keyword = ", req.query.keyword);
-    res.json({keyword : req.query.keyword});
+    var val = Math.random() * 1000;
+    //console.info("req.query.keyword = ", Math.ceil(val));
+
+    setTimeout(function() {
+        res.json({keyword : req.query.keyword});
+    }, Math.ceil(val));
     /* Check save is pining. */
     /*pingService.checkSlave({requestTimeout: Infinity}, function(error, response, status) {
         Status.code = status;

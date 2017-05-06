@@ -18,7 +18,6 @@ builderutil.constructIndex = function(req) {
     return constructIndex;
 };
 
-//TODO : have to rework using builder
 builderutil.constructMappings = function(req) {
     var body = {
         mappings: {
@@ -42,7 +41,7 @@ builderutil.constructMappings = function(req) {
                     it: { type: "integer" },
                     lt: { type: "integer" },
                     ct: { type: "integer" },
-                    ts : {type:   "string"},
+                    ts : {type:   "long"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
                     rc: { type: "integer" },
@@ -146,7 +145,7 @@ builderutil.constructMappings = function(req) {
                     it: { type: "integer" },
                     lt: { type: "integer" },
                     ct: { type: "integer" },
-                    ts : {type:   "string"},
+                    ts : {type:   "long"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
                     rc: { type: "integer" },
@@ -250,7 +249,7 @@ builderutil.constructMappings = function(req) {
                     it: { type: "integer" },
                     lt: { type: "integer" },
                     ct: { type: "integer" },
-                    ts : {type:   "string"},
+                    ts : {type:   "long"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
                     rc: { type: "integer" },
@@ -354,7 +353,7 @@ builderutil.constructMappings = function(req) {
                     it: { type: "integer" },
                     lt: { type: "integer" },
                     ct: { type: "integer" },
-                    ts : {type:   "string"},
+                    ts : {type:   "long"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
                     rc: { type: "integer" },
@@ -458,7 +457,7 @@ builderutil.constructMappings = function(req) {
                     it: { type: "integer" },
                     lt: { type: "integer" },
                     ct: { type: "integer" },
-                    ts : {type:   "string"},
+                    ts : {type:   "long"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
                     rc: { type: "integer" },
@@ -562,7 +561,7 @@ builderutil.constructMappings = function(req) {
                     it: { type: "integer" },
                     lt: { type: "integer" },
                     ct: { type: "integer" },
-                    ts : {type:   "string"},
+                    ts : {type:   "long"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
                     rc: { type: "integer" },
@@ -666,7 +665,7 @@ builderutil.constructMappings = function(req) {
                     it: { type: "integer" },
                     lt: { type: "integer" },
                     ct: { type: "integer" },
-                    ts : {type:   "string"},
+                    ts : {type:   "long"},
                     s: { type: "boolean"},
                     lb: { type: "string" },
                     rc: { type: "integer" },

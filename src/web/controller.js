@@ -5,7 +5,10 @@ var express = require('express')
     , project = require('./projects/project')
     , application = require('./projects/application')
     , environment = require('./projects/environment')
-    , test = require('./test/test');
+    , test = require('./test/test')
+    , initFilter = require('../common/init.filter');
+
+router.all('/test*', initFilter.initValidation);
 
 router.use('/auth', auth);
 router.use('/', home);

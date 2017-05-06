@@ -48,7 +48,6 @@ function saveTestExecutionObject (testExecutionJson, callback) {
 
 exports.saveTestExecutionObject = saveTestExecutionObject;
 
-
 function getTestExecutionObject (testExecutionId, callback) {
     TestExecution.find({_id : testExecutionId})
         .populate({path : 'project', populate: { path: 'groups' }})
@@ -61,6 +60,38 @@ function getTestExecutionObject (testExecutionId, callback) {
         });
 };
 exports.getTestExecutionObject = getTestExecutionObject;
+
+
+function getTestExecutionObjectsByProjectId (projectId, callback) {
+    TestExecution.find({project : projectId})
+        .populate({path : 'project', populate: { path: 'groups' }})
+        .populate({path : 'test', populate: { path: 'environment' }})
+        .populate({path : 'executedComponents', populate: { path: 'componentType' }})
+        .populate({path : 'executedBy'})
+        .exec( function (err, testExecutions) {
+            console.info('err = ', err);
+            callback(err, testExecutions);
+        });
+};
+exports.getTestExecutionObjectsByProjectId = getTestExecutionObjectsByProjectId;
+
+function getTestExecutionObjectByProjectId (projectId, callback) {
+    TestExecution.find({project : projectId})
+        .populate({path : 'project', populate: { path: 'groups' }})
+        .populate({path : 'test', populate: { path: 'environment' }})
+        .populate({path : 'executedComponents', populate: { path: 'componentType' }})
+        .populate({path : 'executedBy'})
+        .sort({created: -1})
+        .limit(1)
+        .exec( function (err, testExecutions) {
+            if(testExecutions && testExecutions.length > 0) {
+                callback(err, testExecutions[0]);
+            } else {
+                callback(err, testExecutions);
+            }
+        });
+};
+exports.getTestExecutionObjectByProjectId = getTestExecutionObjectByProjectId;
 
 function updateTestExecutionObject (testExecutionJson, callback) {
     TestExecution.findById(testExecutionJson.id, function (err, testExecution) {

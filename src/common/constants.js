@@ -213,5 +213,7 @@ module.exports = Object.freeze({
     COMPONENT_FIELD : 'component',
     COMPONENT_TYPE_FIELD : 'componentType',
     CREATED_BY_FIELD : 'createdBy',
+
+    DATE_FORMAT : 'MMM DD YYYY hh:mm:ss A',
 });
 

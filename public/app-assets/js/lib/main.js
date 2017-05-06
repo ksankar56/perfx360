@@ -8,6 +8,7 @@ function showToastr() {
 
 $(document).ready(function() {
     //var cardBlock = $('.card-block');
+    console.info('inside');
 
     var $popoverPanel = $('#shown-popover').popover({
         html: true,
@@ -79,6 +80,30 @@ $(document).ready(function() {
             $('#slide-header-view').html(title);
         }
 
+        //if(loading == undefined) {
+        fetchData($(this), loadingBlock);
+        //}
+    });
+
+    $(document.body).on('click', '.execute-test', function() {
+        var loadingBlock = $('.popover-content');
+
+        console.info('loadingBlock = ', loadingBlock);
+        $(loadingBlock).block({ message: '<h3>Executing... <div class="icon-spinner9 icon-spin icon-lg"></div></h3>',
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.6,
+                cursor: 'wait'
+            },
+            css: {
+                border: 0,
+                padding: 5,
+                paddingTop: 10,
+                opacity: 0.6,
+                backgroundColor: '#000',
+                color: '#b2b2b2'
+            }});
+
         fetchData($(this), loadingBlock);
     });
 
@@ -97,6 +122,7 @@ $(document).ready(function() {
         var data = {};
         var type = currentObj.data("method");
         var destination = currentObj.data("destination");
+        var refreshurl = currentObj.data("refreshurl");
         var formSubmit = currentObj.data("form");
         var formType = currentObj.data("formtype");
         var datatableObj = currentObj.data("datatable");
@@ -112,8 +138,8 @@ $(document).ready(function() {
             }
 
             var testId = $('#selected-test').val();
-            console.info('test Id = ', testId);
-            if (testId != -1) {
+            console.info('testId  = ', testId);
+            if (testId) {
                 url = url + '/' + testId;
             }
             //console.info('hasopen = ', $('.popover').hasClass('in'));
@@ -138,6 +164,10 @@ $(document).ready(function() {
             console.info('data = ', data);
         }
 
+        console.info('url = ', url);
+        console.info('data = ', data);
+        console.info('type = ', type);
+        
         $.ajax({
             url: url,
             data: data,
@@ -156,9 +186,17 @@ $(document).ready(function() {
                     //var dataPopover = $popoverPanel.data('popover');
                     //$popoverPanel.find('.popover-content').html(data);
                     //addNewElement(data);
+                    console.info('data = ', data);
                     $('.popover-content').html(data);
                 } else {
-                    $(destination).html(data);
+                    if (refreshurl) {
+                        //$(destination).html(data);
+                        //window.location.href = refreshurl + '/' + data.testId;
+                        var projectId = $('#selected-test').data('project');
+                        $(location).attr('href', refreshurl + '/' + projectId);
+                    } else {
+                        $(destination).html(data);
+                    }
 
                     if (datatableObj) {
                         enableDataTable(datatableObj);

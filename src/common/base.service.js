@@ -3,8 +3,10 @@
  */
 var express = require('express');
 var _ = require('lodash');
+var moment  = require('moment');
 var Status = require('./domains/Status');
 var JMeterResult = require('./domains/JMeterResult');
+var constants = require('./constants');
 
 exports.getStatus = function(req, res, statusCode, statusMessage) {
     Status.code = statusCode;
@@ -18,6 +20,45 @@ exports.getParam = function(key, valueObj) {
     params[key] = valueObj;
 
     return params;
+}
+
+exports.getSummaryInformation = function(testExecution, searchResult) {
+    var summary = {};
+
+    if (testExecution && searchResult) {
+        summary.vu = testExecution.test.virtualUsers;
+        summary.testType = testExecution.executedComponents[0].componentType.name;
+        summary.started = moment(testExecution.created).format(constants.DATE_FORMAT);
+        summary.ended = moment(testExecution.updated).format(constants.DATE_FORMAT);
+        var responseTimeCalc = (searchResult.aggregations.max_response_time.value + searchResult.aggregations.max_time.value) - searchResult.aggregations.min_response_time.value;
+        var throughput = (searchResult.hits.total / responseTimeCalc) * 1000;
+
+        summary.throughput = throughput.toFixed(1);
+        var responseTime = searchResult.aggregations.load_time_outlier.values["95.0"];
+        if (responseTime) {
+            responseTime = responseTime.toFixed(2);
+        }
+        summary.responseTime = responseTime;
+        summary.error = (searchResult.hits.total - searchResult.aggregations.messages.buckets.success.doc_count) / 100 * 1000;
+        summary.averageBandWidth = searchResult.aggregations.average_bytes.value;
+
+        var startDate = moment(testExecution.created).format();//now
+        var endDate = moment(testExecution.updated).format();
+        var diffTime = moment(testExecution.updated)
+            .diff(testExecution.created);
+        var duration = moment.duration(diffTime);
+        var years = duration.years(),
+            days = duration.days(),
+            hrs = duration.hours(),
+            mins = duration.minutes(),
+            secs = duration.seconds();
+
+        summary.duration = mins + " Mins : " + secs + " Secs";
+        summary.averageResponseTime = searchResult.aggregations.average_response_time.value.toFixed(2);
+    }
+
+    console.info('summary = ', summary);
+    return summary;
 }
 
 exports.getJmeterResultObjects =  function(result) {
@@ -156,7 +197,7 @@ function _getDocument(key, testExecution, result) {
         assignedDocument.ct = parseInt(result.ct);
     }
     if (result.ts) {
-        assignedDocument.ts = result.ts;
+        assignedDocument.ts = parseInt(result.ts);
     }
     if (result.s) {
         assignedDocument.s = Boolean(result.s);

@@ -15,7 +15,7 @@ var testExecutionSchema = new Schema({
     timeTaken: {type: Number, default: 0},
     executedComponents: [{type: Schema.ObjectId, ref: 'Component'}],
     created: { type: Date, default: Date.now },
-    updated: { type: Date, default: Date.now }
+    updated: { type: Date, default: Date.now },
 }, { collection: 'test_executions' });
 
 testExecutionSchema.pre('save', function(next) {

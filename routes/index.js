@@ -24,9 +24,12 @@ var express = require('express')
     , testExecutionApi = require('./api/test/test.execution.api')
     , testExecutionsApi = require('./api/test/test.executions.api')
     , accessibilityApi = require('./api/exec/accessibility.api')
-    , elasticSearchApi = require('./api/elasticsearch/es.api');
+    , elasticSearchApi = require('./api/elasticsearch/es.api')
+    , initFilter = require('../src/common/init.filter');
 
 var restVersionV1 = '/rest/api/v1/perf';
+
+router.all(restVersionV1 + '*', initFilter.initValidation);
 
 router.use(restVersionV1 + '/ping', ping);
 router.use(restVersionV1 + '/jmeter', jmeter);

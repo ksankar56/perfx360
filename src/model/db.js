@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 
 //Set up default mongoose connection
 var mongoDB = 'mongodb://' + global.config.mongodb.host + ":" + global.config.mongodb.port + "/" + global.config.mongodb.dbName;
-console.info("DB ", mongoDB);
+//console.info("DB ", mongoDB);
 mongoose.connect(mongoDB);
 mongoose.set('debug', true);
 

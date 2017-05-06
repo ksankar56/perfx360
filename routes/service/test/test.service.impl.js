@@ -91,3 +91,29 @@ function saveTest(testJson, callback) {
     });
 }
 exports.saveTest = saveTest;
+
+function updateObject(testJson, callback) {
+    console.info('testJson.testId = ', testJson.testId);
+    Test.findById(testJson.testId, function (err, test) {
+
+        console.info('test = ', test);
+        console.info('testJson.virtualUsers = ', testJson.virtualUsers);
+        console.info('testJson.rampUpPeriod = ', testJson.rampUpPeriod);
+        console.info('testJson.iterations = ', testJson.iterations);
+        console.info('testJson.duration = ', testJson.duration);
+
+        test.virtualUsers = testJson.virtualUsers;
+        test.rampUpPeriod = testJson.rampUpPeriod;
+        test.iterations = testJson.iterations;
+        test.duration = testJson.duration;
+        test.updated = new Date();
+
+        // Update the document back to the database
+        test.save(function (err, result) {
+            console.info('err = ', err);
+            console.info('result = ', result);
+            callback(err, result);
+        });
+    });
+}
+exports.updateObject = updateObject;
