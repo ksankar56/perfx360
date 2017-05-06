@@ -25,7 +25,7 @@ exports.getParam = function(key, valueObj) {
 exports.getSummaryInformation = function(testExecution, searchResult) {
     var summary = {};
 
-    if (testExecution && searchResult) {
+    if (testExecution && searchResult && testExecution.executed) {
         summary.vu = testExecution.test.virtualUsers;
         summary.testType = testExecution.executedComponents[0].componentType.name;
         summary.started = moment(testExecution.created).format(constants.DATE_FORMAT);
