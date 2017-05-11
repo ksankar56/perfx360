@@ -1,0 +1,29 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      { "duration": 10,  "arrivalRate": 1, "name": "Load" }
+    ],
+    "payload": {
+      "path": "login.csv",
+      "fields": ["username", "password"],
+      "order": "sequence"
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Login Page test",
+      "flow": [
+        {
+          "post":  {
+            "url": "/auth",
+            "headers": {
+              "content-type": "application/x-www-form-urlencoded"
+            },
+            "body": "username={{username}}&password={{password}}"
+          }
+        }
+      ]
+    }
+  ]
+}

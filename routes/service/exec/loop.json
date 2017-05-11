@@ -1,0 +1,21 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      { "duration": 10,  "arrivalRate": 3 }
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "Get Page test",
+      "flow": [
+        {
+          "loop": [
+            {"get": {"url": "/perf/test/auth"}}
+          ],
+          "count": 100
+        }
+      ]
+    }
+  ]
+}

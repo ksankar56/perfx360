@@ -2,6 +2,10 @@
 
     <%  var project = locals.params.project;
         var tests = locals.params.tests;
+        var testId;
+        if (locals.params.testId) {
+            testId = locals.params.testId;
+        }
     %>
 
     <div class="row">
@@ -21,7 +25,7 @@
                                 for(var i=0; i < tests.length; i++) {
                                 var test = tests[i];
                             %>
-                                <option value="<%= test._id %>"><%= test.name %> - <%= test.environment.name %></option>
+                                <option value="<%= test._id %>" <%= (test._id == testId) ? "selected" : ""%> ><%= test.name %> - <%= test.environment.name %></option>
 
                             <% } %>
                         </select>
@@ -51,7 +55,7 @@
                         </div>
                     </div>-->
 
-                    <button type="button" class="btn btn-danger mr-1 execute-test" data-container="body" data-url="/test/execute" data-method="GET" data-title="Execute Test" data-popover="true" id="shown-popover" disabled="disabled"><i class="icon-rocket2"></i> Execute</button>
+                    <button type="button" class="btn btn-danger mr-1 execute-test" data-container="body" data-url="/test/execute" data-method="GET" data-title="Execute Test" data-popover="true" id="shown-popover" <%= (testId) ? "" : "disabled" %>><i class="icon-rocket2"></i> Execute</button>
                     <div class="btn-group mr-1">
                       <span class="dropdown">
                           <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 white"></i> Configure</button>
@@ -112,7 +116,7 @@
                                 <%- include('dashboards/summary') %>
                             </div>
                             <div class="tab-pane fade" id="project-timeline" role="tabpanel" aria-labelledby="project-timeline-tab" aria-expanded="false">
-
+                                <%- include('dashboards/timeline') %>
                             </div>
                             <div class="tab-pane fade" id="project-logs" role="tabpanel" aria-labelledby="project-logs-tab" aria-expanded="false">
 

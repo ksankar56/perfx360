@@ -27,13 +27,13 @@ var testExecutionServiceImpl = require('../test/test.execution.service.impl');
 var testResultServiceImpl = require('../test/test.results.service.impl');
 var esServiceImpl = require('../elasticsearch/es.service.impl');
 
-var webdriver = require('selenium-webdriver'),
+/*var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
     until = webdriver.until;
 
 var driver = new webdriver.Builder()
     .forBrowser('firefox')
-    .build();
+    .build();*/
 
 exports.executeSelenium = function(req, res, next) {
 
@@ -43,7 +43,7 @@ exports.executeSelenium = function(req, res, next) {
 };
 
 function _executeTest(req, res, callback) {
-    try {
+    /*try {
         driver.get('https://www.google.com');
         driver.findElement(By.name('q')).sendKeys('perfx360');
         driver.findElement(By.id('search-button')).click();
@@ -51,7 +51,7 @@ function _executeTest(req, res, callback) {
         driver.quit();
     } catch (err) {
         callback(null, false);
-    }
+    }*/
 
     callback(null, true);
 }

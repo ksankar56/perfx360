@@ -1,0 +1,34 @@
+{
+    "config": {
+    "target": "http://localhost:8642",
+        "phases": [
+        {
+            "duration": 10,
+            "arrivalRate": 5
+        }
+    ]
+},
+    "scenarios": [
+    {
+        "name": "A socket broadcase emitting",
+        "weight": 2,
+        "engine": "socketio",
+        "flow": [
+            {
+                "get": {
+                    "url": "/"
+                }
+            },
+            {
+                "emit": {
+                    "channel": "broadcast",
+                    "data": "{{$randomString()}}"
+                }
+            },
+            {
+                "think": 2
+            }
+        ]
+    }
+]
+}

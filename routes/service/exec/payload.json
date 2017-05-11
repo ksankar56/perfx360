@@ -1,0 +1,26 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      { "duration": 10,  "arrivalRate": 3 }
+    ],
+    "payload": {
+      "path": "keywords.csv",
+      "fields": ["username", "password"],
+      "order": "sequence"
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Login Page test",
+      "flow": [
+        {
+          "post":  {
+            "url": "/perf/test/auth",
+            "json": {"username": "{{ username }}", "password": "{{ password }}"}
+          }
+        }
+      ]
+    }
+  ]
+}

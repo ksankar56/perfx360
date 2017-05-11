@@ -41,6 +41,9 @@ router.get('/', function(req, res, next) {
 router.get('/index', function(req, res, next) {
     var user = req.session.user;
     var locals = {};
+    var params = {};
+
+    console.info('user = ', user);
 
     if (!_.isEmpty(user)) {
         projectServiceImpl.getProjects({createdBy : user._id}, function(err, projects) {
@@ -51,13 +54,13 @@ router.get('/index', function(req, res, next) {
             }
 
             locals.projects = projects;
-            var params = {};
             if (req.query.m) {
                 params.m = req.query.m;
             }
             res.render('index', locals);
         });
     } else {
+        console.info('else');
         res.render(renderConstants.LOGIN_PAGE, { layout: 'home-layout', req: req, params: params });
     }
 });

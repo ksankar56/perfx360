@@ -1,0 +1,45 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      { "duration": 10,  "arrivalRate": 3 }
+    ],
+    "statsd": {
+      "host": "127.0.0.1"
+    },
+    "payload": {
+      "path": "search.csv",
+      "fields": ["keywords"]
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Search and buy",
+      "flow": [
+        {"post": {
+          "url": "/perf/test/search",
+          "json": {
+            "kw": "{{ keywords }}"
+            },
+          "capture": {
+            "json": "$.results[0].id",
+            "as": "id"
+          }
+        }
+        },
+        {"get": {
+          "url": "/perf/test/details/{{ id }}"
+        }
+        },
+        {"think": 3},
+        {"post": {
+          "url": "/perf/test/cart",
+          "json": {
+            "productId": "{{ id }}"
+          }
+        }
+        }
+      ]
+    }
+  ]
+}

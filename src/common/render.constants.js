@@ -5,6 +5,8 @@
 module.exports = Object.freeze({
     LOGIN_PAGE : 'features/login/login',
 
+    INDEX : "index",
+
     PRODUCT_CREATE_PAGE : "features/projects/create",
     PRODUCT_EDIT_PAGE : "features/projects/edit",
     PRODUCT_DETAILS_PAGE : "features/projects/project",

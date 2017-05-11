@@ -6,6 +6,15 @@
             var test = locals.params.test[0];
             %>
             <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-icon-left  alert-arrow-left alert-success alert-dismissible fade in mb-2" id="test-execution-message" role="alert" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        </button>
+                        Successfully Executed
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="users">Number of Virtual Users</label>
@@ -45,7 +54,7 @@
             <i class="icon-cross2"></i> Close
         </button>
 
-        <button type="button" class="btn btn-danger btn-min-width mr-1 ladda-button execute-test" data-url="/rest/api/v1/perf/jmeter/mvn/exec" data-method="POST" data-refreshurl="/project/details" data-form="test-execute" data-loading="test-execute">
+        <button type="button" class="btn btn-danger btn-min-width mr-1 ladda-button execute-test" data-destination="#test-execution-message" data-url="/rest/api/v1/perf/jmeter/mvn/exec" data-method="POST" data-refreshurl="/project/details" data-form="test-execute" data-loading="test-execute">
             <span class="ladda-label"><i class="icon-rocket2"></i> Save & Execute
             </span>
         </button>

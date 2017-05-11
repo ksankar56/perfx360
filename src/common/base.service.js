@@ -134,7 +134,30 @@ function _getResultObject (httpSample, parent) {
     jmr.dt = httpSample.dt;
     jmr.by = httpSample.by;
     jmr.it = httpSample.it;
-    jmr.httpSample = httpSample.httpSample;
+
+    if (httpSample.sby) {
+        jmr.sby = parseInt(httpSample.sby);
+    }
+    if (httpSample.sc) {
+        jmr.sc = parseInt(httpSample.sc);
+    }
+    if (httpSample.ec) {
+        jmr.ec = parseInt(httpSample.ec);
+    }
+    if (httpSample.ng) {
+        jmr.ng = parseInt(httpSample.ng);
+    }
+    if (httpSample.na) {
+        jmr.na = parseInt(httpSample.na);
+    }
+
+    if (httpSample.hn) {
+        jmr.hn = httpSample.hn;
+    }
+
+    if (httpSample.httpSample) {
+        jmr.httpSample = httpSample.httpSample;
+    }
 
     if (parent) {
         jmr.parent = true;
@@ -148,12 +171,12 @@ exports.assignTestResultValues =  function(documents, testExecution, callback) {
     var assignedDocuments = [];
 
     for(var key in documents) {
-        console.info(key + ' key = ', key);
-        console.info(key + ' json = ', key instanceof Array);
+        //console.info(key + ' key = ', key);
+        //console.info(key + ' json = ', key instanceof Array);
         var results = documents[key];
         //console.info('result = ', results.length);
         //var testExecution = testExecutions[0];
-        console.info('jmrValues = ', results.length);
+        //console.info('jmrValues = ', results.length);
 
         for (var i = 0; i < results.length; i++) {
             var result = results[i];
@@ -182,6 +205,7 @@ exports.getAccessibilityTestResultValues =  function(documents, testExecutions, 
 function _getDocument(key, testExecution, result) {
     var assignedDocument = {};
 
+    console.info('result = ', result);
     assignedDocument = _getBaseDocument(key, testExecution, assignedDocument);
     assignedDocument.file_name = key + '.jtl';
     if (result.t) {
@@ -321,6 +345,7 @@ function _getDocument(key, testExecution, result) {
 
     assignedDocument.created = new Date();
 
+    console.info('assignedDocument = ', assignedDocument);
     return assignedDocument;
 }
 

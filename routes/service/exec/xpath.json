@@ -1,0 +1,35 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      {
+        "duration": 10,
+        "arrivalRate": 1
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "flow": [
+        {
+          "get": {
+            "url": "/perf/test/auth",
+            "capture": {
+              "xpath": "//id",
+              "as": "id"
+            }
+          }
+        },
+        {
+          "post": {
+            "url": "/perf/test/auth/{{id}}",
+            "json": {
+              "name": "Figo",
+              "species": "dog"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

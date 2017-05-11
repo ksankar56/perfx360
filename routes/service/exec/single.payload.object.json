@@ -1,0 +1,50 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      {
+        "duration": 3,
+        "arrivalRate": 3
+      }
+    ],
+    "processor": "./processor.js",
+    "payload": {
+      "path": "./users.csv",
+      "fields": [
+        "username",
+        "password"
+      ],
+      "order": "sequence"
+    }
+  },
+  "scenarios": [
+    {
+      "beforeRequest": ["printHello"],
+      "flow": [
+        { "log": "current environment: {{ $environment }}" },
+        {
+          "get": {
+            "url": "/perf/test/auth/{{username}}"
+          }
+        },
+        {
+          "post": {
+            "url": "/perf/test/auth",
+            "json": {
+              "username": "{{ username }}",
+              "password": "{{ password }}"
+            }
+          }
+        },
+        {"loop": [
+          {"loop": [
+            {"log": "outer: {{ $loopCount }}; inner: {{ k }}"}
+          ], "count": "5", "loopValue": "k"}
+        ], "count": 3},
+        {"get": {
+          "url" : "/does/not/exist", "beforeRequest": "rewriteUrl"}
+        }
+      ]
+    }
+  ]
+}

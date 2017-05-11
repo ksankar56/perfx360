@@ -26,7 +26,7 @@
                     </div>
                 <% } %>
                 <div class="card-block">
-                    <form class="form-horizontal" action="/auth" method="post" novalidate>
+                    <form class="form-horizontal" id="login-form" action="/auth" method="post">
                         <fieldset class="form-group position-relative has-icon-left">
                             <input type="text" class="form-control" id="username" placeholder="User Name" name="username" required value="<%= username %>">
                             <div class="form-control-position">
@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-md-6 col-xs-12 float-sm-left text-xs-center"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
                         </fieldset>
-                        <button type="submit" class="btn btn-outline-primary btn-block box-loading" id="loginSubmit" name="loginSubmit" data-destination=".card"><i class="icon-unlock2"></i> Login</button>
+                        <button type="submit" class="btn btn-outline-primary btn-block" id="loginSubmit" name="loginSubmit" data-destination=".card"><i class="icon-unlock2"></i> Login</button>
                         <a href="register.html" class="btn btn-outline-primary btn-block"><i class="icon-head"></i> Register</a>
                     </form>
                 </div>

@@ -1,0 +1,28 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      { "duration": 5,  "arrivalRate": 3 }
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "Get Page test",
+      "flow": [
+          {
+            "post": {
+                "url": "/perf/test/auth",
+                "json": {"username": "test", "password": "pass"},
+                "capture": {
+                   "json" : "$.id",
+                    "as" : "id"
+                }
+            },
+            "get": {
+              "url": "/perf/test/auth/{{ id }}"
+            }
+          }
+      ]
+    }
+  ]
+}

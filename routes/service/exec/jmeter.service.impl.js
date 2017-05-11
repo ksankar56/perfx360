@@ -50,6 +50,8 @@ function _saveTestObject(req, callback) {
     params.startTime = microtime.now();
 
     testServiceImpl.getTestObject(params.testId, function (err, tests) {
+        if(err) {callback(err, null)}
+
         if (!_.isEmpty(tests)) {
             params.project = tests[0].project;
             params.application = tests[0].components[0];
@@ -74,6 +76,8 @@ function _saveTestExecutionObject(params, callback) {
 
     testExecutionServiceImpl.saveTestExecutionObject(testExecutionJson,
             function(err, testExecution) {
+        if(err) {callback(err, null)}
+
         params.testExecution = testExecution;
         callback(null, params);
     });
@@ -95,6 +99,7 @@ function _executeTest(params, callback) {
     //maven.execute(['clean', 'install'], {'skipTests': true}).then(function (result) {
     var command = 'mvn -f ' + path + '/pom.xml clean install';
     var child = exec(command, function(err, out, code) {
+        if(err) {callback(err, null)}
         console.info('mvn err = ', err);
         var endTime = microtime.now();
         var timeTaken = parseInt(endTime - params.startTime);
@@ -117,12 +122,16 @@ function _testResultUpdate(params, callback) {
 
     testExecutionServiceImpl.updateObject(params.testExecution._id, testExecutionJson,
             function (err, result) {
+        if(err) {callback(err, null)}
+
         callback(null, params);
     });
 }
 
 function _getConvertedResult(params, callback) {
     getResultJson(params, function(err, data) {
+        if(err) {callback(err, null)}
+
         params.resultJson = data;
         var results = data.results;
         var i = 0;
@@ -131,6 +140,7 @@ function _getConvertedResult(params, callback) {
         for (var key in results) {
             var json = results;
             var jmrValues = results[key];
+            console.info('***************** jmrValues = ', jmrValues);
             baseService.assignTestResultValues(jmrValues, params.testExecution, function (err, doc) {
                 docs.push(doc);
             });
@@ -146,7 +156,9 @@ function _publishToDB(params, callback) {
 
     for (var i = 0; i < params.docs.length; i++) {
         testResultServiceImpl.saveTestResultObject(params.docs[0], function (err, result) {
+            if(err) {callback(err, null)}
             esServiceImpl.bulkInsert(params.docs[0], function (err, result) {
+                if(err) {callback(err, null)}
             });
         });
     }
@@ -397,7 +409,6 @@ function getResultJson(params, callback) {
             }
         ],
         function (err, resultJson) {
-            console.info('err = ', err);
             if (err) {
                 logger.debug(err);
             }

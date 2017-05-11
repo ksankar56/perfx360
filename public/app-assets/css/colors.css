@@ -18422,7 +18422,7 @@ input:focus ~ .bg-grey {
   border-right: 1px solid #9E9E9E; }
 
 .grey.darken-1 {
-  color: #757575 !important; }
+  color: #000 !important; }
 
 .bg-grey.bg-darken-1 {
   background-color: #757575 !important; }

@@ -335,9 +335,18 @@ function uploadFiles(req, res, params, callback) {
 router.get('/edit/:id', function(req, res, next) {
     applicationServiceImpl.getComponent(req.params.id, function(err, component) {
         console.info('err = ', err);
-        console.info('project = ', component);
+        console.info('project = ', req.session.project);
 
-        res.render(renderConstants.APPLICATION_EDIT_PAGE, { layout: 'panel-layout', err: err, component: component, req : req });
+        var params = {};
+        params.req = req;
+        params.component = component;
+        params.project = req.session.project;
+
+        applicationTypeServiceImpl.getComponentTypes(function(err, applicationTypes) {
+            params.applicationTypes = applicationTypes
+
+            res.render(renderConstants.APPLICATION_EDIT_PAGE, {layout: 'panel-layout', err: err, req: req, params: params});
+        });
     });
 });
 

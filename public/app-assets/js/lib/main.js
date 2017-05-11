@@ -107,11 +107,77 @@ $(document).ready(function() {
         fetchData($(this), loadingBlock);
     });
 
+    /*$(document.body).on('submit', '#loginSubmit', function() {
+        $("#loginSubmit").validate({
+
+            // Specify the validation rules
+            rules: {
+                firstname: "required",
+                lastname: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                agree: "required"
+            },
+
+            // Specify the validation error messages
+            messages: {
+                firstname: "Please enter your first name",
+                lastname: "Please enter your last name",
+                password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                email: "Please enter a valid email address",
+                agree: "Please accept our policy"
+            },
+
+            submitHandler: function(form) {
+                //form.submit();
+                console.info('validated')
+            }
+        });
+        //return
+    });*/
+
+    $('#login-form').validate({
+        errorClass: 'errors',
+        submitHandler: function(form) {
+            var loadingBlock = $('#loginSubmit').data('destination');
+
+            console.info('loadingBlock = ', loadingBlock);
+            $(loadingBlock).block({ message: '<h5>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h5>',
+                overlayCSS: {
+                    backgroundColor: '#fff',
+                    opacity: 0.6,
+                    cursor: 'wait'
+                },
+                css: {
+                    border: 0,
+                    padding: 5,
+                    paddingTop: 10,
+                    opacity: 0.6,
+                    backgroundColor: '#000',
+                    color: '#b2b2b2',
+                    borderRadius: 10,
+                    width:200,
+                    minHeight: 40
+                }});
+            form.submit();
+            //$('#login-form').submit();
+        }
+    });
+
     $(document.body).on('click', '.box-loading', function() {
         var loadingBlock = $(this).data('destination');
 
         console.info('loadingBlock = ', loadingBlock);
-        $(loadingBlock).block({ message: '<h5>Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h5>',
+        $(loadingBlock).block({ message: '<h5 >Loading... <div class="icon-spinner9 icon-spin icon-lg"></div></h5>',
             overlayCSS: {
                 backgroundColor: '#fff',
                 opacity: 0.6,
@@ -123,7 +189,10 @@ $(document).ready(function() {
                 paddingTop: 10,
                 opacity: 0.6,
                 backgroundColor: '#000',
-                color: '#b2b2b2'
+                color: '#fff',
+                borderRadius: 20,
+                width:200,
+                minHeight: 40
             }});
 
     });
@@ -175,50 +244,36 @@ $(document).ready(function() {
 
         if (formSubmit) {
             var formElement = currentObj.closest('form');
-            console.info('formType = ', formType);
 
             if(formType == 'multipart') {
                 data = getMultiPartData(formElement);
             } else {
                 data = $(formElement).serialize();
             }
-            console.info('data = ', data);
         }
-
-        console.info('url = ', url);
-        console.info('data = ', data);
-        console.info('type = ', type);
-        
         $.ajax({
             url: url,
             data: data,
             error: function(err) {
-                //$('#info').html('<p>An error has occurred</p>');
-                //$.unblockUI();
-                console.info('failed = ', err);
                 $(destination).html('');
                 $(loadingBlock).unblock();
             },
             success: function(data) {
-                console.info('success');
-                //$.unblockUI();
                 if(popover) {
-                    console.info('popover inside');
-                    //var dataPopover = $popoverPanel.data('popover');
-                    //$popoverPanel.find('.popover-content').html(data);
-                    //addNewElement(data);
-                    console.info('data = ', data);
                     $('.popover-content').html(data);
                 } else {
                     if (refreshurl) {
-                        //$(destination).html(data);
-                        //window.location.href = refreshurl + '/' + data.testId;
                         var projectId = $('#selected-test').data('project');
                         if (projectId) {
                             refreshurl = refreshurl + '/' + projectId;
                         }
-                        refreshurl = refreshurl + "?m=1"
-                        $(location).attr('href', refreshurl);
+                        refreshurl = refreshurl + "?testId=" + $('#selected-test').val();
+                        console.info('destination = ', destination);
+                        //$('#test-execution-message').css('display','block');
+                        toastr.success('Test!', 'Executed Successfully');
+                        setTimeout(function(){
+                            $(location).attr('href', refreshurl);
+                        }, 3000)
 
                     } else {
                         $(destination).html(data);
@@ -395,7 +450,10 @@ $(document).ready(function() {
                 paddingTop: 10,
                 opacity: 0.6,
                 backgroundColor: '#000',
-                color: '#b2b2b2'
+                color: '#b2b2b2',
+                borderRadius: 10,
+                width:200,
+                minHeight: 40
             }});
 
         var url = currentObj.data("url");
@@ -453,7 +511,10 @@ $(document).ready(function() {
                 paddingTop: 10,
                 opacity: 0.6,
                 backgroundColor: '#000',
-                color: '#b2b2b2'
+                color: '#b2b2b2',
+                borderRadius: 10,
+                width:200,
+                minHeight: 40
             }});
 
         return loadingBlock;

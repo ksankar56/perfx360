@@ -92,6 +92,9 @@ router.get('/details/:id', function(req, res, next) {
             _getJMeterAggregateReport
         ], function (err, params) {
             //cb(err, params);
+            if(req.query.testId) {
+                params.testId = req.query.testId;
+            }
             res.render(renderConstants.PRODUCT_DETAILS_PAGE, {err: err, params: params, req: req});
         });
 
@@ -164,7 +167,7 @@ function _getTestExecutionObject(params, callback) {
         params.testExecution = testExecution;
 
         if (testExecution && testExecution.test) {
-            params.testName = testExecution.test.name - testExecution.test.environment.name;
+            params.testName = testExecution.test.name + "-" + testExecution.test.environment.name;
             params.envName = testExecution.test.environment.name;
             console.info('params.testName = ', params.testName);
             console.info('params.envName = ', params.envName);

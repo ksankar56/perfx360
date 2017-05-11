@@ -1,0 +1,34 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      {
+        "duration": 2,
+        "arrivalRate": 1
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "A socket notification ws emitting",
+      "weight": 2,
+      "engine": "socketio",
+      "flow": [
+        {
+          "get": {
+            "url": "/"
+          }
+        },
+        {
+          "emit": {
+            "channel": "notification",
+            "data": "{{$randomString()}}"
+          }
+        },
+        {
+          "think": 2
+        }
+      ]
+    }
+  ]
+}
