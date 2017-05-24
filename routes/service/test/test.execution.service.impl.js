@@ -25,7 +25,7 @@ function saveTestExecutionObject (testExecutionJson, callback) {
         callback(baseError, null);
     }
 
-    console.info('testExecutionJson.name = ', testExecutionJson.name);
+    //console.info('testExecutionJson.name = ', testExecutionJson.name);
 
     var testExecution = ModelUtil.getTestExecutionModel(testExecutionJson)
 

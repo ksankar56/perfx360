@@ -26,6 +26,16 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 
 .card-block {
     padding: 0.5rem;
+    background: #fff;
+}
+
+.card-block-scroll {
+    padding: 0.5rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    position: absolute;
+    width: 100%;
 }
 
 .px-1 {
@@ -34,12 +44,12 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .border-radius-1 {
-    border-radius: 10px;
+    border-radius: 2px;
     opacity: 0.95;
 }
 
 .form-group {
-    margin-bottom: 2.4rem;
+    margin-bottom: 0.4rem;
 }
 
 .form-group-fixed-top {
@@ -58,9 +68,10 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     font-size: 0.9rem;
     border-radius: 0.18rem;
     transition: all 0.2s ease-in-out;
+    /*border-color: rgba(129, 138, 145, 0.55);*/
 }
 
-.btn-group, .btn-group-vertical {
+.form-group-right {
     float : right;
 }
 
@@ -73,11 +84,11 @@ body.side-push-panel {
 #side-panel {
     position: fixed;
     top: 0;
-    right: -85%;
+    right: -90%;
     z-index: 399;
-    width: 85%;
+    width: 90%;
     height: 100%;
-    background-color: #F5F5F5;
+    background-color: #FFFFFF;
     overflow: hidden
 }
 
@@ -286,4 +297,114 @@ body.side-panel-open:not(.device-xxs):not(.device-xs):not(.device-sm) .body-over
     display: block;
     right: inherit;
     left: -40px;
+}
+
+.signin-input {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    font-size: 0.875em;
+    outline: 0;
+    padding: 0.85714em 0.71429em;
+    border: 0px solid #d4d4d4;
+    margin: 0;
+    color: #17181A;
+    border-bottom: 1px solid #D4D7D9;
+    padding-left: 35px;
+}
+
+
+#panel-wrap {
+    min-height: 100%;
+}
+
+#panel-main {
+    overflow:auto;
+    padding-bottom:150px; /* this needs to be bigger than footer height*/
+}
+
+.panel-footer {
+    position: relative;
+    margin-top: -150px; /* negative value of footer height */
+    height: 150px;
+    clear:both;
+    padding-top:20px;
+}
+
+.btn-cs {
+    box-shadow: 0 7px #ccc;
+}
+
+.btn-cs:active {
+    box-shadow: 0 5px #ccc;
+    transform: translateY(4px);
+}
+
+.flow-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+}
+
+/* Add this attribute to the element that needs a tooltip */
+[data-wstooltip] {
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+[data-wstooltip]:before,
+[data-wstooltip]:after {
+    visibility: hidden;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Position tooltip above the element */
+[data-wstooltip]:before {
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    margin-bottom: 5px;
+    margin-left: -80px;
+    padding: 7px;
+    width: 160px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #000;
+    background-color: hsla(0, 0%, 20%, 0.9);
+    color: #fff;
+    content: attr(data-wstooltip);
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+[data-wstooltip]:after {
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -5px;
+    width: 0;
+    border-top: 5px solid #000;
+    border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+}
+
+/* Show tooltip content on hover */
+[data-wstooltip]:hover:before,
+[data-wstooltip]:hover:after {
+    visibility: visible;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
 }

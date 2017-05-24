@@ -5,7 +5,7 @@
             <div class="form-group">
                 <div class="btn-group pull-right" role="group" aria-label="Basic example">
                     <!-- Button group with icons -->
-                    <button class="btn btn-danger btn-sm side-panel-trigger process-page" data-url="/project" data-method="GET" data-title="Create Project"><i class="icon-plus4 white"></i> Add
+                    <button class="btn btn-secondary btn-sm side-panel-trigger process-page" data-url="/project" data-method="GET" data-title="Create Project"><i class="icon-plus4 red"></i> Add
                         Project
                     </button>
                 </div>
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-12 col-md-12">
+                        <!--<div class="col-xl-12 col-md-12">
                             <div class="card overflow-hidden">
                                 <div class="card-body">
                                     <div class="card-block cleartfix">
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <% if (locals.projects && locals.projects.length > 0) {
                             for(var i=0; i < locals.projects.length; i++) {
                             var project = locals.projects[i];

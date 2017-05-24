@@ -1,0 +1,38 @@
+{
+  "config": {
+    "target": "http://localhost:8642",
+    "phases": [
+      { "duration": 10,  "arrivalRate": 5 }
+    ],
+    "plugins": {
+      "influxdb": {
+        "testName": "perfx360_test",
+        "measurementName": "Latency",
+        "errorMeasurementName": "ClientSideErrors",
+        "testRunId": "12345",
+        "tags": {
+          "environment": "Product-Server",
+          "host": "perfx360"
+        },
+        "influx": {
+          "host": "localhost",
+          "username": "admin",
+          "password": "admin",
+          "database": "perfx360"
+        }
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Product Details Page",
+      "flow": [
+        {
+          "get": {
+            "url": "/perf/test/details/1"
+          }
+        }
+      ]
+    }
+  ]
+}

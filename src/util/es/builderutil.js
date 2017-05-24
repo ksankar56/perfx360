@@ -18,7 +18,7 @@ builderutil.constructIndex = function(req) {
     return constructIndex;
 };
 
-builderutil.constructMappings = function(req) {
+builderutil.constructMappings1 = function(req) {
     var body = {
         mappings: {
             REST_JSON: {
@@ -762,6 +762,8 @@ builderutil.constructMappings = function(req) {
                     test_execution_id : { type: "string" },
                     test_type: { type: "string" },
                     execution_time : { type: "integer" },
+                    user_id: { type: "string" },
+                    user_name: { type: "string" },
                     version : { type: "float" },
                     test_url : { type: "string" },
                     code: { type: "string" },
@@ -773,6 +775,60 @@ builderutil.constructMappings = function(req) {
                     start_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     end_time: {type: "date", format: "YYYY-MM-DD'T'HH:mm:ssZ"},
                     status: { type: "boolean", index : "not_analyzed" }
+                }
+            }
+        }
+    };
+
+    return {
+        index: global.config.elasticSearch.index.perfx360Index,
+        body: JSON.stringify(body)
+    };
+};
+
+builderutil.constructMappings = function() {
+    var body = {
+        mappings: {
+            REST_JSON_AY: {
+                properties: {
+                    project_id: { type: "string"},
+                    component_id: { type: "string" },
+                    group_id: { type: "string" },
+                    project_name: { type: "string" },
+                    project_description: { type: "string" },
+                    test_id: { type: "string" },
+                    test_name: { type: "string" },
+                    test_execution_id : { type: "string" },
+                    test_execution_name : { type: "string" },
+                    hit_id: { type: "string" },
+                    execution_time : { type: "integer" },
+                    measurementName: {type: "string"},
+                    time: {type: "long"},
+                    value: {type: "float"},
+                    environment: {type: "string"},
+                    host: {type: "string"},
+                    tags: {type: "string"}
+                    /*_latencies: {type: "long"},
+                    _generatedScenarios: {type: "integer"},
+                    _completedScenarios: {type: "integer"},
+                    _codes: {
+                        type: "nested"
+                    },
+                    _errors: {
+                        type: "nested"
+                    },
+                    _requestTimestamps: {type: "long"},
+                    _completedRequests: {type: "integer"},
+                    _scenarioLatencies: {type: "long"},
+                    _matches: {type: "integer"},
+                    _customStats: {
+                        type: "nested"
+                    },
+                    _concurrency: {type: "integer"},
+                    _pendingRequests: {type: "integer"},
+                    _scenarioCounter: {
+                        type: "nested"
+                    }*/
                 }
             }
         }

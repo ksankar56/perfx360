@@ -1,0 +1,40 @@
+{
+  "config": {
+    "target": "https://www.luxepick.com",
+    "phases": [
+      { "duration": 3,  "arrivalRate": 1 }
+    ],
+    "plugins": {
+      "elasticsearchdata": {
+        "testName": "luxepick_test",
+        "measurementName": "Latency",
+        "errorMeasurementName": "ClientSideErrors",
+        "testRunId": "123-456-789",
+        "tags": {
+          "environment": "dev",
+          "host": "luxepick.com"
+        },
+        "influx": {
+          "protocol": "protocol",
+          "host": "localhost",
+          "port": "port",
+          "username": "admin",
+          "password": "admin",
+          "database": "perfx360"
+        }
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Product Details Page",
+      "flow": [
+        {
+          "get": {
+            "url": "/spl-high-end-luxury-jewelry"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+.nav {
+    border-bottom: 1px solid #a14985;
+}
+
+.header-navbar.navbar-light {
+    background: #a14985;
+}
+
+.nav.nav-tabs .nav-item .nav-link.active {
+    background-color: #a14985;
+}
+
+@media (max-width: 767px) {
+    .header-navbar.navbar-with-menu .navbar-container {
+        background: #a14985;
+    }
+}
+
+.btn-cs {
+    background: #a14985;
+    border: 1px solid #a14985;
+}
+
+.btn-cs:hover {
+    background: #ca0557;
+    border: 1px solid #ca0557;
+}

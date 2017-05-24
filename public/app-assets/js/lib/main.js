@@ -72,6 +72,8 @@ $(document).ready(function() {
         $('#shown-popover').trigger( "click" );
     });
 
+    $(document.body).on('mouseover', '.bs-tooltip', function() { $('.bs-tooltip').tooltip(); });
+
     $(document.body).on('click', '.process-page', function() {
         var loadingBlock = _enableLoadingBlock();
         var title = $(this).data("title");
@@ -173,6 +175,90 @@ $(document).ready(function() {
         }
     });
 
+    function stepsValidation() {
+        var form = $(".steps-validation").show();
+
+        $(".steps-validation").steps({
+            headerTag: "h6",
+            bodyTag: "fieldset",
+            transitionEffect: "fade",
+            titleTemplate: '<span class="step">#index#</span> #title#',
+            labels: {
+                finish: 'Submit'
+            },
+            onStepChanging: function (event, currentIndex, newIndex)
+            {
+                // Allways allow previous action even if the current form is not valid!
+                if (currentIndex > newIndex)
+                {
+                    return true;
+                }
+                // Forbid next action on "Warning" step if the user is to young
+                if (newIndex === 3 && Number($("#age-2").val()) < 18)
+                {
+                    return false;
+                }
+                // Needed in some cases if the user went back (clean up)
+                if (currentIndex < newIndex)
+                {
+                    // To remove error styles
+                    form.find(".body:eq(" + newIndex + ") label.error").remove();
+                    form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
+                }
+                form.validate().settings.ignore = ":disabled,:hidden";
+                return form.valid();
+            },
+            onFinishing: function (event, currentIndex)
+            {
+                form.validate().settings.ignore = ":disabled";
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex)
+            {
+                alert("Submitted!");
+            }
+        });
+
+// Initialize validation
+        $(".steps-validation").validate({
+            ignore: 'input[type=hidden]', // ignore hidden fields
+            errorClass: 'danger',
+            successClass: 'success',
+            highlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            unhighlight: function(element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            errorPlacement: function(error, element) {
+                error.insertAfter(element);
+            },
+            rules: {
+                email: {
+                    email: true
+                }
+            }
+        });
+
+        //$('#validation').show();
+        /*var options = {
+            sortable: true,
+
+            filters: [{
+                id: 'core_ID',
+                type: 'integer',
+                operators: ['equal', 'not_equal', 'in', 'not_in']
+            }, {
+                id: 'store_id',
+                label: 'Store ID',
+                type: 'string',
+                operators: ['equal', 'not_equal', 'in', 'not_in']
+            }]
+        };
+        $('#builder').queryBuilder(options);*/
+    }
+
+
     $(document.body).on('click', '.box-loading', function() {
         var loadingBlock = $(this).data('destination');
 
@@ -189,8 +275,8 @@ $(document).ready(function() {
                 paddingTop: 10,
                 opacity: 0.6,
                 backgroundColor: '#000',
-                color: '#fff',
-                borderRadius: 20,
+                color: '#b2b2b2',
+                borderRadius: 10,
                 width:200,
                 minHeight: 40
             }});
@@ -218,6 +304,7 @@ $(document).ready(function() {
         var datatableObj = currentObj.data("datatable");
         var formRepeaterObj = currentObj.data("formrepeater");
         var popover = currentObj.data("popover");
+        var pageEvent = currentObj.data("event");
 
         if(popover) {
             $("div.overlay").toggleClass("on");
@@ -268,9 +355,9 @@ $(document).ready(function() {
                             refreshurl = refreshurl + '/' + projectId;
                         }
                         refreshurl = refreshurl + "?testId=" + $('#selected-test').val();
-                        console.info('destination = ', destination);
+                        //console.info('destination = ', destination);
                         //$('#test-execution-message').css('display','block');
-                        toastr.success('Test!', 'Executed Successfully');
+                        toastr.success('Message!', 'Executed Successfully');
                         setTimeout(function(){
                             $(location).attr('href', refreshurl);
                         }, 3000)
@@ -285,6 +372,13 @@ $(document).ready(function() {
 
                     if (formRepeaterObj) {
                         enableFormRepeater();
+                    }
+
+                    if (pageEvent) {
+                        if (pageEvent == 'stepsValidation') {
+                            console.info('stepsValidation');
+                            stepsValidation();
+                        }
                     }
                 }
                 $(loadingBlock).unblock();
@@ -560,6 +654,6 @@ $(document).ready(function() {
         });
 
     });
-});
 
+});
 

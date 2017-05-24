@@ -17,11 +17,11 @@ router.get('/', function(req, res, next) {
         res.json({keyword : req.query.keyword});
     }, Math.ceil(val));
     /* Check save is pining. */
-    /*pingService.checkSlave({requestTimeout: Infinity}, function(error, response, status) {
+    pingService.checkSlave({requestTimeout: Infinity}, function(error, response, status) {
         Status.code = status;
         Status.message = response;
         res.json({status : Status});
-    });*/
+    });
 
 });
 

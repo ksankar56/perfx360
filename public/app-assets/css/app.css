@@ -7,7 +7,9 @@ html {
   html body {
     height: 100%;
     background-color: #f2f2f2;
-    direction: ltr; }
+    color: #484848;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased}
     html body.fixed-navbar {
       padding-top: 3rem; }
     html body .content {

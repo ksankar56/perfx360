@@ -54,9 +54,9 @@ var requesting = !1,
             s.hasClass("sticky-header") && (e("body:not(.side-header) #header:not(.no-sticky)").removeClass("sticky-header"), s.removeClass().addClass(d), n.removeClass().addClass(c), n.hasClass("force-not-dark") || n.removeClass("not-dark"), SEMICOLON.slider.swiperSliderMenu(), SEMICOLON.slider.revolutionSliderMenu()), s.hasClass("responsive-sticky-header") && e("body.sticky-responsive-menu #header").removeClass("responsive-sticky-header"), (a.hasClass("device-xs") || a.hasClass("device-xxs") || a.hasClass("device-sm")) && "undefined" == typeof h && (s.removeClass().addClass(d), n.removeClass().addClass(c), n.hasClass("force-not-dark") || n.removeClass("not-dark"))
         },
         sideHeader: function() {
-            e("#header-trigger").click(function() {
+            /*e("#header-trigger").click(function() {
                 return e("body.open-header").toggleClass("side-header-open"), !1
-            })
+            })*/
         },
         sidePanel: function() {
             e(document).on('click', '.side-panel-trigger', (function() {
@@ -64,7 +64,7 @@ var requesting = !1,
             }))
         },
         onePageScroll: function() {
-            if (x.length > 0) {
+            /*if (x.length > 0) {
                 var t = x.attr("data-speed"),
                     i = x.attr("data-offset"),
                     s = x.attr("data-easing");
@@ -83,7 +83,7 @@ var requesting = !1,
                     }
                     return !1
                 })
-            }
+            }*/
         },
         onepageScroller: function() {
             x.find("li").removeClass("current"), x.find('a[data-href="#' + SEMICOLON.header.onePageCurrentSection() + '"]').parent("li").addClass("current")
@@ -158,16 +158,16 @@ var requesting = !1,
             }), a.hasClass("device-xxs") && (B.hide(), B.slice(0, 8).show())))
         },
         topsearch: function() {
-            e(document).on("click", function(t) {
+            e(document.body).on("click", '.body-overlay', function(t) {
                 e(t.target).closest("#top-search").length || a.toggleClass("top-search-open", !1), e(t.target).closest("#top-cart").length || A.toggleClass("top-cart-open", !1), e(t.target).closest("#page-menu").length || w.toggleClass("pagemenu-active", !1), e(t.target).closest("#side-panel").length || a.toggleClass("side-panel-open", !1), e(t.target).closest("#primary-menu.mobile-menu-off-canvas > ul").length || e("#primary-menu.mobile-menu-off-canvas > ul").toggleClass("show", !1), e(t.target).closest("#primary-menu.mobile-menu-off-canvas > div > ul").length || e("#primary-menu.mobile-menu-off-canvas > div > ul").toggleClass("show", !1)
             }), e("#top-search-trigger").click(function(t) {
                 a.toggleClass("top-search-open"), A.toggleClass("top-cart-open", !1), e("#primary-menu > ul, #primary-menu > div > ul").toggleClass("show", !1), w.toggleClass("pagemenu-active", !1), a.hasClass("top-search-open") && _.find("input").focus(), t.stopPropagation(), t.preventDefault()
             })
         },
         topcart: function() {
-            e("#top-cart-trigger").click(function(e) {
+            /*e("#top-cart-trigger").click(function(e) {
                 w.toggleClass("pagemenu-active", !1), A.toggleClass("top-cart-open"), e.stopPropagation(), e.preventDefault()
-            })
+            })*/
         }
     }, SEMICOLON.slider = {
         init: function() {

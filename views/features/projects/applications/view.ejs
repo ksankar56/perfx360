@@ -1,75 +1,62 @@
-<section class="row">
-    <div class="col-xs-12">
-        <div class="card">
-            <div class="card-head">
-                <div class="card-header">
-                    <h4 class="card-title">&nbsp;</h4>
-                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                    <div class="heading-elements">
-                        <button class="btn btn-primary btn-sm process-page" data-url="/application/create" data-method="GET" data-title="Add Application" data-formrepeater="true"><i class="icon-plus4 white"></i> Add Application</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body collapse in">
-                <div class="card-block">
-                    <!-- Task List table -->
-                    <table id="application-list" class="table table-white-space table-bordered row-grouping display table-responsive no-wrap icheck table-middle">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Created Date</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% if (locals.components && locals.components.length > 0) {
-                            for(var i=0; i < locals.components.length; i++) {
-                                var component = locals.components[i];
-                        %>
-                        <tr>
-                            <td><input type="checkbox" class="input-chk"></td>
-                            <td>
-                                <div class="media">
-                                    <div class="media-body media-middle">
-                                        <a href="#" class="media-heading"><%= component.name %></a>
-                                        <p class="text-muted"><%= component.description %>.</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-xs-center">
-                                <%= component.created %>
-                            </td>
-                            <td>REST JSON</td>
-                            <td><span class="tag tag-default tag-success">Active</span></td>
-                            <td>
-                                <div class="" role="group" aria-label="First Group">
-                                    <!--<button type="button" class="btn btn-icon btn-success"><i class="icon-eye"></i></button>-->
-                                    <button type="button" class="btn btn-icon btn-info  process-page" data-url="/application/edit/<%= component._id %>" data-method="GET" data-title="Add Application" data-formrepeater="true"><i class="icon-pen3"></i></button>
-                                    <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <% }
-                        } %>
+<div class="card-block">
+    <!-- Task List table -->
+    <!--<div class="heading-elements">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-outline-primary btn-round active">Applications</button>
+            <button type="button" class="btn btn-outline-primary btn-round">Environments</button>
+            <button type="button" class="btn btn-outline-primary btn-round">Tests</button>
+        </div>
+    </div>-->
 
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Created Date</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-xs-12 mb-2 text-xs-right">
+            <button class="btn btn-cs btn-sm process-page" data-url="/application/create" data-method="GET" data-title="Add Application" data-formrepeater="true" data-event="stepsValidation"><i class="icon-plus4 white"></i> Add Application</button>
         </div>
     </div>
-</section>
+
+    <table id="application-list" class="table table-white-space table-bordered row-grouping display table-responsive no-wrap icheck table-middle">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Created Date</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (locals.components && locals.components.length > 0) {
+        for(var i=0; i < locals.components.length; i++) {
+            var component = locals.components[i];
+        %>
+        <tr>
+            <td><input type="checkbox" class="input-chk"></td>
+            <td>
+                <div class="media">
+                    <div class="media-body media-middle">
+                        <a href="#" class="media-heading"><%= component.name %></a>
+                        <p class="text-muted"><%= component.description %>.</p>
+                    </div>
+                </div>
+            </td>
+            <td class="text-xs-center">
+                <%= component.created %>
+            </td>
+            <td>REST JSON</td>
+            <td><span class="tag tag-default tag-success">Active</span></td>
+            <td>
+                <div class="" role="group" aria-label="First Group">
+                    <!--<button type="button" class="btn btn-icon btn-success"><i class="icon-eye"></i></button>-->
+                    <button type="button" class="btn btn-icon btn-info  process-page" data-url="/application/edit/<%= component._id %>" data-method="GET" data-title="Add Application" data-formrepeater="true"><i class="icon-pen3"></i></button>
+                    <button type="button" class="btn btn-icon btn-danger cancel-button"><i class="icon-trash4"></i></button>
+                </div>
+            </td>
+        </tr>
+        <% }
+        } %>
+
+        </tbody>
+    </table>
+</div>
 <script src="/app-assets/js/scripts/pages/application-list.js" type="text/javascript"></script>

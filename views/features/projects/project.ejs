@@ -11,10 +11,10 @@
     <div class="row">
         <div class="col-sm-12 right">
 
-            <div class="form-group">
+            <div class="form-group form-group-right">
                 <div class="btn-group pull-right" role="group" aria-label="Basic example">
                     <!-- Button group with icons -->
-
+                    <i class="icon-info" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom"></i>
                     <div class="btn-group mr-1">
 
                         <select class="form-control" id="selected-test" tabindex="-1" aria-hidden="true" data-project="<%= project._id %>">
@@ -58,7 +58,7 @@
                     <button type="button" class="btn btn-danger mr-1 execute-test" data-container="body" data-url="/test/execute" data-method="GET" data-title="Execute Test" data-popover="true" id="shown-popover" <%= (testId) ? "" : "disabled" %>><i class="icon-rocket2"></i> Execute</button>
                     <div class="btn-group mr-1">
                       <span class="dropdown">
-                          <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 white"></i> Configure</button>
+                          <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-secondary btn-block btn-sm dropdown-toggle dropdown-menu-right"><i class="icon-cloud-download3 red"></i> Configure</button>
                           <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
                               <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/application/list/<%= project._id %>" data-method="GET" data-title="<%= project.name %> : Applications" data-datatable="application-list"><i class="icon-calendar5"></i> Applications</a>
                               <a href="#" class="dropdown-item side-panel-trigger process-page" data-url="/environment/list/<%= project._id %>" data-method="GET" data-title="<%= project.name %> : Environments" data-datatable="environment-list"><i class="icon-shuffle3"></i> Environments</a>
@@ -67,8 +67,8 @@
                       </span>
                     </div>
                     <div class="btn-group mr-1">
-                        <button type="button" class="btn btn-success"><i class="icon-eye6"></i> Results</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-secondary"><i class="icon-eye6"></i> Results</button>
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu">
@@ -79,8 +79,8 @@
                             <a class="dropdown-item" href="#">Separated link</a>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-info mr-1"><i class="icon-calendar5"></i> Schedule</button>
-                    <button type="button" class="btn btn-danger"><i class="icon-eye"></i> Print</button>
+                    <button type="button" class="btn btn-secondary mr-1"><i class="icon-calendar5"></i> Schedule</button>
+                    <button type="button" class="btn btn-secondary"><i class="icon-eye"></i> Print</button>
                 </div>
             </div>
         </div>
@@ -89,8 +89,8 @@
     <section class="row">
         <div class="col-xl-12 col-lg-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title"><a href="/auth/index">Back</a> <%= project.name %> : <%= params.testName %></h4>
+                <div class="title-header">
+                    <h4><a href="/auth/index">Back</a> <%= project.name %> : <%= params.testName %></h4>
                 </div>
                 <div class="card-body">
                     <div class="card-block">

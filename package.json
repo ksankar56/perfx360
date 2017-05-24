@@ -9,6 +9,7 @@
   "dependencies": {
     "artillery": "^1.6.0-0",
     "artillery-core": "^4.2.0",
+    "artillery-plugin-elasticsearch": "^0.8.0",
     "artillery-plugin-statsd": "^2.2.0",
     "async": "^2.3.0",
     "bcrypt": "^1.0.2",

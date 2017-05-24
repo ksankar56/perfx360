@@ -1,153 +1,468 @@
-<div class="card-block">
-    <div class="card-text">
-        <p>Basic information of a component with any one component type associated with it. It can hold testcases files and groups to be tested.</p>
-    </div>
-    <form class="form form-horizontal" id="ajax-upload-form" action="/application/upload" method="POST" enctype="multipart/form-data">
-        <div class="alert alert-icon-left  alert-arrow-left alert-danger alert-dismissible fade in mb-2" role="alert" style="display:none;" id="error-message-alert-wrapper">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            </button>
-            <span id="error-message-alert"></span>
-        </div>
 
-        <div class="alert alert-icon-left  alert-arrow-left alert-success alert-dismissible fade in mb-2" role="alert" style="display:none;" id="success-message-alert-wrapper">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            </button>
-            <span id="success-message-alert"></span>
-        </div>
-        <div class="form-body">
+    <!--<button id="load-builder" name="load-builder" class="btn btn-cs">Load Wizard</button>-->
+    <section id="validation">
+        <form class="steps-validation wizard-notification vertical" id="ajax-upload-form" action="/application/upload" method="POST" enctype="multipart/form-data">
+            <div class="alert alert-icon-left  alert-arrow-left alert-danger alert-dismissible fade in mb-2" role="alert" style="display:none;" id="error-message-alert-wrapper">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <span id="error-message-alert"></span>
+            </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-3 label-control" for="name">Name</label>
-                        <div class="col-md-9">
+            <div class="alert alert-icon-left  alert-arrow-left alert-success alert-dismissible fade in mb-2" role="alert" style="display:none;" id="success-message-alert-wrapper">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+                <span id="success-message-alert"></span>
+            </div>
+            <!-- Step 1 -->
+            <h6>Basic Info</h6>
+            <fieldset>
+                <h4 class="form-section"><i class="icon-stack"></i> Basic Info</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName3" class="wizard-label">
+                                Application Name :
+                                <span class="danger">*</span>
+                            </label>
                             <input type="hidden" id="projectId" class="form-control" placeholder="projectId" name="projectId" value="<%= req.session.project._id%>">
                             <input type="hidden" id="id" class="form-control" placeholder="id" name="id">
-                            <input type="text" id="name" class="form-control required" placeholder="Application Name" name="name" required>
+                            <input type="text" class="form-control" id="name" name="name" >
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label class="col-md-3 label-control" for="componentType">ApplicationsType</label>
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <select name="componentType" class="form-control">
-                                    <% if (locals.params.applicationTypes) {
-                                        var applicationTypes = locals.params.applicationTypes;
-                                    for(var i=0; i < applicationTypes.length; i++) {
-                                        var applicationType = applicationTypes[i];  %>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="lastName3" class="wizard-label">
+                                Application Type :
+                            </label>
+                            <select name="componentType" class="form-control">
+                                <% if (locals.params.applicationTypes) {
+                                    var applicationTypes = locals.params.applicationTypes;
+                                for(var i=0; i < applicationTypes.length; i++) {
+                                    var applicationType = applicationTypes[i];  %>
 
-                                    <option value="<%= applicationType._id %>"><%= applicationType.name %>%></option>
-                                    <% }
-                                    } %>
+                                <option value="<%= applicationType._id %>"><%= applicationType.name %>%></option>
+                                <% }
+                                } %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="shortDescription3" class="wizard-label">Description :</label>
+                            <textarea name="description" id="description" rows="4" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="wizard-label">Requirements :</label>
+                            <div class="c-inputs-stacked">
+                                <label class="inline custom-control custom-checkbox block">
+                                    <input type="checkbox" class="custom-control-input" id="perfLog" name="perfLog" checked="checked">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description ml-0">Perf Log</span>
+                                </label>
+                                <label class="inline custom-control custom-checkbox block">
+                                    <input type="checkbox" class="custom-control-input" id="metricLog" name="metricLog">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description ml-0">Metric Log</span>
+                                </label>
+                                <label class="inline custom-control custom-checkbox block">
+                                    <input type="checkbox" class="custom-control-input" id="networkLog" name="networkLog">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description ml-0">Network Log</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <!-- Step 3 -->
+            <h6>Configuration</h6>
+            <fieldset>
+                <h4 class="form-section"><i class="icon-stack"></i> Phases</h4>
+                <span id="phases">
+                    <div class="row wizard-row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="configName1" class="wizard-label">
+                                    Name :
+                                    <span class="btn-pure success" data-wstooltip="Arrival phases can be named."><i class="icon-info"></i></span>
+                                </label>
+                                <input type="text" class="form-control" id="configName1" name="configName1" value="Warm Up Phase">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="duration1" class="wizard-label">Duration :
+                                    <span class="danger">*</span>
+                                    <span class="btn-pure success" data-wstooltip="Duration in seconds"><i class="icon-info"></i></span>
+                                </label>
+                                <input type="text" class="form-control required" id="duration1" name="duration1" value="10">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="arrivalRate1" class="wizard-label">
+                                    Arrival Rate :
+                                    <span class="danger">*</span>
+                                    <span class="btn-pure success" data-wstooltip="Arrival rate of virtual users (VU) for a duration of time."><i class="icon-info"></i></span>
+                                </label>
+                                <input type="text" class="form-control required" id="arrivalRate1" name="arrivalRate1" value="2">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="rampTo1" class="wizard-label">
+                                    <span data-wstooltip="Ramp up arrival rate from Arrival Rate to Ramp To over Duration:">Ramp To</span> :
+                                    <span class="btn-pure success" data-wstooltip="A linear 'ramp' in arrival of virtual users."><i class="icon-info"></i></span>
+                                </label>
+                                <input type="text" class="form-control" id="rampTo1" name="rampTo1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="pause1" class="wizard-label">
+                                    Pause :
+                                    <span class="btn-pure success" data-wstooltip="Eg:- Pause for 10 seconds between arrival phases."><i class="icon-info"></i></span>
+                                </label>
+                                <input type="text" class="form-control" id="pause1" name="pause1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="remove1" class="wizard-label">
+                                    &nbsp;
+                                </label><br/>
+                                <input type="button" class="btn btn-success" id="addPhase" name="addPhase" value="Add Phase" />
+                                <input type="hidden" id="phaseItems" name="phaseItems" value="3" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row wizard-row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="configName2" name="configName2" value="Medium Load Phase">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="duration2" name="duration2">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="arrivalRate2" name="arrivalRate2">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="rampTo2" name="rampTo2">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" id="remove-button2">
+
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="row wizard-row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="configName3" name="configName3" value="High Load Phase">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="duration3" name="duration3">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="arrivalRate3" name="arrivalRate3">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="rampTo3" name="rampTo3">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" id="remove-button3">
+                                <button type="button" class="btn btn-icon btn-danger remove-button"><i class="icon-trash4"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+
+                <h4 class="form-section"><i class="icon-check"></i> Payload</h4>
+                <span id="payloads">
+                    <div class="row wizard-row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="file1" class="wizard-label">CSV File :
+                                    <span class="btn-pure success" data-wstooltip="Inject data from csv file into scenarios."><i class="icon-info"></i></span>
+                                </label>
+                                <input type="file" class="c-select form-control" id="file1" name="file1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="fields1" class="wizard-label">
+                                    Fields :
+                                    <span class="btn-pure success" data-wstooltip="Each of the rows to a variable name can be used in scenario definitions."><i class="icon-info"></i></span>
+                                </label>
+                                <input type="text" class="form-control" id="fields1" name="arrivalRate1" placeholder="eg:- username, password">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="order" class="wizard-label">
+                                    Order :
+                                    <span class="btn-pure success" data-wstooltip="Rows from the CSV file can be picked random or sequence."><i class="icon-info"></i></span>
+                                </label>
+                                <select class="c-select form-control" id="month1" name="month1" aria-required="false">
+                                    <option value="random" selected="selected">Random</option>
+                                    <option value="sequence">Sequence</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <label class="col-md-3 label-control">Log Capture</label>
-                        <div class="col-md-9">
-                            <div class="card-block right">
-                                <label class="display-inline-block custom-control custom-checkbox">
-                                    <input type="checkbox" id="perfLog" name="perfLog" checked="checked" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">Perf Log</span>
-                                </label>
-                                <label class="display-inline-block custom-control custom-checkbox">
-                                    <input type="checkbox" id="metricLog" name="metricLog" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">Sys Log</span>
-                                </label>
-                                <label class="display-inline-block custom-control custom-checkbox">
-                                    <input type="checkbox" id="networkLog" name="networkLog" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">Network Log</span>
-                                </label>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="addPayload" class="wizard-label">
+                                    &nbsp;
+                                </label><br/>
+                                <input type="button" class="btn btn-success" id="addPayload" name="addPayload" value="Add Payload" />
+                                <input type="hidden" id="payloadItems" name="payloadItems" value="1" />
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-3 label-control" for="description">Description</label>
-                        <div class="col-md-9">
-                            <textarea id="description" rows="5" class="form-control" name="description" placeholder="Application Description" required></textarea>
+                </span>
+            </fieldset>
+
+            <!-- Step 4 -->
+            <h6>Scenarios</h6>
+            <fieldset>
+                <h4 class="form-section"><i class="icon-stack"></i> Scenarios</h4>
+                <span id="phases">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="button" class="btn btn-success pull-right mb-1" id="addScenario" name="addScenario" value="Add Scenario" />
+                                <input type="hidden" id="scenarioItems" name="scenarioItems" value="1" />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-body">
-            <div class="card-block">
-                <p>To Create <code>Test Cases</code> Upload JMeter file or define JMeter Test UI or define only level latency and percentile test. </p>
-                <ul class="nav nav-tabs nav-topline">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="base-tab21" data-toggle="tab" aria-controls="tab21" href="#tab21" aria-expanded="true">Upload JMeter File(s)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="base-tab22" data-toggle="tab" aria-controls="tab22" href="#tab22" aria-expanded="false">Define JMeter Test UI</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="base-tab23" data-toggle="tab" aria-controls="tab23" href="#tab23" aria-expanded="false">Latency and Percentile</a>
-                    </li>
-                    <!--<li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>-->
-                </ul>
-                <div class="tab-content px-1 pt-1 border-grey border-lighten-2 no-border-top">
-                    <div role="tabpanel" class="tab-pane active" id="tab21" aria-expanded="true" aria-labelledby="base-tab21">
+                    <div id="flowWrapper1" class="wizard-row flow-wrapper">
                         <div class="row">
-                            <div class="form-group col-xs-12 mb-2 file-repeater">
-                                <div data-repeater-list="repeater-list">
-                                    <div data-repeater-item>
-                                        <div class="row mb-1">
-                                            <div class="col-xs-3 col-xl-2">
-                                                &nbsp;JMX or CSV
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="scenarioName1" class="wizard-label">
+                                        Name :
+                                        <span class="btn-pure success" data-wstooltip="A descriptive name of scenario."><i class="icon-info"></i></span>
+                                    </label>
+                                    <input type="text" class="form-control" id="scenarioName1" name="scenarioName1" placeholder="eg:- search for a product">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="duration1" class="wizard-label">Weight :
+                                        <span class="danger">*</span>
+                                        <span class="btn-pure success" data-wstooltip="Weights allow you to specify that some scenarios should be picked more often than others"><i class="icon-info"></i></span>
+                                    </label>
+                                    <input type="text" class="form-control required" id="weight1" name="weight1" value="5">
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label for="addRequestUrl" class="wizard-label">
+                                        &nbsp;
+                                    </label><br/>
+                                    <input type="button" class="btn btn-success" id="addRequestUrl" name="addRequestUrl" value="Add Request URL" />
+                                    <input type="hidden" id="requestItems" name="requestItems" value="3" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row card-block wizard-card-block">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="requestMethod1" class="wizard-label">
+                                        Method :
+                                        <span class="btn-pure success" data-wstooltip="Request method."><i class="icon-info"></i></span>
+                                    </label>
+                                    <select class="c-select form-control" id="requestMethod1" name="requestMethod1" aria-required="false">
+                                        <option value="GET" selected="selected">GET</option>
+                                        <option value="POST">POST</option>
+                                        <option value="PUT">PUT</option>
+                                        <option value="DELETE">DELETE</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="requestUrl1" class="wizard-label">Request URL :
+                                        <span class="danger">*</span>
+                                        <span class="btn-pure success" data-wstooltip="Exclude base url. {{id}} can be included if specified in payload fields."><i class="icon-info"></i></span>
+                                    </label>
+                                    <input type="text" class="form-control required" id="requestUrl1" name="requestUrl1" placeholder="eg:- /rest/api/v1/user/{{ id }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="requestPause1" class="wizard-label">
+                                        Pause :
+                                        <span class="btn-pure success" data-wstooltip="Pause between request url."><i class="icon-info"></i></span>
+                                    </label>
+                                    <input type="text" class="form-control required" id="requestPause1" name="requestPause1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row card-block wizard-card-block">
+                            <div class="col-md-12">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="auth-tab1" data-toggle="tab"
+                                           aria-controls="authTab1" href="#authTab1" aria-expanded="true"><span
+                                                    class="tag tag-pill tag-glow tag-default tag-success" id="authTagPill1"></span> Authentication</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="headers-tab1" data-toggle="tab"
+                                           aria-controls="headersTab1" href="#headersTab1" aria-expanded="true"><span
+                                                    class="tag tag-pill tag-glow tag-default tag-success" id="headersTagPill1"></span> Headers</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="body-tab1" data-toggle="tab"
+                                           aria-controls="bodyTab1" href="#bodyTab1" aria-expanded="true"><span
+                                                    class="tag tag-pill tag-glow tag-default tag-success" id="bodyTagPill1"></span> Body</a>
+                                    </li>
+                                    <!--<li class="nav-item">
+                                        <a class="nav-link disabled"><i class="icon-unlink"></i> Disabled</a>
+                                    </li>-->
+                                </ul>
+                                <div class="tab-content px-1 pt-1">
+                                    <div role="tabpanel" class="tab-pane" id="authTab1" aria-expanded="true" aria-labelledby="auth-tab1">
+                                         <div class="row">
+                                             <div class="col-md-3">
+                                                 <div class="form-group">
+                                                    <label for="authMode1" class="wizard-label">
+                                                        Method :
+                                                    </label>
+                                                    <select class="c-select form-control" id="authMode1" name="authMode1" aria-required="false">
+                                                        <option value="noAuth" selected="selected">No Auth</option>
+                                                        <option value="basicAuth">Basic Auth</option>
+                                                    </select>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-9">
+                                                 <span  id="authDetails1" style="display:none;">
+                                                     <div class="row">
+                                                         <div class="col-md-6">
+                                                             <div class="form-group">
+                                                                <label for="authUserName1" class="wizard-label">
+                                                                    User Name :
+                                                                </label>
+                                                                <input type="text" class="form-control required" id="authUserName1" name="authUserName1">
+                                                            </div>
+                                                         </div>
+                                                         <div class="col-md-6">
+                                                             <div class="form-group">
+                                                                <label for="authPassword1" class="wizard-label">
+                                                                    Password :
+                                                                </label>
+                                                                <input type="password" class="form-control required" id="authPassword1" name="authPassword1">
+                                                            </div>
+                                                         </div>
+                                                     </div>
+                                                 </span>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="tab-pane" id="headersTab1" aria-labelledby="headers-tab2">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                 <div class="form-group">
+                                                    <input type="text" class="form-control" id="headerModeKey1" name="headerModeKey1" placeholder="Key">
+                                                </div>
                                             </div>
-                                            <div class="col-xs-7 col-xl-9">
-                                                <label class="file center-block">
-                                                    <input type="file" id="file" name="testFile" required>
-                                                    <span class="file-custom"></span>
-                                                </label>
+                                            <div class="col-md-5">
+                                                 <div class="form-group">
+                                                    <input type="text" class="form-control" id="headerModeValue1" name="headerModeValue1" placeholder="Value">
+                                                </div>
                                             </div>
-                                            <div class="col-xs-2 col-xl-1">
-                                                <button type="button" data-repeater-delete class="btn btn-icon btn-danger mr-1"><i class="icon-cross2"></i></button>
+                                            <div class="col-md-2">
+                                                 <div class="form-group">
+                                                    <input type="button" class="btn btn-success" id="addKeyValueHeader1" name="addKeyValueHeader1" value="Add" />
+                                                </div>
                                             </div>
-                                        </div>
+                                         </div>
+                                    </div>
+                                    <div class="tab-pane" id="bodyTab1" aria-labelledby="body-tab3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                 <div class="form-group">
+                                                    <label for="bodyRaw1" class="wizard-label">Raw :</label>
+                                                    <textarea name="bodyRaw1" id="bodyRaw1" rows="6" class="form-control" placeholder="eg:- {&#10;'username': '{{ username }}'&#10;}"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                 <div class="form-group" class="wizard-label">
+                                                    <label for="bodyCapture1">Capture :</label>
+                                                    <textarea name="bodyCapture1" id="bodyCapture1" rows="6" class="form-control" placeholder="eg:- {&#10;'json': '$.results[0].id',&#10;'as': 'id'&#10;}"></textarea>
+                                                </div>
+                                            </div>
+                                         </div>
                                     </div>
                                 </div>
-
-                                <button type="button" data-repeater-create class="btn btn-info">
-                                    <i class="icon-plus4"></i> Add new file
-                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab22" aria-labelledby="base-tab22" aria-expanded="false">
-                        <p>Sugar plum tootsie roll biscuit caramels. Liquorice brownie pastry cotton candy oat cake fruitcake jelly chupa chups. Pudding caramels pastry powder cake soufflé wafer caramels. Jelly-o pie cupcake.</p>
-                    </div>
-                    <div class="tab-pane" id="tab23" aria-labelledby="base-tab23" aria-expanded="false">
-                        <p>Biscuit ice cream halvah candy canes bear claw ice cream cake chocolate bar donut. Toffee cotton candy liquorice. Oat cake lemon drops gingerbread dessert caramels. Sweet dessert jujubes powder sweet sesame snaps.</p>
-                    </div>
-                </div>
-            </div>
+                </span>
+            </fieldset>
+        </form>
+    </section>
 
-        </div>
+<script>
+    //$('#load-builder').trigger('click');
 
-        <div class="form-actions right">
-            <button type="button" class="btn btn-primary mr-1 process-page" data-url="/application/list/<%= req.session.project._id %>"
-                    data-method="GET" data-title="View Applications" data-datatable="application-list">
-                <i class="icon-arrow-left4"></i> Back
-            </button>
-            <button type="button" class="btn btn-warning mr-1 side-panel-trigger">
-                <i class="icon-cross2"></i> Cancel
-            </button>
-            <button type="submit" class="btn btn-primary">
-                <i class="icon-check2"></i> Save
-            </button>
-        </div>
-    </form>
-</div>
-<script src="/app-assets/js/scripts/pages/users-contacts.js" type="text/javascript"></script>
+    document.addEventListener(
+        'load',
+        function(event){
+            var elm = event.target;
+            console.info('elm = ', elm);
+            if( elm.id === 'some_elementid'){ // or any other filtering condition
+                // do some stuff
+            }
+        },
+        true // Capture event
+    );
+</script>
+
 <script src="/app-assets/js/scripts/forms/form-repeater.js" type="text/javascript"></script>

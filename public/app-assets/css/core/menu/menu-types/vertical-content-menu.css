@@ -232,7 +232,7 @@
   body.vertical-content-menu .navbar .navbar-header {
     width: 240px; }
   body.vertical-content-menu .content-body {
-    margin-left: 268px;
+    /*margin-left: 268px;*/
     transition: 300ms ease all; } }
 
 @media (max-width: 991px) {

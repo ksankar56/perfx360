@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
-    <%- include('partials/head') %>
+<%- include('partials/head') %>
+<body data-open="click" data-menu="vertical-content-menu" data-col="2-columns"
+      class="vertical-layout vertical-content-menu 2-columns  fixed-navbar">
 
-    <body data-open="click" data-menu="vertical-content-menu" data-col="1-column"
-          class="vertical-layout vertical-content-menu 1-column fixed-navbar">
+<!-- navbar-fixed-top-->
+<%- include('partials/navbar') %>
 
-        <%- include('partials/slidepanel') %>
+<%- include('partials/search') %>
 
-        <%- include('partials/navbar') %>
 
-        <%- include('partials/search') %>
-
-        <!-- ////////////////////////////////////////////////////////////////////////////-->
-        <div class="app-content content container-fluid">
+<!-- ////////////////////////////////////////////////////////////////////////////-->
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-body">
             <%- body %>
+
+            <%- include('partials/slidepanel') %>
         </div>
-        <!-- ////////////////////////////////////////////////////////////////////////////-->
+    </div>
+</div>
+<!-- ////////////////////////////////////////////////////////////////////////////-->
 
-        <%- include('partials/footer') %>
+<%- include('partials/footer') %>
 
-    </body>
+</body>
 </html>
