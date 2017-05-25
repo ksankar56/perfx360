@@ -273,172 +273,186 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <input type="button" class="btn btn-success pull-right mb-1" id="addScenario" name="addScenario" value="Add Scenario" />
-                                <input type="hidden" id="scenarioItems" name="scenarioItems" value="1" />
+                                <input type="text" id="scenarioItems" name="scenarioItems" value="1" />
                             </div>
                         </div>
                     </div>
-                    <div id="flowWrapper1" class="wizard-row flow-wrapper">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="scenarioName1" class="wizard-label">
-                                        Name :
-                                        <span class="btn-pure success" data-wstooltip="A descriptive name of scenario."><i class="icon-info"></i></span>
-                                    </label>
-                                    <input type="text" class="form-control" id="scenarioName1" name="scenarioName1" placeholder="eg:- search for a product">
-                                </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="duration1" class="wizard-label">Weight :
-                                        <span class="danger">*</span>
-                                        <span class="btn-pure success" data-wstooltip="Weights allow you to specify that some scenarios should be picked more often than others"><i class="icon-info"></i></span>
-                                    </label>
-                                    <input type="text" class="form-control required" id="weight1" name="weight1" value="5">
+                    <div id="scenarioList">
+                        <div id="scenario1-flowWrapper" class="wizard-row flow-wrapper">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="scenario1Name1" class="wizard-label">
+                                            Name :
+                                            <span class="btn-pure success" data-wstooltip="A descriptive name of scenario."><i class="icon-info"></i></span>
+                                        </label>
+                                        <input type="text" class="form-control" id="scenario1Name1" name="scenario1Name1" placeholder="eg:- Search for a product">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <label for="addRequestUrl" class="wizard-label">
-                                        &nbsp;
-                                    </label><br/>
-                                    <input type="button" class="btn btn-success" id="addRequestUrl" name="addRequestUrl" value="Add Request URL" />
-                                    <input type="hidden" id="requestItems" name="requestItems" value="3" />
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="scenario1Weight1" class="wizard-label">Weight :
+                                            <span class="danger">*</span>
+                                            <span class="btn-pure success" data-wstooltip="Weights allow you to specify that some scenarios should be picked more often than others"><i class="icon-info"></i></span>
+                                        </label>
+                                        <input type="text" class="form-control required" id="scenario1Weight1" name="scenario1Weight1" value="5">
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row card-block wizard-card-block">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="requestMethod1" class="wizard-label">
-                                        Method :
-                                        <span class="btn-pure success" data-wstooltip="Request method."><i class="icon-info"></i></span>
-                                    </label>
-                                    <select class="c-select form-control" id="requestMethod1" name="requestMethod1" aria-required="false">
-                                        <option value="GET" selected="selected">GET</option>
-                                        <option value="POST">POST</option>
-                                        <option value="PUT">PUT</option>
-                                        <option value="DELETE">DELETE</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="requestUrl1" class="wizard-label">Request URL :
-                                        <span class="danger">*</span>
-                                        <span class="btn-pure success" data-wstooltip="Exclude base url. {{id}} can be included if specified in payload fields."><i class="icon-info"></i></span>
-                                    </label>
-                                    <input type="text" class="form-control required" id="requestUrl1" name="requestUrl1" placeholder="eg:- /rest/api/v1/user/{{ id }}">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <label for="scenario1addRequestUrl1" class="wizard-label">
+                                            &nbsp;
+                                        </label><br/>
+                                        <input type="button" class="btn btn-success scenario-request-url" id="scenario1addRequestUrl1" name="scenario1addRequestUrl1" value="Add Request URL" data-scenario="1"/>
+                                        <input type="text" class="scenario-request-items" id="scenario1requestItems" name="scenario1requestItems" value="1" />
+                                    </div>
                                 </div>
                             </div>
+                            <div id="scenario1flowRequestUrl1">
+                                <div class="row card-block wizard-card-block">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="scenario1RequestMethod1" class="wizard-label">
+                                                Method :
+                                                <span class="btn-pure success" data-wstooltip="Request method."><i class="icon-info"></i></span>
+                                            </label>
+                                            <select class="c-select form-control" id="scenario1RequestMethod1" name="scenario1RequestMethod1" aria-required="false">
+                                                <option value="GET" selected="selected">GET</option>
+                                                <option value="POST">POST</option>
+                                                <option value="PUT">PUT</option>
+                                                <option value="DELETE">DELETE</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="requestPause1" class="wizard-label">
-                                        Pause :
-                                        <span class="btn-pure success" data-wstooltip="Pause between request url."><i class="icon-info"></i></span>
-                                    </label>
-                                    <input type="text" class="form-control required" id="requestPause1" name="requestPause1">
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label for="scenario1RequestUrl1" class="wizard-label">Request URL :
+                                                <span class="danger">*</span>
+                                                <span class="btn-pure success" data-wstooltip="Exclude base url. {{id}} can be included if specified in payload fields."><i class="icon-info"></i></span>
+                                            </label>
+                                            <input type="text" class="form-control required" id="scenario1RequestUrl1" name="scenario1RequestUrl1" placeholder="eg:- /rest/api/v1/user/{{ id }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="scenario1RequestPause1" class="wizard-label">
+                                                Pause :
+                                                <span class="btn-pure success" data-wstooltip="Pause between request url."><i class="icon-info"></i></span>
+                                            </label>
+                                            <input type="text" class="form-control required" id="scenario1RequestPause1" name="scenario1RequestPause1">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            &nbsp;
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row card-block wizard-card-block">
-                            <div class="col-md-12">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="auth-tab1" data-toggle="tab"
-                                           aria-controls="authTab1" href="#authTab1" aria-expanded="true"><span
-                                                    class="tag tag-pill tag-glow tag-default tag-success" id="authTagPill1"></span> Authentication</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="headers-tab1" data-toggle="tab"
-                                           aria-controls="headersTab1" href="#headersTab1" aria-expanded="true"><span
-                                                    class="tag tag-pill tag-glow tag-default tag-success" id="headersTagPill1"></span> Headers</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="body-tab1" data-toggle="tab"
-                                           aria-controls="bodyTab1" href="#bodyTab1" aria-expanded="true"><span
-                                                    class="tag tag-pill tag-glow tag-default tag-success" id="bodyTagPill1"></span> Body</a>
-                                    </li>
-                                    <!--<li class="nav-item">
-                                        <a class="nav-link disabled"><i class="icon-unlink"></i> Disabled</a>
-                                    </li>-->
-                                </ul>
-                                <div class="tab-content px-1 pt-1">
-                                    <div role="tabpanel" class="tab-pane" id="authTab1" aria-expanded="true" aria-labelledby="auth-tab1">
-                                         <div class="row">
-                                             <div class="col-md-3">
-                                                 <div class="form-group">
-                                                    <label for="authMode1" class="wizard-label">
-                                                        Method :
-                                                    </label>
-                                                    <select class="c-select form-control" id="authMode1" name="authMode1" aria-required="false">
-                                                        <option value="noAuth" selected="selected">No Auth</option>
-                                                        <option value="basicAuth">Basic Auth</option>
-                                                    </select>
-                                                </div>
-                                             </div>
-                                             <div class="col-md-9">
-                                                 <span  id="authDetails1" style="display:none;">
-                                                     <div class="row">
-                                                         <div class="col-md-6">
-                                                             <div class="form-group">
-                                                                <label for="authUserName1" class="wizard-label">
-                                                                    User Name :
-                                                                </label>
-                                                                <input type="text" class="form-control required" id="authUserName1" name="authUserName1">
-                                                            </div>
-                                                         </div>
-                                                         <div class="col-md-6">
-                                                             <div class="form-group">
-                                                                <label for="authPassword1" class="wizard-label">
-                                                                    Password :
-                                                                </label>
-                                                                <input type="password" class="form-control required" id="authPassword1" name="authPassword1">
-                                                            </div>
-                                                         </div>
+                                <div class="row card-block wizard-card-block mb-1">
+                                    <div class="col-md-12">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="scenario1-auth-tab1" data-toggle="tab"
+                                                   aria-controls="scenario1AuthTab1" href="#scenario1AuthTab1" aria-expanded="true"><span
+                                                            class="tag tag-pill tag-glow tag-default tag-success" id="scenario1AuthTagPill1"></span> Authentication</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="scenario1-headers-tab1" data-toggle="tab"
+                                                   aria-controls="scenario1HeadersTab1" href="#scenario1HeadersTab1" aria-expanded="true"><span
+                                                            class="tag tag-pill tag-glow tag-default tag-success" id="scenario1HeadersTagPill1"></span> Headers</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="scenario1-body-tab1" data-toggle="tab"
+                                                   aria-controls="scenario1BodyTab1" href="#scenario1BodyTab1" aria-expanded="true"><span
+                                                            class="tag tag-pill tag-glow tag-default tag-success" id="scenario1BodyTagPill1"></span> Body</a>
+                                            </li>
+                                            <!--<li class="nav-item">
+                                                <a class="nav-link disabled"><i class="icon-unlink"></i> Disabled</a>
+                                            </li>-->
+                                        </ul>
+                                        <div class="tab-content px-1 pt-1">
+                                            <div role="tabpanel" class="tab-pane" id="scenario1AuthTab1" aria-expanded="true" aria-labelledby="scenario1-auth-tab1">
+                                                 <div class="row">
+                                                     <div class="col-md-3">
+                                                         <div class="form-group">
+                                                            <label for="authMode1" class="wizard-label">
+                                                                Method :
+                                                            </label>
+                                                            <select class="c-select form-control" id="scenario1AuthMode1" name="scenario1AuthMode1" aria-required="false">
+                                                                <option value="noAuth" selected="selected">No Auth</option>
+                                                                <option value="basicAuth">Basic Auth</option>
+                                                            </select>
+                                                        </div>
                                                      </div>
-                                                 </span>
-                                             </div>
-                                         </div>
-                                    </div>
-                                    <div class="tab-pane" id="headersTab1" aria-labelledby="headers-tab2">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="headerModeKey1" name="headerModeKey1" placeholder="Key">
-                                                </div>
+                                                     <div class="col-md-9">
+                                                         <span  id="scenario1AuthDetails1" style="display:none;">
+                                                             <div class="row">
+                                                                 <div class="col-md-6">
+                                                                     <div class="form-group">
+                                                                        <label for="scenario1AuthUserName1" class="wizard-label">
+                                                                            User Name :
+                                                                        </label>
+                                                                        <input type="text" class="form-control required" id="scenario1AuthUserName1" name="scenario1AuthUserName1">
+                                                                    </div>
+                                                                 </div>
+                                                                 <div class="col-md-6">
+                                                                     <div class="form-group">
+                                                                        <label for="scenario1AuthPassword1" class="wizard-label">
+                                                                            Password :
+                                                                        </label>
+                                                                        <input type="password" class="form-control required" id="scenario1AuthPassword1" name="scenario1AuthPassword1">
+                                                                    </div>
+                                                                 </div>
+                                                             </div>
+                                                         </span>
+                                                     </div>
+                                                 </div>
                                             </div>
-                                            <div class="col-md-5">
-                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="headerModeValue1" name="headerModeValue1" placeholder="Value">
-                                                </div>
+                                            <div class="tab-pane" id="scenario1HeadersTab1" aria-labelledby="scenario1-headers-tab1">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                         <div class="form-group">
+                                                            <input type="text" class="form-control" id="scenario1HeaderModeKey1" name="scenario1HeaderModeKey1" placeholder="Key">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                         <div class="form-group">
+                                                            <input type="text" class="form-control" id="scenario1HeaderModeValue1" name="scenario1HeaderModeValue1" placeholder="Value">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                         <div class="form-group">
+                                                             <input type="button" class="btn btn-success add-header-values" id="scenario1AddKeyValueHeader1" name="scenario1AddKeyValueHeader1" value="Add" />
+                                                             <input type="text" class="scenario-request-items" id="scenario1requestItems" name="scenario1requestItems" value="1" />
+                                                        </div>
+                                                    </div>
+                                                 </div>
                                             </div>
-                                            <div class="col-md-2">
-                                                 <div class="form-group">
-                                                    <input type="button" class="btn btn-success" id="addKeyValueHeader1" name="addKeyValueHeader1" value="Add" />
-                                                </div>
+                                            <div class="tab-pane" id="scenario1BodyTab1" aria-labelledby="scenario1-body-tab1">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                         <div class="form-group">
+                                                            <label for="scenario1BodyRaw1" class="wizard-label">Raw :</label>
+                                                            <textarea name="scenario1BodyRaw1" id="scenario1BodyRaw1" rows="6" class="form-control" placeholder="eg:- {&#10;'username': '{{ username }}'&#10;}"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                         <div class="form-group" class="wizard-label">
+                                                            <label for="scenario1BodyCapture1" class="wizard-label">Capture :
+                                                                <span class="btn-pure success" data-wstooltip="Use this to capture values from the response body of a request and store those in variables."><i class="icon-info"></i></span>
+                                                            </label>
+                                                            <textarea name="scenario1BodyCapture1" id="scenario1BodyCapture1" rows="6" class="form-control" placeholder="eg:- [{&#10;'json': '$.results[0].id',&#10;'as': 'id'&#10;}]"></textarea>
+                                                        </div>
+                                                    </div>
+                                                 </div>
                                             </div>
-                                         </div>
-                                    </div>
-                                    <div class="tab-pane" id="bodyTab1" aria-labelledby="body-tab3">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                 <div class="form-group">
-                                                    <label for="bodyRaw1" class="wizard-label">Raw :</label>
-                                                    <textarea name="bodyRaw1" id="bodyRaw1" rows="6" class="form-control" placeholder="eg:- {&#10;'username': '{{ username }}'&#10;}"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                 <div class="form-group" class="wizard-label">
-                                                    <label for="bodyCapture1">Capture :</label>
-                                                    <textarea name="bodyCapture1" id="bodyCapture1" rows="6" class="form-control" placeholder="eg:- {&#10;'json': '$.results[0].id',&#10;'as': 'id'&#10;}"></textarea>
-                                                </div>
-                                            </div>
-                                         </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -448,21 +462,3 @@
             </fieldset>
         </form>
     </section>
-
-<script>
-    //$('#load-builder').trigger('click');
-
-    document.addEventListener(
-        'load',
-        function(event){
-            var elm = event.target;
-            console.info('elm = ', elm);
-            if( elm.id === 'some_elementid'){ // or any other filtering condition
-                // do some stuff
-            }
-        },
-        true // Capture event
-    );
-</script>
-
-<script src="/app-assets/js/scripts/forms/form-repeater.js" type="text/javascript"></script>
