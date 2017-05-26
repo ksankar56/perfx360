@@ -2,7 +2,7 @@
   "config": {
     "target": "http://localhost:8642",
     "phases": [
-      { "duration": 120,  "arrivalRate": 30 }
+      { "duration": 10,  "arrivalRate": 3 }
     ],
     "statsd": {
       "host": "127.0.0.1"
@@ -10,6 +10,36 @@
     "payload": {
       "path": "search.csv",
       "fields": ["keywords"]
+    },
+    "plugins": {
+      "elasticsearch": {
+        "projectId" : "123123123123",
+        "applicationId": "21312312312",
+        "projectName" : "Test Project",
+        "projectDescription" : "Test Project Description",
+        "testId": "test123",
+        "testExecutionId": "32343423423423423423",
+        "testExecutionName": "testest",
+        "testName": "es_test",
+        "measurementName": "Latency",
+        "errorMeasurementName": "ClientSideErrors",
+        "testRunId": "123-456-7890",
+        "userId": "123456789",
+        "userName" : "Senthil",
+        "tags": {
+          "environment": "staging",
+          "host": "perfx360"
+        },
+        "es": {
+          "protocol": "http",
+          "host": "localhost",
+          "port": "9200",
+          "username": "admin",
+          "password": "admin",
+          "index": "perfx360",
+          "indexType": "REST_JSON_AY"
+        }
+      }
     }
   },
   "scenarios": [

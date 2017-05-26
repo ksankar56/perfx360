@@ -273,7 +273,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <input type="button" class="btn btn-success pull-right mb-1" id="addScenario" name="addScenario" value="Add Scenario" />
-                                <input type="text" id="scenarioItems" name="scenarioItems" value="1" />
+                                <input type="hidden" id="scenarioItems" name="scenarioItems" value="1" />
                             </div>
                         </div>
                     </div>
@@ -307,7 +307,7 @@
                                             &nbsp;
                                         </label><br/>
                                         <input type="button" class="btn btn-success scenario-request-url" id="scenario1addRequestUrl1" name="scenario1addRequestUrl1" value="Add Request URL" data-scenario="1"/>
-                                        <input type="text" class="scenario-request-items" id="scenario1requestItems" name="scenario1requestItems" value="1" />
+                                        <input type="hidden" class="scenario-request-items" id="scenario1requestItems" name="scenario1requestItems" value="1" />
                                     </div>
                                 </div>
                             </div>
@@ -319,7 +319,7 @@
                                                 Method :
                                                 <span class="btn-pure success" data-wstooltip="Request method."><i class="icon-info"></i></span>
                                             </label>
-                                            <select class="c-select form-control" id="scenario1RequestMethod1" name="scenario1RequestMethod1" aria-required="false">
+                                            <select class="c-select form-control request-method-select" id="scenario1RequestMethod1" name="scenario1RequestMethod1" aria-required="false"  data-scenario="1" data-item="1">
                                                 <option value="GET" selected="selected">GET</option>
                                                 <option value="POST">POST</option>
                                                 <option value="PUT">PUT</option>
@@ -384,7 +384,7 @@
                                                             <label for="authMode1" class="wizard-label">
                                                                 Method :
                                                             </label>
-                                                            <select class="c-select form-control" id="scenario1AuthMode1" name="scenario1AuthMode1" aria-required="false">
+                                                            <select class="c-select form-control auth-mode-select" id="scenario1AuthMode1" name="scenario1AuthMode1" aria-required="false" data-scenario="1" data-item="1">
                                                                 <option value="noAuth" selected="selected">No Auth</option>
                                                                 <option value="basicAuth">Basic Auth</option>
                                                             </select>
@@ -415,7 +415,7 @@
                                                  </div>
                                             </div>
                                             <div class="tab-pane" id="scenario1HeadersTab1" aria-labelledby="scenario1-headers-tab1">
-                                                <div class="row">
+                                                <div class="row" id="scenario1HeadersHolder1">
                                                     <div class="col-md-5">
                                                          <div class="form-group">
                                                             <input type="text" class="form-control" id="scenario1HeaderModeKey1" name="scenario1HeaderModeKey1" placeholder="Key">
@@ -428,8 +428,8 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                          <div class="form-group">
-                                                             <input type="button" class="btn btn-success add-header-values" id="scenario1AddKeyValueHeader1" name="scenario1AddKeyValueHeader1" value="Add" />
-                                                             <input type="text" class="scenario-request-items" id="scenario1requestItems" name="scenario1requestItems" value="1" />
+                                                             <input type="button" class="btn btn-success add-header-values" id="scenario1AddKeyValueHeader1" name="scenario1AddKeyValueHeader1" value="Add" data-scenario="1" data-item="1"/>
+                                                             <input type="hidden" class="scenario-header-value-items" id="scenario1header1ValueItems" name="scenario1header1ValueItems" value="1" data-scenario="1" data-item="1" data-requestitem="1"/>
                                                         </div>
                                                     </div>
                                                  </div>

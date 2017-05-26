@@ -13,7 +13,7 @@ var artilleryCore = require('artillery-core');
 exports.execute = function(req, res, next) {
     console.info('execute called');
 
-    var command = 'artillery run /Users/senthil/work/projects/perf/work/perfx360/routes/service/exec/es.json';
+    var command = 'artillery run /Users/senthil/work/projects/perf/work/perfx360/routes/service/exec/chat.json';
     var child = exec(command, function(err, out, code) {
         console.info('out = ', out);
     });
