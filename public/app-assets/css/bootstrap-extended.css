@@ -1043,8 +1043,8 @@ button:focus {
   border-radius: 0; }
   .card .card-title {
     text-transform: capitalize;
-    font-weight: 600;
-    letter-spacing: 0.4px; }
+    font-weight: 400;
+    letter-spacing: 0.2px; }
   .card .card-bordered {
     border: 1px solid rgba(0, 0, 0, 0.06); }
   .card.card-fullscreen {
@@ -1072,12 +1072,15 @@ button:focus {
   background-color: #F6BB42;
   color: #FFFFFF; }
 
+.lead {
+  font-size: 1.15rem;
+}
 .handle, .titleArea {
   cursor: move; }
 
 .card-header {
   border-bottom: 1px solid #EEEEEE;
-  padding: 1.0rem 1.0rem;}
+  padding: 0.7rem 1.0rem}
   .card-header .card-title {
     margin-bottom: 0; }
   .card-header .heading-elements,

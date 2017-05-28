@@ -194,10 +194,10 @@ $(document).ready(function() {
                     return true;
                 }
                 // Forbid next action on "Warning" step if the user is to young
-                if (newIndex === 3 && Number($("#age-2").val()) < 18)
+                /*if (newIndex === 3 && Number($("#age-2").val()) < 18)
                 {
                     return false;
-                }
+                }*/
                 // Needed in some cases if the user went back (clean up)
                 if (currentIndex < newIndex)
                 {
@@ -215,7 +215,9 @@ $(document).ready(function() {
             },
             onFinished: function (event, currentIndex)
             {
-                alert("Submitted!");
+                //alert("Submitted!");
+                console.info('submitted = ', form);
+                form.submit();
             }
         });
 
@@ -334,8 +336,10 @@ $(document).ready(function() {
 
             if(formType == 'multipart') {
                 data = getMultiPartData(formElement);
+                contentType = false;
             } else {
                 data = $(formElement).serialize();
+                contentType = true;
             }
         }
         $.ajax({
@@ -495,7 +499,7 @@ $(document).ready(function() {
         console.info('data = ', data);
 
         $.ajax({
-            url: '/application/upload',
+            url: '/application/artillery/upload',
             type: 'POST',
             data: data,
             cache: false,

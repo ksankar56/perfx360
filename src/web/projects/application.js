@@ -96,9 +96,69 @@ router.get('/test/execute', function(req, res, next) {
  * @access public
  */
 
-router.post('/upload', function(req, res, next) {
+router.post('/artillery/upload', function(req, res, next) {
+    console.info('inside artillery upload');
+    var form = new formidable.IncomingForm();
+    form.encoding = 'utf-8';
+    var fields = {};
 
-    async.waterfall([
+    form.on('field', function(name, value) {
+        form.uploadDir = __dirname;
+        fields[name] = value;
+        console.info('name = ', name);
+        console.info('value = ', value);
+    });
+
+    var files = [];
+    form.on('file', function(name, file){
+        //console.info('fields = ', fields);
+        //console.info('scenarioItems = ', fields['scenarioItems']);
+        console.info('file = ', file);
+        console.info('file name = ', file.name);
+        files.push(file.name);
+    });
+
+    form.on('error', function(err) {
+        console.info('err');
+    });
+
+    form.on('aborted', function() {
+        console.info('aborted');
+    });
+
+    form.on('end', function() {
+        console.info('end');
+        console.info('************** files = ', files);
+        fields.files = files;
+
+        var artilleryInputJson = {};
+        var basicInfo = baseService.getArtilleryBasicInfo(fields);
+        var config = baseService.getArtilleryConfigurations(fields);
+        var scenarios = baseService.getArtilleryScenarios(fields);
+
+        artilleryInputJson.config = config;
+        artilleryInputJson.scenarios = scenarios
+        console.info('config = ', config);
+        console.info('scenarios = ', scenarios);
+        //console.info()
+        res.send(artilleryInputJson);
+    });
+
+    form.parse(req);
+
+
+});
+
+/**
+ * Create application.
+ *
+ * @return {Function}
+ * @access public
+ */
+
+router.post('/upload', function(req, res, next) {
+    console.info('inside upload');
+    /*async.waterfall([
         _makeTmpDirectory,
         async.apply(_setFormFields, req, res),
         _setProject,
@@ -121,7 +181,7 @@ router.post('/upload', function(req, res, next) {
         //return result;
         //callback(err, result);
         //res.render(renderConstants.APPLICATIONS_PAGE, {layout: 'panel-layout', req: req, result: result});
-    });
+    });*/
 
 });
 

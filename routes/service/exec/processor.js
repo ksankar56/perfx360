@@ -9,6 +9,34 @@ module.exports = {
 function printHello(req, ctx, events, done) {
     console.log(' req url = ', req.url);
     console.log(' ctx uid = ', ctx._uid);
+    /*console.log(' req = ', req);
+    console.log(' ctx = ', ctx);*/
+
+    console.info('Date in processor = ', new Date());
+    /*console.log('events = ', events);
+    events.on('customStat', function (data) {
+        console.info('customStat data = ', data);
+    });
+
+    events.on('started', function (data) {
+        console.info('started data = ', data);
+    });
+
+    events.on('request', function (data) {
+        console.info('request data = ', data);
+    });
+
+    events.on('response', function (data) {
+        console.info('response data = ', data);
+    });
+
+    events.on('match', function (data) {
+        console.info('match data = ', data);
+    });
+
+    events.on('error', function (data) {
+        console.info('error data = ', data);
+    });*/
     return done();
 }
 

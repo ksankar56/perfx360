@@ -3,10 +3,12 @@
  */
 var express = require('express');
 var _ = require('lodash');
+var util = require('util');
 var moment  = require('moment');
 var Status = require('./domains/Status');
 var JMeterResult = require('./domains/JMeterResult');
 var constants = require('./constants');
+var tc = require('./test.constants');
 
 exports.getStatus = function(req, res, statusCode, statusMessage) {
     Status.code = statusCode;
@@ -366,6 +368,209 @@ function _getBaseDocument(componentId, testExecution, assignedDocument) {
 
     return assignedDocument;
 }
+
 function _isArray(ob) {
     return ob.constructor === Array;
 }
+
+function getArtilleryBasicInfo(fieldsJson) {
+    var basicInfo = {};
+
+    basicInfo[tc.PROJECT_ID] = fieldsJson[tc.PROJECT_ID];
+    basicInfo[tc.ID] = fieldsJson[tc.ID];
+    basicInfo[tc.COMPONENT_TYPE] = fieldsJson[tc.COMPONENT_TYPE];
+    basicInfo[tc.DESCRIPTION] = fieldsJson[tc.DESCRIPTION];
+    basicInfo[tc.PERF_LOG] = fieldsJson[tc.PERF_LOG];
+    basicInfo[tc.METRIC_LOG] = fieldsJson[tc.METRIC_LOG];
+    basicInfo[tc.NETWORK_LOG] = fieldsJson[tc.NETWORK_LOG];
+
+    return basicInfo;
+}
+exports.getArtilleryBasicInfo = getArtilleryBasicInfo;
+
+function getArtilleryConfigurations(fieldsJson) {
+    var config = {};
+
+    var phaseItems = fieldsJson[tc.PHASE_TOTAL_COUNT];
+    var headerValueItems = fieldsJson[tc.GLOBAL_HEADER_TOTAL_COUNT];
+    var payloadItems = fieldsJson[tc.PAYLOAD_TOTAL_COUNT];
+    var files = fieldsJson.files;
+
+    var defaults = {}
+    var headers = {};
+    var phases = [];
+
+    for (i = 1; i <= phaseItems; i++) {
+        var phase = {};
+        var phaseConfigName = util.format(tc.PHASE_CONFIG_NAME, i);
+        var durationName = util.format(tc.PHASE_CONFIG_DURATION, i);
+        var arrivalRateName = util.format(tc.PHASE_CONFIG_ARRIVAL_RATE, i);
+        var arrivalCountName = util.format(tc.PHASE_CONFIG_ARRIVAL_COUNT, i);
+        var rampToName = util.format(tc.PHASE_CONFIG_RAMP_TO, i);
+        var pauseName = util.format(tc.PHASE_CONFIG_PAUSE, i);
+
+        var headerValueName = util.format(tc.GLOBAL_HEADER_VALUE, i);
+        console.info('headerKeyName = ', headerKeyName);
+        console.info('headerValueName = ', headerValueName);
+
+        console.info('Name = ',  fieldsJson[headerKeyName]);
+        console.info('Value = ',  fieldsJson[headerValueName]);
+        if (fieldsJson[durationName]) {
+            phase[tc.DURATION] = fieldsJson[durationName];
+        }
+
+        /*if (fieldsJson[phaseConfigName]) {
+            phase[tc.CONFIG_NAME] = fieldsJson[phaseConfigName];
+        }*/
+
+        if (fieldsJson[arrivalRateName]) {
+            phase[tc.ARRIVAL_RATE] = fieldsJson[arrivalRateName];
+        }
+
+        if (fieldsJson[arrivalCountName]) {
+            phase[tc.ARRIVAL_COUNT] = fieldsJson[arrivalCountName];
+        }
+
+        if (fieldsJson[rampToName]) {
+            phase[tc.RAMP_TO] = fieldsJson[rampToName];
+        }
+
+        var pause = {}
+        if (fieldsJson[pauseName]) {
+            pause[tc.PAUSE] = fieldsJson[pauseName];
+        }
+
+        if(!_.isEmpty(phase)) {
+            if (fieldsJson[phaseConfigName]) {
+                phase[tc.CONFIG_NAME] = fieldsJson[phaseConfigName];
+            }
+            phases.push(phase);
+        }
+
+        if(!_.isEmpty(pause)) {
+            phases.push(pause);
+        }
+    }
+
+    config.phases  = phases;
+
+    for (i = 1; i <= headerValueItems; i++) {
+        var headerKeyName = util.format(tc.GLOBAL_HEADER_KEY, i);
+        var headerValueName = util.format(tc.GLOBAL_HEADER_VALUE, i);
+        console.info('headerKeyName = ', headerKeyName);
+        console.info('headerValueName = ', headerValueName);
+
+        console.info('Name = ',  fieldsJson[headerKeyName]);
+        console.info('Value = ',  fieldsJson[headerValueName]);
+        headers[fieldsJson[headerKeyName]] = fieldsJson[headerValueName];
+        //headers[headerValueName] = fieldsJson[headerValueName];
+    }
+
+    var payloads = [];
+
+    for (i = 1; i <= payloadItems; i++) {
+        var payload = {};
+        var payloadFields = util.format(tc.PAYLOAD_FIELDS, i);
+        var payloadOrder = util.format(tc.PAYLOAD_ORDER, i);
+        var fileName = files[(i - 1)];
+        var fields = fieldsJson[payloadFields];
+        var tempField = new Array();
+        tempField = fields.split(',');
+        console.info('tempField = ', tempField);
+        payload.path = fileName;
+        payload.fields = tempField;
+        if (tc.SEQUENCE = fieldsJson[payloadOrder]) {
+            var order = fieldsJson[payloadOrder];
+            payload.order = order;
+        }
+
+        payloads.push(payload);
+        console.info('fileName = ', fileName);
+        console.info('fields = ', fields);
+        console.info('order = ', order);
+
+    }
+
+    if (payloads.length > 0) {
+        config.payload = payloads;
+    }
+
+    if (!_.isEmpty(headers)) {
+        defaults.headers = headers;
+        config.defaults = defaults;
+    }
+
+    return config;
+}
+exports.getArtilleryConfigurations = getArtilleryConfigurations;
+
+
+function getArtilleryScenarios(fieldsJson) {
+    var scenarios = [];
+    var scenario = {};
+    //scenario.name = '';
+    var scenarioItems = fieldsJson[tc.SCENARIO_TOTAL_COUNT];
+
+    for (i = 1; i <= scenarioItems; i++) {
+        var scenarioName = util.format(tc.SCENARIO_NAME, i, 1);
+        var scenarioWeight = util.format(tc.SCENARIO_WEIGHT, i, 1);
+        var scenarioRequestCount = util.format(tc.SCENARIO_REQUEST_COUNT, i);
+        scenario.name = fieldsJson[scenarioName];
+        scenario.weight = fieldsJson[scenarioWeight];
+
+        console.info('scenarioRequestCount = ', scenarioRequestCount);
+        console.info('fieldsJson[scenarioRequestCount] = ', fieldsJson[scenarioRequestCount]);
+        var scenarioRequestItems = fieldsJson[scenarioRequestCount];
+        var flows = [];
+        for (j = 1; j <= scenarioRequestItems; j++) {
+            var flow = {};
+
+            var scenarioRequestMethod = util.format(tc.SCENARIO_REQUEST_METHOD, i, j);
+            var scenarioRequestUrl = util.format(tc.SCENARIO_REQUEST_URL, i, j);
+            var scenarioRequestPause = util.format(tc.SCENARIO_REQUEST_PAUSE, i, j);
+
+            console.info('scenarioRequestMethod = ', scenarioRequestMethod);
+            console.info('fieldsJson[scenarioRequestMethod] = ', fieldsJson[scenarioRequestMethod].toLowerCase());
+            var requestUrl = {};
+            requestUrl.url = fieldsJson[scenarioRequestUrl];
+            flow[fieldsJson[scenarioRequestMethod].toLowerCase()] = requestUrl;
+            //flow[fieldsJson[scenarioRequestMethod].toLowerCase()].test = 'test';
+
+            var scenarioAuthMode = util.format(tc.SCENARIO_REQUEST_AUTH_MODE, i, j);
+            var scenarioAuthUserName = util.format(tc.SCENARIO_REQUEST_AUTH_USERNAME, i, j);
+            var scenarioAuthPassword = util.format(tc.SCENARIO_REQUEST_AUTH_PASSWORD, i, j);
+            var scenarioHeaderValueItems = util.format(tc.SCENARIO_REQUEST_HEADER_TOTAL_COUNT, i, j);
+
+            var headerValueItems = fieldsJson[scenarioHeaderValueItems];
+
+            var headers = {};
+            for (k = 1; k <= headerValueItems; k++) {
+                var scenarioHeaderModeKey = util.format(tc.SCENARIO_HEADER_MODE_KEY, j, k);
+                var scenarioHeaderModeValue = util.format(tc.SCENARIO_HEADER_MODE_VALUE, j, k);
+                headers[fieldsJson[scenarioHeaderModeKey]] = fieldsJson[scenarioHeaderModeValue];
+            }
+
+            var scenarioBodyRaw = util.format(tc.SCENARIO_REQUEST_BODY_RAW, i, j);
+            var scenarioBodyCapture = util.format(tc.SCENARIO_REQUEST_BODY_CAPTURE, i, j);
+            var scenarioRequestBodyRaw = JSON.parse(fieldsJson[scenarioBodyRaw].toString());
+            var scenarioRequestBodyCapture = JSON.parse(fieldsJson[scenarioBodyCapture].toString());
+
+            flow[fieldsJson[scenarioRequestMethod].toLowerCase()].headers = headers;
+            flow[fieldsJson[scenarioRequestMethod].toLowerCase()].json = scenarioRequestBodyRaw;
+            flow[fieldsJson[scenarioRequestMethod].toLowerCase()].capture = scenarioRequestBodyCapture;
+
+            console.info('flow = ', flow);
+            flows.push(flow);
+
+            if (fieldsJson[scenarioRequestPause]) {
+                var pause = {}
+                pause.think = fieldsJson[scenarioRequestPause];
+                flows.push(pause);
+            }
+        }
+        scenario.flow = flows;
+        scenarios.push(scenario);
+    }
+    return scenarios;
+}
+exports.getArtilleryScenarios = getArtilleryScenarios;

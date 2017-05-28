@@ -2,15 +2,12 @@
   "config": {
     "target": "http://localhost:8642",
     "phases": [
-      { "duration": 10,  "arrivalRate": 3 }
+      {
+        "duration": 1,
+        "arrivalRate": 2
+      }
     ],
-    "statsd": {
-      "host": "127.0.0.1"
-    },
-    "payload": {
-      "path": "search.csv",
-      "fields": ["keywords"]
-    },
+    "processor": "./processor.js",
     "plugins": {
       "elasticsearch": {
         "projectId" : "123123123123",
@@ -26,7 +23,8 @@
         "testRunId": "123-456-7890",
         "userId": "123456789",
         "userName" : "Senthil",
-        "environment": "staging",
+        "environmentId": "9898938192831",
+        "environmentName" : "Staging",
         "tags": {
           "host": "perfx360"
         },
@@ -40,9 +38,50 @@
           "indexType": "REST_JSON_AY"
         }
       }
-    }
+    },
+    "payload": [{
+      "path": "./users.csv",
+      "fields": [
+        "username",
+        "password"
+      ],
+      "order": "sequence"
+    },
+      {
+        "path": "search.csv",
+        "fields": ["keywords"]
+      }]
   },
   "scenarios": [
+    {
+      "beforeRequest": ["printHello"],
+      "name": "Authentication",
+      "flow": [
+        { "log": "current environment: {{ $environment }}" },
+        {
+          "get": {
+            "url": "/perf/test/auth/{{username}}"
+          }
+        },
+        {
+          "post": {
+            "url": "/perf/test/auth",
+            "json": {
+              "username": "{{ username }}",
+              "password": "{{ password }}"
+            }
+          }
+        },
+        {"loop": [
+          {"loop": [
+            {"log": "outer: {{ $loopCount }}; inner: {{ k }}"}
+          ], "count": "5", "loopValue": "k"}
+        ], "count": 3},
+        {"get": {
+          "url" : "/does/not/exist", "beforeRequest": "rewriteUrl"}
+        }
+      ]
+    },
     {
       "name": "Search and buy",
       "flow": [
@@ -50,7 +89,7 @@
           "url": "/perf/test/search",
           "json": {
             "kw": "{{ keywords }}"
-            },
+          },
           "capture": {
             "json": "$.results[0].id",
             "as": "id"

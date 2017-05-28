@@ -1,4 +1,4 @@
-{
+  {
   "config": {
     "target": "http://localhost:8642",
     "phases": [
